@@ -229,7 +229,7 @@
     >
         PO.LAJU PRIMA
     </span> 
-    Anda dari sini mulai langkah pesan - bayar - berangkat TESTING SELESAI GIT AUTO DEPLOY
+    Anda dari sini mulai langkah pesan - bayar - berangkat
 </p>
 
 
