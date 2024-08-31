@@ -483,6 +483,7 @@ if ($stmt_count = $conn->prepare($sql_count_recent_edits)) {
             justify-content: center;
             text-align: center;
         }
+        
     </style>
    
 </head>
@@ -639,53 +640,82 @@ if ($stmt_count = $conn->prepare($sql_count_recent_edits)) {
 </nav>
 
 <div class="container">
-    
-<div class="container mt-4">
-        <div class="row">
-            <!-- Card untuk Pesanan Baru dalam 2 Jam Terakhir -->
-            <div class="col-md-3">
-                <div class="card text-white bg-primary mb-3">
-                    <div class="card-header">Pesanan baru (2 jam terakhir)</div>
-                    <div class="card-body">
-                        <h5 class="card-title"><?= $count_new_orders; ?></h5>
-                        <p class="card-text">Pesanan baru dalam 2 jam terakhir.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card untuk Total Pesanan dalam 7 Hari Terakhir -->
-            <div class="col-md-3">
-                <div class="card text-white bg-success mb-3">
-                    <div class="card-header">Pesanan (dalam 7 hari terakhir)</div>
-                    <div class="card-body">
-                        <h5 class="card-title"><?= $count_orders_last_7_days; ?></h5>
-                        <p class="card-text">Pesanan dalam waktu 7 hari terakhir.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card untuk Penumpang yang Mengupdate Data dalam 2 Jam Terakhir -->
-            <div class="col-md-3">
-                <div class="card text-white bg-warning mb-3">
-                    <div class="card-header">Penumpang edit data</div>
-                    <div class="card-body">
-                        <h5 class="card-title"><?= $recent_edits_count; ?></h5>
-                        <p class="card-text">Jumlah pesanan yang edit data dalam 2 jam terakhir.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card untuk Pesanan dengan Pengajuan Batal = 'Ya' -->
-            <div class="col-md-3">
-                <div class="card text-white bg-danger mb-3">
-                    <div class="card-header">Jumlah pengajuan batal penumpang</div>
-                    <div class="card-body">
-                        <h5 class="card-title"><?= $count_batal_orders; ?></h5>
-                        <p class="card-text">Pesanan yang mengajukan batal.</p>
-                    </div>
-                </div>
+<div class="row">
+    <!-- Card untuk Pesanan Baru dalam 2 Jam Terakhir -->
+    <div class="col-md-3">
+        <div class="card text-white bg-primary mb-3">
+            <div class="card-header">Pesanan baru (2 jam terakhir)</div>
+            <div class="card-body">
+                <h5 class="card-title"><?= $count_new_orders; ?></h5>
+                <p class="card-text">Pesanan baru dalam 2 jam terakhir.</p>
             </div>
         </div>
+    </div>
+
+    <!-- Card untuk Total Pesanan dalam 7 Hari Terakhir -->
+    <div class="col-md-3">
+        <div class="card text-white bg-success mb-3">
+            <div class="card-header">Pesanan (dalam 7 hari terakhir)</div>
+            <div class="card-body">
+                <h5 class="card-title"><?= $count_orders_last_7_days; ?></h5>
+                <p class="card-text">Pesanan dalam waktu 7 hari terakhir.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Card untuk Penumpang yang Mengupdate Data dalam 2 Jam Terakhir -->
+    <div class="col-md-3">
+        <div class="card text-white bg-warning mb-3">
+            <div class="card-header">Penumpang edit data</div>
+            <div class="card-body">
+                <h5 class="card-title"><?= $recent_edits_count; ?></h5>
+                <p class="card-text">Jumlah pesanan yang edit data dalam 2 jam.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Card untuk Pesanan dengan Pengajuan Batal = 'Ya' -->
+    <div class="col-md-3">
+        <div class="card text-white bg-danger mb-3">
+            <div class="card-header">Jumlah pengajuan batal penumpang</div>
+            <div class="card-body">
+                <h5 class="card-title"><?= $count_batal_orders; ?></h5>
+                <p class="card-text">Pesanan yang mengajukan batal.</p>
+            </div>
+        </div>
+    </div>
+</div>      
+
+    <!-- Search form container -->
+    <div class="card p-4 mb-4">
+        <div class="container-heading"><h2 class="mb-4">Lihat Daftar Penumpang</h2></div>
+        <form class="form-inline mb-4" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="GET">
+            <div class="input-group mr-sm-2 mb-2">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="bi bi-search"></i></span>
+                </div>
+                <input id="search" class="form-control" type="text" name="search" placeholder="Cari kode booking" value="<?php echo htmlspecialchars($search); ?>" oninput="toggleSearchFields()">
+            </div>
+
+            <div class="input-group mr-sm-2 mb-2">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="bi bi-telephone"></i></span>
+                </div>
+                <input id="phone_search" class="form-control" type="text" name="phone_search" placeholder="Cari nomor telepon penumpang" value="<?php echo htmlspecialchars($phone_search); ?>" oninput="toggleSearchFields()">
+            </div>
+
+            <button class="btn btn-primary my-2 my-sm-0" type="submit"><i class="bi bi-search"></i> Cari</button>
+        </form>
+
+        <!-- Date filter form -->
+        <form class="form-inline" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="GET">
+            <div class="input-group mr-sm-2 mb-2">
+                <div class="input-group-prepend">
+                        </div>
+                <input class="form-control" type="date" name="date_filter" placeholder="Pilih tanggal" value="<?php echo htmlspecialchars($date_filter); ?>">
+            </div>
+            <button class="btn btn-secondary my-2 my-sm-0" type="submit"><i class="bi bi-calendar-check"></i> Cari tanggal keberangkatan</button>
+        </form>
     </div>
 
         <div class="table-responsive">
