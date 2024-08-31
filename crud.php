@@ -186,6 +186,24 @@ if ($result === FALSE) {
     die("<div class='alert alert-danger'>Error: " . $conn->error . "</div>");
 }
 
+
+// Hitung pesanan baru dalam 2 jam terakhir
+$sql_new_orders_last_2_hours = "SELECT COUNT(*) AS count_new_orders FROM orders WHERE purchase_date >= NOW() - INTERVAL 2 HOUR";
+$result_new_orders = $conn->query($sql_new_orders_last_2_hours);
+$count_new_orders = $result_new_orders->fetch_assoc()['count_new_orders'];
+
+// Hitung pesanan dengan `pengajuan_batal` = 'ya'
+$sql_batal_orders = "SELECT COUNT(*) AS count_batal_orders FROM orders WHERE pengajuan_batal = 'ya'";
+$result_batal_orders = $conn->query($sql_batal_orders);
+$count_batal_orders = $result_batal_orders->fetch_assoc()['count_batal_orders'];
+
+// Hitung total pesanan dalam 7 hari terakhir
+$sql_orders_last_7_days = "SELECT COUNT(*) AS count_orders_last_7_days FROM orders WHERE purchase_date >= NOW() - INTERVAL 7 DAY";
+$result_orders_last_7_days = $conn->query($sql_orders_last_7_days);
+$count_orders_last_7_days = $result_orders_last_7_days->fetch_assoc()['count_orders_last_7_days'];
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -601,6 +619,41 @@ if ($result === FALSE) {
 
 <div class="container">
         
+<div class="row">
+    <!-- Card untuk Pesanan Baru dalam 2 Jam Terakhir -->
+    <div class="col-md-4">
+        <div class="card text-white bg-primary mb-3">
+            <div class="card-header">New Orders (Last 2 Hours)</div>
+            <div class="card-body">
+                <h5 class="card-title"><?= $count_new_orders; ?></h5>
+                <p class="card-text">New orders placed in the last 2 hours.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Card untuk Pesanan dengan Pengajuan Batal = 'Ya' -->
+    <div class="col-md-4">
+        <div class="card text-white bg-warning mb-3">
+            <div class="card-header">Cancellation Requests</div>
+            <div class="card-body">
+                <h5 class="card-title"><?= $count_batal_orders; ?></h5>
+                <p class="card-text">Orders with cancellation requests.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Card untuk Total Pesanan dalam 7 Hari Terakhir -->
+    <div class="col-md-4">
+        <div class="card text-white bg-success mb-3">
+            <div class="card-header">Orders (Last 7 Days)</div>
+            <div class="card-body">
+                <h5 class="card-title"><?= $count_orders_last_7_days; ?></h5>
+                <p class="card-text">Total orders in the last 7 days.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
     
     <!-- Search form container -->
     <div class="card p-4 mb-4">
