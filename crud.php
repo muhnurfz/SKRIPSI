@@ -623,10 +623,10 @@ $count_orders_last_7_days = $result_orders_last_7_days->fetch_assoc()['count_ord
     <!-- Card untuk Pesanan Baru dalam 2 Jam Terakhir -->
     <div class="col-md-4">
         <div class="card text-white bg-primary mb-3">
-            <div class="card-header">New Orders (Last 2 Hours)</div>
+            <div class="card-header">Pesanan baru (2 jam terkahir)</div>
             <div class="card-body">
                 <h5 class="card-title"><?= $count_new_orders; ?></h5>
-                <p class="card-text">New orders placed in the last 2 hours.</p>
+                <p class="card-text">pesanan baru dalam 2 jam terakhir.</p>
             </div>
         </div>
     </div>
@@ -634,10 +634,10 @@ $count_orders_last_7_days = $result_orders_last_7_days->fetch_assoc()['count_ord
     <!-- Card untuk Pesanan dengan Pengajuan Batal = 'Ya' -->
     <div class="col-md-4">
         <div class="card text-white bg-warning mb-3">
-            <div class="card-header">Cancellation Requests</div>
+            <div class="card-header">Jumlah pengajuan batal penumpang</div>
             <div class="card-body">
                 <h5 class="card-title"><?= $count_batal_orders; ?></h5>
-                <p class="card-text">Orders with cancellation requests.</p>
+                <p class="card-text">pesanan yang mengajukan batal.</p>
             </div>
         </div>
     </div>
@@ -645,10 +645,10 @@ $count_orders_last_7_days = $result_orders_last_7_days->fetch_assoc()['count_ord
     <!-- Card untuk Total Pesanan dalam 7 Hari Terakhir -->
     <div class="col-md-4">
         <div class="card text-white bg-success mb-3">
-            <div class="card-header">Orders (Last 7 Days)</div>
+            <div class="card-header">Pesanan (dalam 7 hari terakhir)</div>
             <div class="card-body">
                 <h5 class="card-title"><?= $count_orders_last_7_days; ?></h5>
-                <p class="card-text">Total orders in the last 7 days.</p>
+                <p class="card-text">pesanan dalam kurun waktu 7 hari terakhir</p>
             </div>
         </div>
     </div>
