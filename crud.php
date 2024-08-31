@@ -657,10 +657,10 @@ if ($stmt_count = $conn->prepare($sql_count_recent_edits)) {
     <!-- Card untuk Penumpang yang Mengupdate Data dalam 2 Jam Terakhir -->
     <div class="col-md-3">
         <div class="card text-white bg-warning mb-3">
-            <div class="card-header">Recent Edits</div>
+            <div class="card-header">Penumpang edit data</div>
             <div class="card-body">
                 <h5 class="card-title"><?= $recent_edits_count; ?></h5>
-                <p class="card-text">Orders updated in the last 2 hours.</p>
+                <p class="card-text">Jumlah pesanan yang edit data dalam 2 jam terakhir.</p>
             </div>
         </div>
     </div>
