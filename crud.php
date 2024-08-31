@@ -633,7 +633,7 @@ $count_orders_last_7_days = $result_orders_last_7_days->fetch_assoc()['count_ord
 
     <!-- Card untuk Pesanan dengan Pengajuan Batal = 'Ya' -->
     <div class="col-md-4">
-        <div class="card text-white bg-warning mb-3">
+     <div class="card text-white bg-danger mb-3">
             <div class="card-header">Jumlah pengajuan batal penumpang</div>
             <div class="card-body">
                 <h5 class="card-title"><?= $count_batal_orders; ?></h5>
