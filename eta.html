@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Departure and Arrival Time</title>
+</head>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+}
+
+.ticket-container {
+    border: 2px solid #000;
+    border-radius: 10px;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.ticket {
+    display: flex;
+    flex-direction: column;
+}
+
+.route {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    position: relative;
+}
+
+.route-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 30px;
+}
+
+.circle {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    margin-right: 10px;
+    z-index: 1;
+}
+
+.circle.blue {
+    background-color: #0000ff; /* Blue color */
+}
+
+.circle.grey {
+    background-color: #808080; /* Grey color */
+}
+
+.timeline-connector {
+    width: 2px;
+    height: 60px; /* Adjust height according to the gap between items */
+    background: repeating-linear-gradient(
+        to bottom,
+        #ccc,
+        #ccc 5px,
+        transparent 5px,
+        transparent 10px
+    );
+    position: absolute;
+    left: 39px;
+    top: 25px; /* Adjust top position to match circle alignment */
+    z-index: 0;
+}
+
+.route-info {
+    flex: 1;
+}
+
+.label {
+    color: #000;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.location {
+    color: #000;
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.time {
+    color: #000;
+    font-size: 24px;
+    font-weight: bold;
+    margin-left: 20px;
+}
+
+</style>
+<script>
+ // JavaScript is not required for static content like this,
+// but if you need to dynamically change the times or labels,
+// you can use the following code as an example:
+
+document.addEventListener("DOMContentLoaded", function() {
+    const departureLocationElement = document.querySelector(".route-item .route-info .location");
+    const departureTimeElement = document.querySelector(".route-item .time");
+    const arrivalLocationElement = document.querySelectorAll(".route-item .route-info .location")[1];
+    const arrivalTimeElement = document.querySelectorAll(".route-item .time")[1];
+
+    const departureLocation = "BSD Serpong";
+    const departureTime = "14:00 WIB";
+    const arrivalLocation = "Sragen";
+    const arrivalTime = "ETA 03:00 WIB";
+
+    departureLocationElement.textContent = departureLocation;
+    departureTimeElement.textContent = departureTime;
+    arrivalLocationElement.textContent = arrivalLocation;
+    arrivalTimeElement.textContent = arrivalTime;
+});
+
+
+</script>
+<body>
+    <div class="ticket-container">
+        <div class="ticket">
+            <div class="route">
+                <div class="route-item">
+                    <div class="circle blue"></div>
+                    <div class="route-info">
+                        <div class="label">Asal keberangkatan</div>
+                        <div class="location">BSD Serpong</div>
+                    </div>
+                    <div class="time">14:00 WIB</div>
+                </div>
+                <div class="timeline-connector"></div>
+                <div class="route-item">
+                    <div class="circle grey"></div>
+                    <div class="route-info">
+                        <div class="label">Kota tujuan</div>
+                        <div class="location">Sragen</div>
+                    </div>
+                    <div class="time">ETA 03:00 WIB</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+    </html>
+    
+</body>
+</html>
