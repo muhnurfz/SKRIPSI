@@ -202,6 +202,20 @@ $sql_orders_last_7_days = "SELECT COUNT(*) AS count_orders_last_7_days FROM orde
 $result_orders_last_7_days = $conn->query($sql_orders_last_7_days);
 $count_orders_last_7_days = $result_orders_last_7_days->fetch_assoc()['count_orders_last_7_days'];
 
+// Menghitung jumlah order yang diedit dalam 2 jam terakhir
+$two_hours_ago = date("Y-m-d H:i:s", strtotime('-2 hours'));
+
+$sql_count_recent_edits = "SELECT COUNT(*) AS recent_edits_count FROM edit_logs WHERE edit_timestamp >= ?";
+if ($stmt_count = $conn->prepare($sql_count_recent_edits)) {
+    $stmt_count->bind_param("s", $two_hours_ago);
+    $stmt_count->execute();
+    $stmt_count->bind_result($recent_edits_count);
+    $stmt_count->fetch();
+    $stmt_count->close();
+} else {
+    die("Failed to prepare count statement: " . $conn->error);
+}
+
 
 
 ?>
@@ -631,6 +645,29 @@ $count_orders_last_7_days = $result_orders_last_7_days->fetch_assoc()['count_ord
         </div>
     </div>
 
+  <!-- Card untuk Total Pesanan dalam 7 Hari Terakhir -->
+  <div class="col-md-4">
+        <div class="card text-white bg-success mb-3">
+            <div class="card-header">Pesanan (dalam 7 hari terakhir)</div>
+            <div class="card-body">
+                <h5 class="card-title"><?= $count_orders_last_7_days; ?></h5>
+                <p class="card-text">pesanan dalam kurun waktu 7 hari terakhir</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Card untuk Penumpang yang Mengupdate Data dalam 2 Jam Terakhir -->
+<div class="col-md-4">
+    <div class="card text-white bg-warning mb-3">
+        <div class="card-header">Recent Edits</div>
+        <div class="card-body">
+            <h5 class="card-title"><?= $recent_edits_count; ?></h5>
+            <p class="card-text">Orders updated in the last 2 hours.</p>
+        </div>
+    </div>
+</div>
+
     <!-- Card untuk Pesanan dengan Pengajuan Batal = 'Ya' -->
     <div class="col-md-4">
      <div class="card text-white bg-danger mb-3">
@@ -642,18 +679,7 @@ $count_orders_last_7_days = $result_orders_last_7_days->fetch_assoc()['count_ord
         </div>
     </div>
 
-    <!-- Card untuk Total Pesanan dalam 7 Hari Terakhir -->
-    <div class="col-md-4">
-        <div class="card text-white bg-success mb-3">
-            <div class="card-header">Pesanan (dalam 7 hari terakhir)</div>
-            <div class="card-body">
-                <h5 class="card-title"><?= $count_orders_last_7_days; ?></h5>
-                <p class="card-text">pesanan dalam kurun waktu 7 hari terakhir</p>
-            </div>
-        </div>
-    </div>
-</div>
-
+  
     
     <!-- Search form container -->
     <div class="card p-4 mb-4">
