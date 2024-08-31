@@ -1,9 +1,8 @@
 <?php
 $servername = "localhost";
-$username = "andro";
-$password = "1";
-$dbname = "ticket_booking";
-
+$username = "u162416084_agungindah";
+$password = "ticket_booking123A";
+$dbname = "u162416084_ticket_booking";
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
 
@@ -12,3 +11,4 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 ?>
+
