@@ -629,6 +629,8 @@ if ($stmt_count = $conn->prepare($sql_count_recent_edits)) {
         </div>
     </div>
 </nav>
+
+<div class="container">
 <div class="row">
     <!-- Card untuk Pesanan Baru dalam 2 Jam Terakhir -->
     <div class="col-md-3">
@@ -647,7 +649,7 @@ if ($stmt_count = $conn->prepare($sql_count_recent_edits)) {
             <div class="card-header">Pesanan (dalam 7 hari terakhir)</div>
             <div class="card-body">
                 <h5 class="card-title"><?= $count_orders_last_7_days; ?></h5>
-                <p class="card-text">Pesanan dalam kurun waktu 7 hari terakhir.</p>
+                <p class="card-text">Pesanan dalam waktu 7 hari terakhir.</p>
             </div>
         </div>
     </div>
@@ -673,10 +675,7 @@ if ($stmt_count = $conn->prepare($sql_count_recent_edits)) {
             </div>
         </div>
     </div>
-</div>
-
-<div class="container">
-        
+</div>      
 
     <!-- Search form container -->
     <div class="card p-4 mb-4">
