@@ -2,19 +2,6 @@
 include('conn.php');
 session_start();
 
-// Connect to the database
-$servername = "localhost";
-$username = "your_username";
-$password = "your_password";
-$database = "your_database";
-
-$conn = new mysqli($servername, $username, $password, $database);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
 // Ensure the user is logged in
 if (!isset($_SESSION['user_email'])) {
     header("Location: login.php");

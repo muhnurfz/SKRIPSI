@@ -1,33 +1,32 @@
 <?php
 session_start();
-include('conn.php');
+include('conn.php'); // Make sure to include your database connection
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = $_POST['username'];
-    $password = md5($_POST['password']); // Hash password with MD5
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $email = $_POST['email'];
+    $password = md5($_POST['password']); // Hash the password using MD5
 
-    // Prepare and execute SQL statement
-    $stmt = $conn->prepare("SELECT * FROM users WHERE username = ? AND password = ?");
-    $stmt->bind_param("ss", $username, $password);
-    $stmt->execute();
-    $result = $stmt->get_result();
+    $query = "SELECT * FROM data_pnp WHERE email = ? AND password = ?";
+    if ($stmt = $conn->prepare($query)) {
+        $stmt->bind_param("ss", $email, $password);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
-    if ($result->num_rows > 0) {
-        // Fetch user data
-        $user = $result->fetch_assoc();
+        if ($result->num_rows > 0) {
+            $user = $result->fetch_assoc();
+            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['passenger_name'] = $user['passenger_name'];
+            $_SESSION['email'] = $user['email'];
 
-        // Set session variables
-        $_SESSION['username'] = $username;
-        $_SESSION['accessLevel'] = $user['accessLevel']; // Save accessLevel in session
-
-        header("Location: crud.php");
-        exit();
-    } else {
-        $error = "Username atau password salah!";
+            header("Location: dashboard_pnp.php");
+            exit();
+        } else {
+            $error = "Email atau password salah.";
+        }
+        $stmt->close();
     }
-
-    $stmt->close();
 }
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -124,10 +123,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </style>
 </head>
 <body>
-    <div class="login-container">
+<div class="login-container">
         <h2 class="text-center">Login</h2>
         <?php if (isset($error)) echo "<p class='error-message'><i class='fas fa-exclamation-circle'></i> $error</p>"; ?>
-        <form id="loginForm" method="post">
+        <form id="loginForm" method="post" action="">
             <div class="form-group">
                 <label for="email">Email</label>
                 <input type="email" class="form-control" id="email" name="email" required>
@@ -160,6 +159,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <p>Belum punya akun?<a href="register.php"> Register</a></p>
         </div>
     </div>
+
 
     <!-- Bootstrap JS and dependencies -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
