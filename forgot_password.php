@@ -8,8 +8,6 @@ require 'PHPMailer/src/Exception.php';
 require 'PHPMailer/src/PHPMailer.php';
 require 'PHPMailer/src/SMTP.php';
 
-include('conn.php'); // Koneksi ke database
-
 $message = '';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -28,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $kode_penumpang = $row['kode_penumpang'];
 
         // Buat link reset password
-        $reset_link = "https://www.example.com/reset_pass_pnp.php?kode_penumpang=" . $kode_penumpang;
+        $reset_link = "https://www.example.com/reset_pass_pnp.php?kode_penumpang=" . urlencode($kode_penumpang);
 
         $mail = new PHPMailer(true);
 
@@ -39,7 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $mail->SMTPAuth = true;
             $mail->Username = 'customer.service@tiket.agungindahtrav.com';
             $mail->Password = '1Customer.service';
-            $mail->SMTPSecure = 'ssl';
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS; // Gunakan metode enkripsi yang benar
             $mail->Port = 465;
 
             // Penerima dan pengirim
@@ -48,8 +46,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             // Konten email
             $mail->isHTML(true);
-            $mail->Subject = 'Reset Password';
+            $mail->Subject = 'Reset Password Akun Anda';
             $mail->Body    = 'Klik link berikut untuk mereset password Anda: <a href="' . $reset_link . '">Reset Password</a>';
+            $mail->AltBody = 'Klik link berikut untuk mereset password Anda: ' . $reset_link;
 
             // Kirim email
             $mail->send();
