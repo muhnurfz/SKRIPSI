@@ -44,22 +44,20 @@
             border-radius: 30px;
         }
         .password-wrapper {
-    position: relative;
-}
-
-.password-wrapper .form-control {
-    padding-right: 40px; /* Space for the icon */
-}
-
-.password-wrapper #togglePassword {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    cursor: pointer;
-    color: #007bff;
-    font-size: 1.2em;
-}
+            position: relative;
+        }
+        .password-wrapper .form-control {
+            padding-right: 40px; /* Space for the icon */
+        }
+        .password-wrapper #togglePassword {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #007bff;
+            font-size: 1.2em;
+        }
 
         .btn-primary:hover, .btn-primary:focus {
             background-color: #004494; /* Darker shade */
@@ -119,16 +117,19 @@
             <label for="email">Email</label>
             <input type="email" class="form-control" id="email" name="email" required>
         </div>
-        <div class="form-group password-wrapper">
-            <label for="password">Password</label>
-            <input type="password" class="form-control" id="password" name="password" required>
-            <i id="togglePassword" class="fas fa-eye"></i>
+        <div class="form-group" style="position: relative;">
+                <label for="password">Password</label>
+                <div class="password-wrapper">
+                    <input type="password" class="form-control" id="password" name="password" required>
+                    <i id="togglePassword" class="fas fa-eye"></i>
+                </div>
         </div>
         <div class="form-group">
             <label for="confirm_password">Confirm Password</label>
             <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
             <small id="passwordError" class="form-text text-danger" style="display: none;">Passwords do not match.</small>
         </div>
+    </div>
         <div class="form-group row">
             <div class="col-md-6">
                 <a class="btn btn-secondary btn-block" href="index.php">Back</a>
