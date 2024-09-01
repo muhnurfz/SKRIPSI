@@ -129,8 +129,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <form id="loginForm" method="post" action="">
             <div class="form-group">
                 <label for="email">Email</label>
-                <input type="email" class="form-control" id="email" name="email" required>
+                <input type="email" class="form-control" id="email" name="email" placeholder="contoh@gmail.com" required>
             </div>
+
             <div class="form-group" style="position: relative;">
                 <label for="password">Password</label>
                 <div class="password-wrapper">
