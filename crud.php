@@ -642,7 +642,7 @@ if ($stmt_count = $conn->prepare($sql_count_recent_edits)) {
 </nav>
 
 <div class="container">
-<div class="row" style="margin: 10px 0px 10px 0px;">
+<div class="row" style="margin: 10px 0px 10px;">
     <!-- Card untuk Pesanan Baru dalam 2 Jam Terakhir -->
     <div class="col-md-3">
         <div class="card text-white bg-primary mb-3">
@@ -654,9 +654,10 @@ if ($stmt_count = $conn->prepare($sql_count_recent_edits)) {
         </div>
     </div>
 
+<div class="row" style="margin: 10px 0px 10px;">
     <!-- Card untuk Total Pesanan dalam 7 Hari Terakhir -->
     <div class="col-md-3">
-        <div class="card text-white bg-success mb-3" style="margin: 10px 0px 10px 0px;">
+        <div class="card text-white bg-success mb-3">
             <div class="card-header">Pesanan (dalam 7 hari terakhir)</div>
             <div class="card-body">
                 <h5 class="card-title"><?= $count_orders_last_7_days; ?></h5>
@@ -665,9 +666,10 @@ if ($stmt_count = $conn->prepare($sql_count_recent_edits)) {
         </div>
     </div>
 
+    <div class="row" style="margin: 10px 0px 10px;">
     <!-- Card untuk Penumpang yang Mengupdate Data dalam 2 Jam Terakhir -->
     <div class="col-md-3">
-        <div class="card text-white bg-warning mb-3" style="margin: 10px 0px 10px 0px;">
+        <div class="card text-white bg-warning mb-3">
             <div class="card-header">Penumpang edit data</div>
             <div class="card-body">
                 <h5 class="card-title"><?= $recent_edits_count; ?></h5>
@@ -676,9 +678,10 @@ if ($stmt_count = $conn->prepare($sql_count_recent_edits)) {
         </div>
     </div>
 
+    <div class="row" style="margin: 10px 0px 10px;">
     <!-- Card untuk Pesanan dengan Pengajuan Batal = 'Ya' -->
     <div class="col-md-3">
-        <div class="card text-white bg-danger mb-3" style="margin: 10px 0px 10px 0px;">
+        <div class="card text-white bg-danger mb-3">
             <div class="card-header">Jumlah pengajuan batal penumpang</div>
             <div class="card-body">
                 <h5 class="card-title"><?= $count_batal_orders; ?></h5>
