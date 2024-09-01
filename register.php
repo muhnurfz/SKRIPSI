@@ -129,7 +129,7 @@
             <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
             <small id="passwordError" class="form-text text-danger" style="display: none;">Passwords do not match.</small>
         </div>
-    </div>
+    
         <div class="form-group row">
             <div class="col-md-6">
                 <a class="btn btn-secondary btn-block" href="index.php">Back</a>
