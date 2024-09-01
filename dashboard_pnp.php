@@ -2,21 +2,29 @@
 include('conn.php');
 session_start();
 
-// Cek apakah user sudah login
+// Check if the user is logged in
 if (!isset($_SESSION['email'])) {
     header("Location: login.php");
     exit();
 }
 
-// Ambil email pengguna yang login
+// Get the email of the logged-in user
 $logged_in_email = $_SESSION['email'];
 
-// Ambil data penumpang dari tabel data_pnp yang sesuai dengan email yang login
-$sql = "SELECT * FROM data_pnp WHERE email = ?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("s", $logged_in_email);
-$stmt->execute();
-$result = $stmt->get_result();
+// Fetch passenger data from `data_pnp` based on the logged-in user's email
+$sql_pnp = "SELECT * FROM data_pnp WHERE email = ?";
+$stmt_pnp = $conn->prepare($sql_pnp);
+$stmt_pnp->bind_param("s", $logged_in_email);
+$stmt_pnp->execute();
+$result_pnp = $stmt_pnp->get_result();
+$passenger = $result_pnp->fetch_assoc();
+
+// Fetch transaction history from `orders` based on the logged-in user's email
+$sql_orders = "SELECT * FROM orders WHERE email = ?";
+$stmt_orders = $conn->prepare($sql_orders);
+$stmt_orders->bind_param("s", $logged_in_email);
+$stmt_orders->execute();
+$result_orders = $stmt_orders->get_result();
 
 ?>
 <!DOCTYPE html>
@@ -35,13 +43,12 @@ $result = $stmt->get_result();
         .container {
             margin-top: 50px;
         }
-        .table-wrapper {
-            background-color: #fff;
-            padding: 20px;
+        .card {
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0,0,0,0.15);
+            margin-bottom: 20px;
         }
-        .table-title {
+        .card-title {
             margin-bottom: 15px;
         }
         .btn-primary, .btn-danger {
@@ -49,6 +56,11 @@ $result = $stmt->get_result();
         }
         .navbar {
             margin-bottom: 20px;
+        }
+        .table-wrapper {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
         }
     </style>
 </head>
@@ -72,46 +84,62 @@ $result = $stmt->get_result();
     </nav>
 
     <div class="container">
-        <div class="table-wrapper">
-            <div class="table-title">
-                <h2>Data Penumpang</h2>
+        <!-- Card for Booking Tickets -->
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Pesan Tiket</h5>
+                <a href="pnp_pesan_tiket.php" class="btn btn-primary">Pesan Tiket</a>
             </div>
-            <table class="table table-bordered table-striped">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Kode Penumpang</th>
-                        <th>Nama Penumpang</th>
-                        <th>No. Telepon</th>
-                        <th>Email</th>
-                        <th>Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php if ($result->num_rows > 0): ?>
-                        <?php while($row = $result->fetch_assoc()): ?>
+        </div>
+
+        <!-- Card for Transaction History -->
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Riwayat Transaksi</h5>
+                <div class="table-wrapper">
+                    <table class="table table-bordered table-striped">
+                        <thead>
                             <tr>
-                                <td><?php echo $row['id']; ?></td>
-                                <td><?php echo $row['kode_penumpang']; ?></td>
-                                <td><?php echo $row['passenger_name']; ?></td>
-                                <td><?php echo $row['passenger_phone']; ?></td>
-                                <td><?php echo $row['email']; ?></td>
-                                <td>
-                                    <a href="edit_pnp.php?id=<?php echo $row['id']; ?>" class="btn btn-primary btn-sm">Edit</a>
-                                    <a href="delete_pnp.php?id=<?php echo $row['id']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Anda yakin ingin menghapus data ini?');">Delete</a>
-                                </td>
+                                <th>ID</th>
+                                <th>Kode Booking</th>
+                                <th>Nama Penumpang</th>
+                                <th>Tujuan</th>
+                                <th>Tanggal Berangkat</th>
+                                <th>Status Pembayaran</th>
                             </tr>
-                        <?php endwhile; ?>
-                    <?php else: ?>
-                        <tr>
-                            <td colspan="6" class="text-center">Tidak ada data penumpang</td>
-                        </tr>
-                    <?php endif; ?>
-                </tbody>
-            </table>
+                        </thead>
+                        <tbody>
+                            <?php if ($result_orders->num_rows > 0): ?>
+                                <?php while($row = $result_orders->fetch_assoc()): ?>
+                                    <tr>
+                                        <td><?php echo $row['id']; ?></td>
+                                        <td><?php echo $row['booking_code']; ?></td>
+                                        <td><?php echo $row['passenger_name']; ?></td>
+                                        <td><?php echo $row['destination']; ?></td>
+                                        <td><?php echo $row['departure_date']; ?></td>
+                                        <td><?php echo ucfirst($row['status_pembayaran']); ?></td>
+                                    </tr>
+                                <?php endwhile; ?>
+                            <?php else: ?>
+                                <tr>
+                                    <td colspan="6" class="text-center">Tidak ada riwayat transaksi</td>
+                                </tr>
+                            <?php endif; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card for Other Options -->
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Pilihan Lainnya</h5>
+                <a href="#" class="btn btn-danger">Opsi Lain</a>
+            </div>
         </div>
     </div>
-    
+
     <!-- Bootstrap JS and dependencies -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
