@@ -74,18 +74,28 @@
             border-radius: 0.25rem;
         }
 
+        /* Styling untuk links */
         .links {
             text-align: right;
             margin-top: 10px;
         }
-        .links a {
+        .links .link-button {
+            display: inline-block;
+            padding: 5px 10px;
             font-size: 0.9em;
-            color: #007bff;
+            color: #ffffff;
+            background-color: #007bff;
+            border-radius: 5px;
             text-decoration: none;
-            transition: color 0.3s;
+            transition: background-color 0.3s;
         }
-        .links a:hover {
-            color: #004494;
+        .links .link-button:hover {
+            background-color: #0056b3;
+        }
+        .links .divider {
+            margin: 10px 0;
+            height: 1px;
+            background-color: #ddd;
         }
     </style>
 </head>
@@ -106,8 +116,9 @@
                 </div>
             </div>
             <div class="links">
-                <a href="register.php">Belum punya akun? Register</a><br>
-                <a href="forgot_password.php">Lupa password?</a>
+                <a href="register.php" class="link-button">Belum punya akun? Register</a>
+                <div class="divider"></div>
+                <a href="forgot_password.php" class="link-button">Lupa password?</a>
             </div>
             <div class="form-group row">
                 <div class="col-md-6">
