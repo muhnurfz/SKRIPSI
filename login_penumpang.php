@@ -1,3 +1,45 @@
+<?php
+session_start();
+$max_attempts = 3;
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $email = $_POST['email'];
+    $password = md5($_POST['password']); // Assuming the password is stored as an MD5 hash
+    $attempts = isset($_SESSION['login_attempts']) ? $_SESSION['login_attempts'] : 0;
+
+    $conn = new mysqli('localhost', 'username', 'password', 'database_name');
+
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+    $stmt = $conn->prepare("SELECT * FROM data_pnp WHERE email = ? AND password = ?");
+    $stmt->bind_param("ss", $email, $password);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        $_SESSION['user'] = $email;
+        $_SESSION['login_attempts'] = 0;
+        header("Location: dashboard_pnp.php");
+        exit();
+    } else {
+        $attempts++;
+        $_SESSION['login_attempts'] = $attempts;
+
+        if ($attempts >= $max_attempts) {
+            header("Location: forgot_password.php");
+            exit();
+        } else {
+            $error = "Email or password is incorrect.";
+        }
+    }
+
+    $stmt->close();
+    $conn->close();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -98,8 +140,8 @@
         <?php if (isset($error)) echo "<p class='error-message'><i class='fas fa-exclamation-circle'></i> $error</p>"; ?>
         <form id="loginForm" method="post">
             <div class="form-group">
-                <label for="username">Username</label>
-                <input type="text" class="form-control" id="username" name="username" required>
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" name="email" required>
             </div>
             <div class="form-group" style="position: relative;">
                 <label for="password">Password</label>
@@ -108,7 +150,7 @@
                     <i id="togglePassword" class="fas fa-eye"></i>
                 </div>
                 <div style="text-align: right;">
-                    <a href="forgot-password.php" style="font-size: 0.9em; color: #007bff; text-decoration: none;">Lupa password?</a>
+                    <a href="forgot_password.php" style="font-size: 0.9em; color: #007bff; text-decoration: none;">Lupa password?</a>
                 </div>
             </div>
             <div class="form-group row">
@@ -134,7 +176,7 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="https://kit.fontawesome.com/a076d05399.js"></script> <!-- Load FontAwesome -->
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('loginForm').addEventListener('submit', function() {
