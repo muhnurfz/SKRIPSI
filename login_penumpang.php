@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,37 +9,41 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
+            background-image: url('your-background-image.jpg'); /* Specify your background image URL here */
+            background-size: cover;
+            background-position: center;
             display: flex;
             justify-content: center;
             align-items: center;
-            background-size: 50% 50%; /* width height */
             height: 100vh;
             margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         .login-container {
-            background-color: #ffffff;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.15);
+            background-color: rgba(255, 255, 255, 0.85);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.25);
             width: 100%;
             max-width: 400px;
+            backdrop-filter: blur(10px);
         }
         .error-message {
             color: #dc3545;
             font-size: 0.9em;
             margin-bottom: 15px;
+            text-align: center;
         }
-                .btn-primary, .btn-secondary {
+        .btn-primary, .btn-secondary {
             transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
+            border-radius: 30px;
         }
         .password-wrapper {
             position: relative;
         }
-
         .password-wrapper .form-control {
             padding-right: 40px; /* Space for the icon */
         }
-
         .password-wrapper #togglePassword {
             position: absolute;
             right: 10px;
@@ -50,19 +53,16 @@
             color: #007bff;
             font-size: 1.2em;
         }
-
         .btn-primary:hover, .btn-primary:focus {
             background-color: #004494; /* Darker shade */
             border-color: #003a75;
             box-shadow: 0 4px 6px rgba(0,0,0,0.2);
         }
-
         .btn-secondary:hover, .btn-secondary:focus {
             background-color: #5a6268; /* Darker shade */
             border-color: #4e555b;
             box-shadow: 0 4px 6px rgba(0,0,0,0.2);
         }
-
         .loading {
             display: none;
             text-align: center;
@@ -72,25 +72,30 @@
             display: block;
         }
         .form-control {
-            border-radius: 0.25rem;
+            border-radius: 0.5rem;
+        }
+        h2 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: #333;
         }
     </style>
 </head>
 <body>
     <div class="login-container">
         <h2 class="text-center">Login</h2>
-        <?php if (isset($error)) echo "<p class='error-message text-center'>$error</p>"; ?>
+        <?php if (isset($error)) echo "<p class='error-message'><i class='fas fa-exclamation-circle'></i> $error</p>"; ?>
         <form id="loginForm" method="post">
             <div class="form-group">
                 <label for="username">Username</label>
                 <input type="text" class="form-control" id="username" name="username" required>
             </div>
             <div class="form-group">
-            <label for="password">Password</label>
-            <div class="password-wrapper">
-                <input type="password" class="form-control" id="password" name="password" required>
-                <i id="togglePassword" class="fas fa-eye"></i>
-            </div>
+                <label for="password">Password</label>
+                <div class="password-wrapper">
+                    <input type="password" class="form-control" id="password" name="password" required>
+                    <i id="togglePassword" class="fas fa-eye"></i>
+                </div>
             </div>
             <div class="form-group row">
                 <div class="col-md-6">
@@ -114,28 +119,27 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://kit.fontawesome.com/a076d05399.js"></script> <!-- Load FontAwesome -->
     <script>
-       document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('loginForm').addEventListener('submit', function() {
-        document.getElementById('loginButton').disabled = true;
-        document.getElementById('loading').classList.add('active');
-    });
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('loginForm').addEventListener('submit', function() {
+                document.getElementById('loginButton').disabled = true;
+                document.getElementById('loading').classList.add('active');
+            });
 
-    document.getElementById('togglePassword').addEventListener('click', function () {
-        const passwordField = document.getElementById('password');
-        const toggleIcon = document.getElementById('togglePassword');
+            document.getElementById('togglePassword').addEventListener('click', function () {
+                const passwordField = document.getElementById('password');
+                const toggleIcon = document.getElementById('togglePassword');
 
-        if (passwordField.type === 'password') {
-            passwordField.type = 'text';
-            toggleIcon.classList.remove('fa-eye');
-            toggleIcon.classList.add('fa-eye-slash');
-        } else {
-            passwordField.type = 'password';
-            toggleIcon.classList.remove('fa-eye-slash');
-            toggleIcon.classList.add('fa-eye');
-        }
-    });
-});
-
+                if (passwordField.type === 'password') {
+                    passwordField.type = 'text';
+                    toggleIcon.classList.remove('fa-eye');
+                    toggleIcon.classList.add('fa-eye-slash');
+                } else {
+                    passwordField.type = 'password';
+                    toggleIcon.classList.remove('fa-eye-slash');
+                    toggleIcon.classList.add('fa-eye');
+                }
+            });
+        });
     </script>
 </body>
 </html>
