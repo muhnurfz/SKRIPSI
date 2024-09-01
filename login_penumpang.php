@@ -126,7 +126,7 @@
             </div>
         </div>
         <div class="form-footer">
-            <p><a href="register.php">Register</a></p>
+            <p>Belum punya akun?<a href="register.php"> Register</a></p>
         </div>
     </div>
 
