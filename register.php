@@ -129,7 +129,7 @@
             <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
             <small id="passwordError" class="form-text text-danger" style="display: none;">Passwords do not match.</small>
         </div>
-    </div>
+
         <div class="form-group row">
             <div class="col-md-6">
                 <a class="btn btn-secondary btn-block" href="index.php">Back</a>
@@ -157,7 +157,7 @@
 <script src="https://kit.fontawesome.com/a076d05399.js"></script> <!-- Load FontAwesome -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Toggle Password Visibility
+    // Toggle Password Visibility for Password
     document.getElementById('togglePassword').addEventListener('click', function () {
         const passwordField = document.getElementById('password');
         const toggleIcon = document.getElementById('togglePassword');
@@ -168,6 +168,22 @@ document.addEventListener('DOMContentLoaded', function() {
             toggleIcon.classList.add('fa-eye-slash');
         } else {
             passwordField.type = 'password';
+            toggleIcon.classList.remove('fa-eye-slash');
+            toggleIcon.classList.add('fa-eye');
+        }
+    });
+
+    // Toggle Password Visibility for Confirm Password
+    document.getElementById('toggleConfirmPassword').addEventListener('click', function () {
+        const confirmPasswordField = document.getElementById('confirm_password');
+        const toggleIcon = document.getElementById('toggleConfirmPassword');
+
+        if (confirmPasswordField.type === 'password') {
+            confirmPasswordField.type = 'text';
+            toggleIcon.classList.remove('fa-eye');
+            toggleIcon.classList.add('fa-eye-slash');
+        } else {
+            confirmPasswordField.type = 'password';
             toggleIcon.classList.remove('fa-eye-slash');
             toggleIcon.classList.add('fa-eye');
         }
@@ -200,6 +216,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+
 </script>
 </body>
 </html>
