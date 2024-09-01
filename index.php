@@ -264,7 +264,7 @@
                         <div class="dropdown-menu" id="dropdownMenu">
                             <a class="dropdown-item" href="edit_penumpang.php">Edit Penumpang</a>
                             <a class="dropdown-item" href="batal_penumpang.php">Ajukan Pembatalan</a>
-                            <a class="dropdown-item" href="cari_tiket.php">Cetak Tiket TESTING GIT</a>
+                            <a class="dropdown-item" href="cari_tiket.php">Cetak Tiket</a>
                         </div>
                     </div>
                 </div>
