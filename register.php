@@ -159,59 +159,60 @@ $conn->close();
 </head>
 <body>
 <div class="register-container">
-        <h2 class="text-center">Register</h2>
-        <?php if ($error) echo "<p class='error-message'><i class='fas fa-exclamation-circle'></i> " . htmlspecialchars($error) . "</p>"; ?>
-        <?php if ($success) echo "<p class='success-message'><i class='fas fa-check-circle'></i> " . htmlspecialchars($success) . "</p>"; ?>
-        <form id="registerForm" method="post" action="">
-            <div class="form-group">
-                <label for="username">Username</label>
-                <input type="text" class="form-control" id="username" name="username" required>
-            </div>
-            <div class="form-group">
+    <h2 class="text-center">Register</h2>
+    <?php if ($error) echo "<p class='error-message'><i class='fas fa-exclamation-circle'></i> " . htmlspecialchars($error) . "</p>"; ?>
+    <?php if ($success) echo "<p class='success-message'><i class='fas fa-check-circle'></i> " . htmlspecialchars($success) . "</p>"; ?>
+    <form id="registerForm" method="post" action="">
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" class="form-control" id="username" name="username" required>
+        </div>
+        <div class="form-group">
             <label for="passenger_phone">Nomor Telepon</label>
             <input type="text" class="form-control" id="passenger_phone" name="passenger_phone" placeholder="+62 812 3456 7890" required>
+            <small id="phoneError" class="form-text text-danger" style="display: none;">Nomor telepon tidak valid.</small>
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" class="form-control" id="email" name="email" required>
+        </div>
+        <div class="form-group password-wrapper">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" id="password" name="password" required>
+            <i id="togglePassword" class="fas fa-eye"></i>
+        </div>
+        <div class="form-group">
+            <label for="confirm_password">Confirm Password</label>
+            <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
+            <small id="passwordError" class="form-text text-danger" style="display: none;">Passwords do not match.</small>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-6">
+                <a class="btn btn-secondary btn-block" href="index.php">Back</a>
             </div>
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" class="form-control" id="email" name="email" required>
-            </div>
-            <div class="form-group password-wrapper">
-                <label for="password">Password</label>
-                <input type="password" class="form-control" id="password" name="password" required>
-                <i id="togglePassword" class="fas fa-eye"></i>
-            </div>
-            <div class="form-group">
-                <label for="confirm_password">Confirm Password</label>
-                <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
-                <small id="passwordError" class="form-text text-danger" style="display: none;">Passwords do not match.</small>
-            </div>
-            <div class="form-group row">
-                <div class="col-md-6">
-                    <a class="btn btn-secondary btn-block" href="index.php">Back</a>
-                </div>
-                <div class="col-md-6">
-                    <button type="submit" class="btn btn-primary btn-block" id="registerButton">Register</button>
-                </div>
-            </div>
-        </form>
-
-        <div id="loading" class="loading">
-            <div class="spinner-border text-primary" role="status">
-                <span class="sr-only">Loading...</span>
+            <div class="col-md-6">
+                <button type="submit" class="btn btn-primary btn-block" id="registerButton">Register</button>
             </div>
         </div>
-        <div class="form-footer">
-            <p>Already have an account?<a href="login.php"> Login</a></p>
+    </form>
+
+    <div id="loading" class="loading">
+        <div class="spinner-border text-primary" role="status">
+            <span class="sr-only">Loading...</span>
         </div>
     </div>
+    <div class="form-footer">
+        <p>Already have an account?<a href="login.php"> Login</a></p>
+    </div>
+</div>
 
-    <!-- Bootstrap JS and dependencies -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="https://kit.fontawesome.com/a076d05399.js"></script> <!-- Load FontAwesome -->
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://kit.fontawesome.com/a076d05399.js"></script> <!-- Load FontAwesome -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
     // Toggle Password Visibility
     document.getElementById('togglePassword').addEventListener('click', function () {
         const passwordField = document.getElementById('password');
@@ -228,37 +229,33 @@ $conn->close();
         }
     });
 
-    // Form Submission and Password Confirmation
+    // Form Submission and Validation
     document.getElementById('registerForm').addEventListener('submit', function(event) {
         const password = document.getElementById('password').value;
         const confirmPassword = document.getElementById('confirm_password').value;
+        const phone = document.getElementById('passenger_phone').value;
         const passwordError = document.getElementById('passwordError');
+        const phoneError = document.getElementById('phoneError');
+        const phoneRegex = /^\+?\d{10,15}$/; // Regex untuk format nomor telepon internasional
 
-        // If passwordError element does not exist, create one
-        if (!passwordError) {
-            const errorElement = document.createElement('div');
-            errorElement.id = 'passwordError';
-            errorElement.style.display = 'none';
-            errorElement.style.color = '#dc3545';
-            errorElement.style.fontSize = '0.9em';
-            errorElement.style.marginTop = '10px';
-            errorElement.innerText = 'Passwords do not match!';
-            document.querySelector('.register-container').appendChild(errorElement);
-        }
-
-        // Reset error message
+        // Reset error messages
         passwordError.style.display = 'none';
+        phoneError.style.display = 'none';
 
         if (password !== confirmPassword) {
             event.preventDefault(); // Prevent form submission
             passwordError.style.display = 'block'; // Show error message
+        }
+
+        if (!phoneRegex.test(phone)) {
+            event.preventDefault(); // Prevent form submission
+            phoneError.style.display = 'block'; // Show error message
         } else {
             document.getElementById('registerButton').disabled = true;
             document.getElementById('loading').classList.add('active');
         }
     });
 });
-
-    </script>
+</script>
 </body>
 </html>
