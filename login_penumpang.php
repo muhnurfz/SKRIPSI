@@ -1,45 +1,33 @@
 <?php
-include('conn.php');
 session_start();
-$max_attempts = 3;
+include('conn.php');
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $email = $_POST['email'];
-    $password = md5($_POST['password']); // Assuming the password is stored as an MD5 hash
-    $attempts = isset($_SESSION['login_attempts']) ? $_SESSION['login_attempts'] : 0;
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $username = $_POST['username'];
+    $password = md5($_POST['password']); // Hash password with MD5
 
-    $conn = new mysqli('localhost', 'username', 'password', 'database_name');
-
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
-
-    $stmt = $conn->prepare("SELECT * FROM data_pnp WHERE email = ? AND password = ?");
-    $stmt->bind_param("ss", $email, $password);
+    // Prepare and execute SQL statement
+    $stmt = $conn->prepare("SELECT * FROM users WHERE username = ? AND password = ?");
+    $stmt->bind_param("ss", $username, $password);
     $stmt->execute();
     $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
-        $_SESSION['user'] = $email;
-        $_SESSION['login_attempts'] = 0;
-        header("Location: dashboard_pnp.php");
+        // Fetch user data
+        $user = $result->fetch_assoc();
+
+        // Set session variables
+        $_SESSION['username'] = $username;
+        $_SESSION['accessLevel'] = $user['accessLevel']; // Save accessLevel in session
+
+        header("Location: crud.php");
         exit();
     } else {
-        $attempts++;
-        $_SESSION['login_attempts'] = $attempts;
-
-        if ($attempts >= $max_attempts) {
-            header("Location: forgot_password.php");
-            exit();
-        } else {
-            $error = "Email or password is incorrect.";
-        }
+        $error = "Username atau password salah!";
     }
 
     $stmt->close();
-    $conn->close();
 }
-?>
 
 <!DOCTYPE html>
 <html lang="en">
