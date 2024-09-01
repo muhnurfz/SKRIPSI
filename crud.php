@@ -475,19 +475,17 @@ if ($stmt_count = $conn->prepare($sql_count_recent_edits)) {
             background-color: #f44336; /* Warna merah untuk error */
         }
         .card {
-    height: auto; /* Biarkan tinggi otomatis agar sesuai dengan konten */
-    max-width: 300px; /* Atur lebar maksimum sesuai kebutuhan */
-    margin: 0 auto; /* Pusatkan kartu jika diperlukan */
-}
-
-.card-body {
-    padding: 10px; /* Atur padding untuk menyesuaikan isi kartu */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    text-align: center;
-}
-
+            height: 100%;
+           
+        }
+        .card-body {
+            margin : 10px 0px 10px 0px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+        }
+        
     </style>
    
 </head>
@@ -643,8 +641,11 @@ if ($stmt_count = $conn->prepare($sql_count_recent_edits)) {
     </div>
 </nav>
 
-<div class="col-md-3" style="margin-bottom: 10px;">
-        <div class="card text-white bg-primary mb-3">
+<div class="container">
+<div class="row" style="margin: 10px 0;">
+    <!-- Card untuk Pesanan Baru dalam 2 Jam Terakhir -->
+    <div class="col-md-3" style="margin-bottom: 10px;">
+    <div class="card card-small text-white bg-primary mb-3">
             <div class="card-header">Pesanan baru (2 jam terakhir)</div>
             <div class="card-body">
                 <h5 class="card-title"><?= $count_new_orders; ?></h5>
@@ -687,11 +688,6 @@ if ($stmt_count = $conn->prepare($sql_count_recent_edits)) {
     </div>
 </div>
 
-
-<div class="container">
-<div class="row" style="margin: 10px 0;">
-    <!-- Card untuk Pesanan Baru dalam 2 Jam Terakhir -->
-   
     <!-- Search form container -->
     <div class="card p-4 mb-4">
         <div class="container-heading"><h2 class="mb-4">Lihat Daftar Penumpang</h2></div>
