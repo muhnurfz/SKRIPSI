@@ -241,7 +241,10 @@
       <div class="d-flex justify-content-end mb-3">
           </div>
           <div class="features">
-              <a href="login_penumpang.php" class="btn btn-outline-primary">Login</a>
+          <div style="display: flex; justify-content: flex-end;">
+    <a href="login_penumpang.php" class="btn btn-outline-primary">Login</a>
+</div>
+
         <div class="row">
             <div class="col-md-4">
                 <div class="feature-item">
