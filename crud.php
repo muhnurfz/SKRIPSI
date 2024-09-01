@@ -475,7 +475,7 @@ if ($stmt_count = $conn->prepare($sql_count_recent_edits)) {
             background-color: #f44336; /* Warna merah untuk error */
         }
         .card {
-            height: 50%;
+            height: 100%;
             margin : 10px 0px 10px 0px;
         }
         .card-body {
