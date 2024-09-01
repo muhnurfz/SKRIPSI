@@ -37,7 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $mail->SMTPAuth = true;
             $mail->Username = 'customer.service@tiket.agungindahtrav.com';
             $mail->Password = '1Customer.service';
-            $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS; // Gunakan metode enkripsi yang benar
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
             $mail->Port = 465;
 
             // Penerima dan pengirim
@@ -69,6 +69,42 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lupa Password</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Arial', sans-serif;
+        }
+        .card {
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .card-header {
+            background-color: #007bff;
+            color: white;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+            text-align: center;
+            font-size: 1.25rem;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+            transition: background-color 0.3s ease;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #004085;
+        }
+        .btn-secondary {
+            background-color: #6c757d;
+            border-color: #6c757d;
+            transition: background-color 0.3s ease;
+        }
+        .btn-secondary:hover {
+            background-color: #5a6268;
+            border-color: #4e555b;
+        }
+    </style>
 </head>
 <body>
     <div class="container mt-5">
@@ -87,9 +123,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <form action="" method="POST">
                             <div class="form-group">
                                 <label for="email">Alamat Email</label>
-                                <input type="email" name="email" class="form-control" id="email" required>
+                                <input type="email" name="email" class="form-control" id="email" placeholder="Masukkan alamat email Anda" required>
                             </div>
                             <button type="submit" class="btn btn-primary btn-block">Kirim Link Reset Password</button>
+                            <a href="login_penumpang.php" class="btn btn-secondary btn-block mt-2">Kembali ke Login</a>
                         </form>
                     </div>
                 </div>
