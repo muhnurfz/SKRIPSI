@@ -9,41 +9,37 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            background-image: url('your-background-image.jpg'); /* Specify your background image URL here */
-            background-size: cover;
-            background-position: center;
             display: flex;
             justify-content: center;
             align-items: center;
+            background-size: 50% 50%; /* width height */
             height: 100vh;
             margin: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         .login-container {
-            background-color: rgba(255, 255, 255, 0.85);
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.25);
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.15);
             width: 100%;
             max-width: 400px;
-            backdrop-filter: blur(10px);
         }
         .error-message {
             color: #dc3545;
             font-size: 0.9em;
             margin-bottom: 15px;
-            text-align: center;
         }
         .btn-primary, .btn-secondary {
             transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
-            border-radius: 30px;
         }
         .password-wrapper {
             position: relative;
         }
+
         .password-wrapper .form-control {
             padding-right: 40px; /* Space for the icon */
         }
+
         .password-wrapper #togglePassword {
             position: absolute;
             right: 10px;
@@ -53,16 +49,19 @@
             color: #007bff;
             font-size: 1.2em;
         }
+
         .btn-primary:hover, .btn-primary:focus {
             background-color: #004494; /* Darker shade */
             border-color: #003a75;
             box-shadow: 0 4px 6px rgba(0,0,0,0.2);
         }
+
         .btn-secondary:hover, .btn-secondary:focus {
             background-color: #5a6268; /* Darker shade */
             border-color: #4e555b;
             box-shadow: 0 4px 6px rgba(0,0,0,0.2);
         }
+
         .loading {
             display: none;
             text-align: center;
@@ -72,19 +71,28 @@
             display: block;
         }
         .form-control {
-            border-radius: 0.5rem;
+            border-radius: 0.25rem;
         }
-        h2 {
-            font-size: 1.8rem;
-            margin-bottom: 20px;
-            color: #333;
+
+        .links {
+            text-align: right;
+            margin-top: 10px;
+        }
+        .links a {
+            font-size: 0.9em;
+            color: #007bff;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .links a:hover {
+            color: #004494;
         }
     </style>
 </head>
 <body>
     <div class="login-container">
         <h2 class="text-center">Login</h2>
-        <?php if (isset($error)) echo "<p class='error-message'><i class='fas fa-exclamation-circle'></i> $error</p>"; ?>
+        <?php if (isset($error)) echo "<p class='error-message text-center'>$error</p>"; ?>
         <form id="loginForm" method="post">
             <div class="form-group">
                 <label for="username">Username</label>
@@ -96,6 +104,10 @@
                     <input type="password" class="form-control" id="password" name="password" required>
                     <i id="togglePassword" class="fas fa-eye"></i>
                 </div>
+            </div>
+            <div class="links">
+                <a href="register.php">Belum punya akun? Register</a><br>
+                <a href="forgot_password.php">Lupa password?</a>
             </div>
             <div class="form-group row">
                 <div class="col-md-6">
