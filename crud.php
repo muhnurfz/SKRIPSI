@@ -476,9 +476,10 @@ if ($stmt_count = $conn->prepare($sql_count_recent_edits)) {
         }
         .card {
             height: 100%;
-            margin : 10px 0px 10px 0px;
+           
         }
         .card-body {
+            margin : 10px 0px 10px 0px;
             display: flex;
             flex-direction: column;
             justify-content: center;
