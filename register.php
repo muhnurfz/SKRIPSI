@@ -49,7 +49,8 @@
         .password-wrapper .form-control {
             padding-right: 40px; /* Space for the icon */
         }
-        .password-wrapper #togglePassword {
+        .password-wrapper #togglePassword, 
+        .password-wrapper #toggleConfirmPassword {
             position: absolute;
             right: 10px;
             top: 50%;
@@ -117,20 +118,18 @@
             <label for="email">Email</label>
             <input type="email" class="form-control" id="email" name="email" required>
         </div>
-        <div class="form-group" style="position: relative;">
-                <label for="password">Password</label>
-                <div class="password-wrapper">
-                    <input type="password" class="form-control" id="password" name="password" required>
-                    <i id="togglePassword" class="fas fa-eye"></i>
-                </div>
+        <div class="form-group password-wrapper">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" id="password" name="password" required>
+            <i id="togglePassword" class="fas fa-eye"></i>
         </div>
-        <div class="form-group">
+        <div class="form-group password-wrapper">
             <label for="confirm_password">Confirm Password</label>
             <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
-            <i id="togglePassword" class="fas fa-eye"></i>
+            <i id="toggleConfirmPassword" class="fas fa-eye"></i>
             <small id="passwordError" class="form-text text-danger" style="display: none;">Passwords do not match.</small>
         </div>
-
+    
         <div class="form-group row">
             <div class="col-md-6">
                 <a class="btn btn-secondary btn-block" href="index.php">Back</a>
@@ -158,7 +157,7 @@
 <script src="https://kit.fontawesome.com/a076d05399.js"></script> <!-- Load FontAwesome -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Toggle Password Visibility for Password
+    // Toggle Password Visibility
     document.getElementById('togglePassword').addEventListener('click', function () {
         const passwordField = document.getElementById('password');
         const toggleIcon = document.getElementById('togglePassword');
@@ -174,7 +173,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Toggle Password Visibility for Confirm Password
     document.getElementById('toggleConfirmPassword').addEventListener('click', function () {
         const confirmPasswordField = document.getElementById('confirm_password');
         const toggleIcon = document.getElementById('toggleConfirmPassword');
@@ -217,7 +215,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
-
 </script>
 </body>
 </html>
