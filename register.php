@@ -173,32 +173,23 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Form Submission and Validation
-    document.getElementById('registerForm').addEventListener('submit', function(event) {
-        const password = document.getElementById('password').value;
-        const confirmPassword = document.getElementById('confirm_password').value;
-        const phone = document.getElementById('passenger_phone').value;
-        const passwordError = document.getElementById('passwordError');
-        const phoneError = document.getElementById('phoneError');
-        const phoneRegex = /^\+?\d{10,15}$/; // Regex untuk format nomor telepon internasional
+ // Form Submission and Validation
+document.getElementById('registerForm').addEventListener('submit', function(event) {
+    const password = document.getElementById('password').value;
+    const confirmPassword = document.getElementById('confirm_password').value;
+    const passwordError = document.getElementById('passwordError');
 
-        // Reset error messages
-        passwordError.style.display = 'none';
-        phoneError.style.display = 'none';
+    // Reset error messages
+    passwordError.style.display = 'none';
 
-        if (password !== confirmPassword) {
-            event.preventDefault(); // Prevent form submission
-            passwordError.style.display = 'block'; // Show error message
-        }
-
-        if (!phoneRegex.test(phone)) {
-            event.preventDefault(); // Prevent form submission
-            phoneError.style.display = 'block'; // Show error message
-        } else {
-            document.getElementById('registerButton').disabled = true;
-            document.getElementById('loading').classList.add('active');
-        }
-    });
+    if (password !== confirmPassword) {
+        event.preventDefault(); // Prevent form submission
+        passwordError.style.display = 'block'; // Show error message
+    } else {
+        document.getElementById('registerButton').disabled = true;
+        document.getElementById('loading').classList.add('active');
+    }
+});
 });
 </script>
 </body>
