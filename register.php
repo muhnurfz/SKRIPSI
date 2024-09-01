@@ -105,7 +105,7 @@
     <?php if (isset($_GET['success'])) echo "<p class='success-message'><i class='fas fa-check-circle'></i> " . htmlspecialchars($_GET['success']) . "</p>"; ?>
     <form id="registerForm" method="post" action="register_process.php">
         <div class="form-group">
-            <label for="username">Username</label>
+            <label for="username">Nama</label>
             <input type="text" class="form-control" id="username" name="username" required>
         </div>
         <div class="form-group">
@@ -125,7 +125,7 @@
                 </div>
         </div>
         <div class="form-group">
-            <label for="confirm_password">Confirm Password</label>
+            <label for="confirm_password">Konfirmasi password</label>
             <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
             <small id="passwordError" class="form-text text-danger" style="display: none;">Passwords do not match.</small>
         </div>
@@ -135,7 +135,7 @@
                 <a class="btn btn-secondary btn-block" href="index.php">Back</a>
             </div>
             <div class="col-md-6">
-                <button type="submit" class="btn btn-primary btn-block" id="registerButton">Register</button>
+                <button type="submit" class="btn btn-primary btn-block" id="registerButton">Registrasi</button>
             </div>
         </div>
     </form>
@@ -146,7 +146,7 @@
         </div>
     </div>
     <div class="form-footer">
-        <p>Already have an account?<a href="login.php"> Login</a></p>
+        <p>Sudah punya akun?<a href="login.php"> Login</a></p>
     </div>
 </div>
 

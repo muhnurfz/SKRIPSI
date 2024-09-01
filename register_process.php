@@ -54,13 +54,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->bind_param("ssss", $kode_penumpang, $passenger_name, $passenger_phone, $email);
 
         if ($stmt->execute()) {
-            header('Location: register.php?success=Registration successful!');
+            header('Location: register.php?success=Registrasi berhasil!');
         } else {
             header('Location: register.php?error=Terjadi kesalahan: ' . $stmt->error);
         }
         $stmt->close();
     } else {
-        header('Location: register.php?error=Semua field harus diisi dan password harus cocok!');
+        header('Location: register.php?error=Mohon isi data dengan benar!');
     }
 } else {
     header('Location: register.php?error=Invalid request method.');
