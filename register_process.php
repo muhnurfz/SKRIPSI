@@ -47,11 +47,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!empty($passenger_name) && !empty($passenger_phone) && !empty($email) && !empty($password) && $password === $confirm_password) {
         $kode_penumpang = getUniqueKodePenumpang($conn, $passenger_name);
 
-        $hashed_password = md5($password); // Pastikan hashing ini aman sesuai kebutuhan Anda
+        // Hash the password
+        $hashed_password = md5($password); // Consider using a more secure hashing method
 
-        $sql = "INSERT INTO data_pnp (kode_penumpang, passenger_name, passenger_phone, email) VALUES (?, ?, ?, ?)";
+        // Insert the data into the database including the hashed password
+        $sql = "INSERT INTO data_pnp (kode_penumpang, passenger_name, passenger_phone, email, password) VALUES (?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("ssss", $kode_penumpang, $passenger_name, $passenger_phone, $email);
+        $stmt->bind_param("sssss", $kode_penumpang, $passenger_name, $passenger_phone, $email, $hashed_password);
 
         if ($stmt->execute()) {
             header('Location: register.php?success=Registrasi berhasil!');

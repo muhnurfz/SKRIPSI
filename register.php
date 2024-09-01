@@ -127,7 +127,7 @@
         <div class="form-group">
             <label for="confirm_password">Konfirmasi password</label>
             <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
-            <small id="passwordError" class="form-text text-danger" style="display: none;">Passwords do not match.</small>
+            <small id="passwordError" class="form-text text-danger" style="display: none;">Password tidak sama.</small>
         </div>
 
         <div class="form-group row">
@@ -146,7 +146,7 @@
         </div>
     </div>
     <div class="form-footer">
-        <p>Sudah punya akun?<a href="login.php"> Login</a></p>
+        <p>Sudah punya akun?<a href="login_penumpang.php"> Login</a></p>
     </div>
 </div>
 
