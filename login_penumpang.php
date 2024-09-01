@@ -90,36 +90,28 @@
         .form-footer a:hover {
             text-decoration: underline;
         }
-        .forgot-password {
-            position: absolute;
-            right: 0;
-            bottom: -30px; /* Adjust as needed */
-            font-size: 0.9em;
-            color: #007bff;
-            text-decoration: none;
-        }
-        .forgot-password:hover {
-            text-decoration: underline;
-        }
     </style>
 </head>
 <body>
     <div class="login-container">
         <h2 class="text-center">Login</h2>
         <?php if (isset($error)) echo "<p class='error-message'><i class='fas fa-exclamation-circle'></i> $error</p>"; ?>
-        <form id="loginForm" method="post" style="position: relative;">
+        <form id="loginForm" method="post">
             <div class="form-group">
                 <label for="username">Username</label>
                 <input type="text" class="form-control" id="username" name="username" required>
             </div>
-            <div class="form-group" style="position: relative;">
+            <div class="form-group">
                 <label for="password">Password</label>
                 <div class="password-wrapper">
                     <input type="password" class="form-control" id="password" name="password" required>
                     <i id="togglePassword" class="fas fa-eye"></i>
                 </div>
-                <a href="forgot-password.php" class="forgot-password">Lupa password?</a>
             </div>
+            <div><a href="forgot-password.php">Lupa password?</a></div>
+            <div class="form-footer">
+            <p>Belum punya akun?<a href="register.php">Register</a></p>
+        </div>
             <div class="form-group row">
                 <div class="col-md-6">
                     <a class="btn btn-secondary btn-block" href="index.php">Kembali</a>
@@ -134,9 +126,7 @@
                 <span class="sr-only">Loading...</span>
             </div>
         </div>
-        <div class="form-footer">
-            <p><a href="register.php">Register</a></p>
-        </div>
+       
     </div>
 
     <!-- Bootstrap JS and dependencies -->
