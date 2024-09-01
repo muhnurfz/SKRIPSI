@@ -44,21 +44,30 @@
             border-radius: 30px;
         }
         .password-wrapper {
-            position: relative;
-        }
-        .password-wrapper .form-control {
-            padding-right: 40px; /* Space for the icon */
-        }
-        .password-wrapper #togglePassword, 
-        .password-wrapper #toggleConfirmPassword {
-            position: absolute;
-            right: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            cursor: pointer;
-            color: #007bff;
-            font-size: 1.2em;
-        }
+    position: relative;
+}
+
+.password-wrapper .form-control {
+    padding-right: 40px; /* Cukup ruang untuk ikon */
+    border-radius: 0.5rem;
+}
+
+.password-wrapper #togglePassword, 
+.password-wrapper #toggleConfirmPassword {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #007bff;
+    font-size: 1.2em;
+    pointer-events: none; /* Prevent the icon from receiving click events */
+}
+
+.password-wrapper .form-control {
+    padding-right: 40px; /* Ensure there is enough space for the icon */
+}
+
 
         .btn-primary:hover, .btn-primary:focus {
             background-color: #004494; /* Darker shade */
