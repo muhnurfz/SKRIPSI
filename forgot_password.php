@@ -9,6 +9,7 @@ require 'PHPMailer/src/PHPMailer.php';
 require 'PHPMailer/src/SMTP.php';
 
 $message = '';
+$alertClass = '';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
@@ -26,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $kode_penumpang = $row['kode_penumpang'];
 
         // Buat link reset password
-        $reset_link = "https://www.example.com/reset_pass_pnp.php?kode_penumpang=" . urlencode($kode_penumpang);
+        $reset_link = "https://www.tiket.agungindahtrav.com/reset_pass_pnp.php?kode_penumpang=" . urlencode($kode_penumpang);
 
         $mail = new PHPMailer(true);
 
@@ -35,8 +36,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $mail->isSMTP();
             $mail->Host = 'smtp.hostinger.com';
             $mail->SMTPAuth = true;
-            $mail->Username = 'customer.service@tiket.agungindahtrav.com';
-            $mail->Password = '1Customer.service';
+            $mail->Username = 'customer.service@tiket.agungindahtrav.com'; // Ganti dengan email Anda
+            $mail->Password = '1Customer.service'; // Ganti dengan password email Anda
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
             $mail->Port = 465;
 
@@ -53,14 +54,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Kirim email
             $mail->send();
             $message = 'Link reset password telah dikirim ke email Anda.';
+            $alertClass = 'alert-success';
         } catch (Exception $e) {
             $message = "Email tidak dapat dikirim. Mailer Error: {$mail->ErrorInfo}";
+            $alertClass = 'alert-danger';
         }
     } else {
         $message = 'Email tidak ditemukan di database kami.';
+        $alertClass = 'alert-danger';
     }
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -132,7 +137,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         .form-footer a:hover {
             text-decoration: underline;
         }
-        .alert-info {
+        .alert {
             text-align: center;
         }
     </style>
@@ -141,7 +146,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <div class="forgot-password-container">
     <h2 class="text-center">Lupa Password</h2>
     <?php if (!empty($message)): ?>
-        <div class="alert alert-info">
+        <div class="alert <?= $alertClass; ?>">
             <?= $message; ?>
         </div>
     <?php endif; ?>
