@@ -3,11 +3,23 @@ include('conn.php');
 
 // Generate kode penumpang
 function generateKodePenumpang($name) {
+    // 1. Get the first two letters of the passenger's name
     $nameParts = explode(' ', $name);
     $initials = strtoupper(substr($nameParts[0], 0, 2));
-    $monthYear = date('mY');
-    $randomDigits = sprintf("%02d", mt_rand(0, 99));
-    $kode_penumpang = $initials . $monthYear . $randomDigits;
+    
+    // 2. Get the current month (MM) and year (YY)
+    $month = date('m'); // MM format
+    $year = substr(date('Y'), -2); // YY format
+    
+    // 3. Generate 2 random characters (uppercase letters and numbers)
+    $randomChars = '';
+    $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    for ($i = 0; $i < 2; $i++) {
+        $randomChars .= $characters[mt_rand(0, strlen($characters) - 1)];
+    }
+    
+    // Combine all parts into the final kode_penumpang
+    $kode_penumpang = $initials . $month . $year . $randomChars;
     return $kode_penumpang;
 }
 
