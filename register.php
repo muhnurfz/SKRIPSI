@@ -44,30 +44,20 @@
             border-radius: 30px;
         }
         .password-wrapper {
-    position: relative;
-}
-
-.password-wrapper .form-control {
-    padding-right: 40px; /* Cukup ruang untuk ikon */
-    border-radius: 0.5rem;
-}
-
-.password-wrapper #togglePassword, 
-.password-wrapper #toggleConfirmPassword {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    cursor: pointer;
-    color: #007bff;
-    font-size: 1.2em;
-    pointer-events: none; /* Prevent the icon from receiving click events */
-}
-
-.password-wrapper .form-control {
-    padding-right: 40px; /* Ensure there is enough space for the icon */
-}
-
+            position: relative;
+        }
+        .password-wrapper .form-control {
+            padding-right: 40px; /* Space for the icon */
+        }
+        .password-wrapper #togglePassword {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #007bff;
+            font-size: 1.2em;
+        }
 
         .btn-primary:hover, .btn-primary:focus {
             background-color: #004494; /* Darker shade */
@@ -128,19 +118,18 @@
             <input type="email" class="form-control" id="email" name="email" required>
         </div>
         <div class="form-group" style="position: relative;">
-        <div class="form-group password-wrapper">
-    <label for="password">Password</label>
-    <input type="password" class="form-control" id="password" name="password" required>
-    <i id="togglePasswordIcon" class="fas fa-eye"></i>
-</div>
+                <label for="password">Password</label>
+                <div class="password-wrapper">
+                    <input type="password" class="form-control" id="password" name="password" required>
+                    <i id="togglePassword" class="fas fa-eye"></i>
+                </div>
+        </div>
+        <div class="form-group">
+            <label for="confirm_password">Confirm Password</label>
+            <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
+            <small id="passwordError" class="form-text text-danger" style="display: none;">Passwords do not match.</small>
+        </div>
 
-<div class="form-group password-wrapper">
-    <label for="confirm_password">Confirm Password</label>
-    <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
-    <i id="toggleConfirmPasswordIcon" class="fas fa-eye"></i>
-    <small id="passwordError" class="form-text text-danger" style="display: none;">Passwords do not match.</small>
-</div>
-    
         <div class="form-group row">
             <div class="col-md-6">
                 <a class="btn btn-secondary btn-block" href="index.php">Back</a>
@@ -168,11 +157,10 @@
 <script src="https://kit.fontawesome.com/a076d05399.js"></script> <!-- Load FontAwesome -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    document.addEventListener('DOMContentLoaded', function() {
     // Toggle Password Visibility
-    document.getElementById('togglePasswordIcon').addEventListener('click', function () {
+    document.getElementById('togglePassword').addEventListener('click', function () {
         const passwordField = document.getElementById('password');
-        const toggleIcon = document.getElementById('togglePasswordIcon');
+        const toggleIcon = document.getElementById('togglePassword');
 
         if (passwordField.type === 'password') {
             passwordField.type = 'text';
@@ -184,22 +172,6 @@ document.addEventListener('DOMContentLoaded', function() {
             toggleIcon.classList.add('fa-eye');
         }
     });
-
-    document.getElementById('toggleConfirmPasswordIcon').addEventListener('click', function () {
-        const confirmPasswordField = document.getElementById('confirm_password');
-        const toggleIcon = document.getElementById('toggleConfirmPasswordIcon');
-
-        if (confirmPasswordField.type === 'password') {
-            confirmPasswordField.type = 'text';
-            toggleIcon.classList.remove('fa-eye');
-            toggleIcon.classList.add('fa-eye-slash');
-        } else {
-            confirmPasswordField.type = 'password';
-            toggleIcon.classList.remove('fa-eye-slash');
-            toggleIcon.classList.add('fa-eye');
-        }
-    });
-});
 
     // Form Submission and Validation
     document.getElementById('registerForm').addEventListener('submit', function(event) {
