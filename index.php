@@ -239,9 +239,9 @@
 <div class="container">
       <!-- Tombol Login di kanan atas -->
       <div class="d-flex justify-content-end mb-3">
-        <a href="login_penumpang.php" class="btn btn-outline-primary">Login</a>
-    </div>
-    <div class="features">
+          </div>
+          <div class="features">
+              <a href="login_penumpang.php" class="btn btn-outline-primary">Login</a>
         <div class="row">
             <div class="col-md-4">
                 <div class="feature-item">
