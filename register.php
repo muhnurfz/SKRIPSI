@@ -168,10 +168,9 @@ $conn->close();
                 <input type="text" class="form-control" id="username" name="username" required>
             </div>
             <div class="form-group">
-                <label for="passenger_phone">Nomor telepon</label>
-                <input type="number" class="form-control" id="passenger_phone" name="passenger_phone" required>
+            <label for="passenger_phone">Nomor Telepon</label>
+            <input type="text" class="form-control" id="passenger_phone" name="passenger_phone" placeholder="+62 812 3456 7890" required>
             </div>
-
             <div class="form-group">
                 <label for="email">Email</label>
                 <input type="email" class="form-control" id="email" name="email" required>
