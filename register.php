@@ -49,8 +49,7 @@
         .password-wrapper .form-control {
             padding-right: 40px; /* Space for the icon */
         }
-        .password-wrapper #togglePassword, 
-        .password-wrapper #toggleConfirmPassword {
+        .password-wrapper #togglePassword {
             position: absolute;
             right: 10px;
             top: 50%;
@@ -128,7 +127,6 @@
         <div class="form-group">
             <label for="confirm_password">Confirm Password</label>
             <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
-            <i id="togglePassword" class="fas fa-eye"></i>
             <small id="passwordError" class="form-text text-danger" style="display: none;">Passwords do not match.</small>
         </div>
     
@@ -151,6 +149,7 @@
         <p>Already have an account?<a href="login.php"> Login</a></p>
     </div>
 </div>
+
 <!-- Bootstrap JS and dependencies -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
@@ -169,21 +168,6 @@ document.addEventListener('DOMContentLoaded', function() {
             toggleIcon.classList.add('fa-eye-slash');
         } else {
             passwordField.type = 'password';
-            toggleIcon.classList.remove('fa-eye-slash');
-            toggleIcon.classList.add('fa-eye');
-        }
-    });
-
-    document.getElementById('toggleConfirmPassword').addEventListener('click', function () {
-        const confirmPasswordField = document.getElementById('confirm_password');
-        const toggleIcon = document.getElementById('toggleConfirmPassword');
-
-        if (confirmPasswordField.type === 'password') {
-            confirmPasswordField.type = 'text';
-            toggleIcon.classList.remove('fa-eye');
-            toggleIcon.classList.add('fa-eye-slash');
-        } else {
-            confirmPasswordField.type = 'password';
             toggleIcon.classList.remove('fa-eye-slash');
             toggleIcon.classList.add('fa-eye');
         }
