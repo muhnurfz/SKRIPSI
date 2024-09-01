@@ -242,7 +242,7 @@
           </div>
           <div class="features">
           <div style="display: flex; justify-content: flex-end;">
-    <a href="login_penumpang.php" class="btn btn-outline-primary">Login</a>
+    <p>Sudah punya akun? silahkan</p><a href="login_penumpang.php" class="btn btn-outline-primary">Login</a>
 </div>
 
         <div class="row">
