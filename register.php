@@ -1,63 +1,3 @@
-<?php
-include('conn.php');
-
-// Generate kode penumpang
-function generateKodePenumpang($name) {
-    $nameParts = explode(' ', $name);
-    $initials = strtoupper(substr($nameParts[0], 0, 2));
-    $monthYear = date('mY');
-    $randomDigits = sprintf("%02d", mt_rand(0, 99));
-    $kode_penumpang = $initials . $monthYear . $randomDigits;
-    return $kode_penumpang;
-}
-
-// Check if kode_penumpang exists
-function getUniqueKodePenumpang($conn, $name) {
-    do {
-        $kode_penumpang = generateKodePenumpang($name);
-        $sql = "SELECT id FROM data_pnp WHERE kode_penumpang = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("s", $kode_penumpang);
-        $stmt->execute();
-        $stmt->store_result();
-    } while ($stmt->num_rows > 0);
-    $stmt->close();
-    return $kode_penumpang;
-}
-
-$error = '';
-$success = '';
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $passenger_name = $_POST['username'];
-    $passenger_phone = $_POST['passenger_phone'];
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-    $confirm_password = $_POST['confirm_password'];
-
-    if (!empty($passenger_name) && !empty($passenger_phone) && !empty($email) && !empty($password) && $password === $confirm_password) {
-        $kode_penumpang = getUniqueKodePenumpang($conn, $passenger_name);
-
-        $hashed_password = md5($password); // Pastikan hashing ini aman sesuai kebutuhan Anda
-
-        $sql = "INSERT INTO data_pnp (kode_penumpang, passenger_name, passenger_phone, email, password) VALUES (?, ?, ?, ?, ?)";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("sssss", $kode_penumpang, $passenger_name, $passenger_phone, $email, $hashed_password);
-
-        if ($stmt->execute()) {
-            $success = "Registration successful!";
-        } else {
-            $error = "Terjadi kesalahan: " . $stmt->error;
-        }
-        $stmt->close();
-    } else {
-        $error = "Semua field harus diisi dan password harus cocok!";
-    }
-}
-
-$conn->close();
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -160,9 +100,9 @@ $conn->close();
 <body>
 <div class="register-container">
     <h2 class="text-center">Register</h2>
-    <?php if ($error) echo "<p class='error-message'><i class='fas fa-exclamation-circle'></i> " . htmlspecialchars($error) . "</p>"; ?>
-    <?php if ($success) echo "<p class='success-message'><i class='fas fa-check-circle'></i> " . htmlspecialchars($success) . "</p>"; ?>
-    <form id="registerForm" method="post" action="">
+    <?php if (isset($_GET['error'])) echo "<p class='error-message'><i class='fas fa-exclamation-circle'></i> " . htmlspecialchars($_GET['error']) . "</p>"; ?>
+    <?php if (isset($_GET['success'])) echo "<p class='success-message'><i class='fas fa-check-circle'></i> " . htmlspecialchars($_GET['success']) . "</p>"; ?>
+    <form id="registerForm" method="post" action="register_process.php">
         <div class="form-group">
             <label for="username">Username</label>
             <input type="text" class="form-control" id="username" name="username" required>
