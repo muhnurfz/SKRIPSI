@@ -71,22 +71,23 @@ $conn->close();
             transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
         }
         .password-wrapper {
-            position: relative;
-        }
+    position: relative;
+}
 
-        .password-wrapper .form-control {
-            padding-right: 40px; /* Space for the icon */
-        }
+.password-wrapper .form-control {
+    padding-right: 40px; /* Space for the icon */
+}
 
-        .password-wrapper #togglePassword {
-            position: absolute;
-            right: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            cursor: pointer;
-            color: #007bff;
-            font-size: 1.2em;
-        }
+.password-wrapper #togglePassword {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #007bff;
+    font-size: 1.2em;
+}
+
 
         .btn-primary:hover, .btn-primary:focus {
             background-color: #004494; /* Darker shade */
