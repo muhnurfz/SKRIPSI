@@ -79,6 +79,17 @@
             margin-bottom: 20px;
             color: #333;
         }
+        .form-footer {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .form-footer a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .form-footer a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
@@ -110,6 +121,9 @@
             <div class="spinner-border text-primary" role="status">
                 <span class="sr-only">Loading...</span>
             </div>
+        </div>
+        <div class="form-footer">
+            <p><a href="register.php">Register</a> | <a href="forgot-password.php">Forgot Password?</a></p>
         </div>
     </div>
 
