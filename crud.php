@@ -642,7 +642,7 @@ if ($stmt_count = $conn->prepare($sql_count_recent_edits)) {
 </nav>
 
 <div class="container">
-<div class="row">
+<div class="row" style="margin : 10px 0px 10px 0x;">
     <!-- Card untuk Pesanan Baru dalam 2 Jam Terakhir -->
     <div class="col-md-3">
         <div class="card text-white bg-primary mb-3">
