@@ -129,16 +129,17 @@
         </div>
         <div class="form-group" style="position: relative;">
         <div class="form-group password-wrapper">
-            <label for="password">Password</label>
-            <input type="password" class="form-control" id="password" name="password" required>
-            <i id="togglePassword" class="fas fa-eye"></i>
-        </div>
-        <div class="form-group password-wrapper">
-            <label for="confirm_password">Confirm Password</label>
-            <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
-            <i id="toggleConfirmPassword" class="fas fa-eye"></i>
-            <small id="passwordError" class="form-text text-danger" style="display: none;">Passwords do not match.</small>
-        </div>
+    <label for="password">Password</label>
+    <input type="password" class="form-control" id="password" name="password" required>
+    <i id="togglePasswordIcon" class="fas fa-eye"></i>
+</div>
+
+<div class="form-group password-wrapper">
+    <label for="confirm_password">Confirm Password</label>
+    <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
+    <i id="toggleConfirmPasswordIcon" class="fas fa-eye"></i>
+    <small id="passwordError" class="form-text text-danger" style="display: none;">Passwords do not match.</small>
+</div>
     
         <div class="form-group row">
             <div class="col-md-6">
@@ -167,10 +168,11 @@
 <script src="https://kit.fontawesome.com/a076d05399.js"></script> <!-- Load FontAwesome -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function() {
     // Toggle Password Visibility
-    document.getElementById('togglePassword').addEventListener('click', function () {
+    document.getElementById('togglePasswordIcon').addEventListener('click', function () {
         const passwordField = document.getElementById('password');
-        const toggleIcon = document.getElementById('togglePassword');
+        const toggleIcon = document.getElementById('togglePasswordIcon');
 
         if (passwordField.type === 'password') {
             passwordField.type = 'text';
@@ -183,9 +185,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    document.getElementById('toggleConfirmPassword').addEventListener('click', function () {
+    document.getElementById('toggleConfirmPasswordIcon').addEventListener('click', function () {
         const confirmPasswordField = document.getElementById('confirm_password');
-        const toggleIcon = document.getElementById('toggleConfirmPassword');
+        const toggleIcon = document.getElementById('toggleConfirmPasswordIcon');
 
         if (confirmPasswordField.type === 'password') {
             confirmPasswordField.type = 'text';
@@ -197,6 +199,7 @@ document.addEventListener('DOMContentLoaded', function() {
             toggleIcon.classList.add('fa-eye');
         }
     });
+});
 
     // Form Submission and Validation
     document.getElementById('registerForm').addEventListener('submit', function(event) {
