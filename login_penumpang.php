@@ -101,17 +101,16 @@
                 <label for="username">Username</label>
                 <input type="text" class="form-control" id="username" name="username" required>
             </div>
-            <div class="form-group">
+            <div class="form-group" style="position: relative;">
                 <label for="password">Password</label>
                 <div class="password-wrapper">
                     <input type="password" class="form-control" id="password" name="password" required>
                     <i id="togglePassword" class="fas fa-eye"></i>
                 </div>
+                <div style="text-align: right;">
+                    <a href="forgot-password.php" style="font-size: 0.9em; color: #007bff; text-decoration: none;">Lupa password?</a>
+                </div>
             </div>
-            <div><a href="forgot-password.php">Lupa password?</a></div>
-            <div class="form-footer">
-            <p>Belum punya akun?<a href="register.php">Register</a></p>
-        </div>
             <div class="form-group row">
                 <div class="col-md-6">
                     <a class="btn btn-secondary btn-block" href="index.php">Kembali</a>
@@ -126,7 +125,9 @@
                 <span class="sr-only">Loading...</span>
             </div>
         </div>
-       
+        <div class="form-footer">
+            <p><a href="register.php">Register</a></p>
+        </div>
     </div>
 
     <!-- Bootstrap JS and dependencies -->
