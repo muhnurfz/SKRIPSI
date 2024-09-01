@@ -65,7 +65,7 @@ $result = $stmt->get_result();
                     <a class="nav-link" href="#">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="logout.php">Logout</a>
+                    <a class="nav-link" href="logout_penumpang.php">Logout</a>
                 </li>
             </ul>
         </div>
