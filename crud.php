@@ -474,18 +474,18 @@ if ($stmt_count = $conn->prepare($sql_count_recent_edits)) {
         .notification.error {
             background-color: #f44336; /* Warna merah untuk error */
         }
-        .card {
-            height: 100%;
-           
-        }
-        .card-body {
-            margin : 10px 0px 10px 0px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            text-align: center;
-        }
-        
+        .card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px; /* Jarak antara kartu */
+}
+
+.card {
+    flex: 1 1 200px; /* Ukuran fleksibel dengan lebar minimum */
+    max-width: 300px;
+    margin: 10px; /* Jarak antara kartu */
+}
+
     </style>
    
 </head>
