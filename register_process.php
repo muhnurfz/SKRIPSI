@@ -3,22 +3,15 @@ include('conn.php');
 
 // Generate kode penumpang
 function generateKodePenumpang($name) {
-    // 1. Get the first two letters of the passenger's name
     $nameParts = explode(' ', $name);
     $initials = strtoupper(substr($nameParts[0], 0, 2));
-    
-    // 2. Get the current month (MM) and year (YY)
     $month = date('m'); // MM format
     $year = substr(date('Y'), -2); // YY format
-    
-    // 3. Generate 2 random characters (uppercase letters and numbers)
     $randomChars = '';
     $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
     for ($i = 0; $i < 2; $i++) {
         $randomChars .= $characters[mt_rand(0, strlen($characters) - 1)];
     }
-    
-    // Combine all parts into the final kode_penumpang
     $kode_penumpang = $initials . $month . $year . $randomChars;
     return $kode_penumpang;
 }
@@ -37,6 +30,18 @@ function getUniqueKodePenumpang($conn, $name) {
     return $kode_penumpang;
 }
 
+// Check if email already exists
+function emailExists($conn, $email) {
+    $sql = "SELECT id FROM data_pnp WHERE email = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $stmt->store_result();
+    $exists = $stmt->num_rows > 0;
+    $stmt->close();
+    return $exists;
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $passenger_name = $_POST['username'];
     $passenger_phone = $_POST['passenger_phone'];
@@ -44,23 +49,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = $_POST['password'];
     $confirm_password = $_POST['confirm_password'];
 
-    if (!empty($passenger_name) && !empty($passenger_phone) && !empty($email) && !empty($password) && $password === $confirm_password) {
-        $kode_penumpang = getUniqueKodePenumpang($conn, $passenger_name);
+    if (!empty($passenger_name) && !empty($passenger_phone) && !empty($email) && !empty($password)) {
+        if ($password === $confirm_password) {
+            if (!emailExists($conn, $email)) {
+                $kode_penumpang = getUniqueKodePenumpang($conn, $passenger_name);
 
-        // Hash the password
-        $hashed_password = md5($password); // Consider using a more secure hashing method
+                // Hash the password
+                $hashed_password = md5($password); // Consider using a more secure hashing method
 
-        // Insert the data into the database including the hashed password
-        $sql = "INSERT INTO data_pnp (kode_penumpang, passenger_name, passenger_phone, email, password) VALUES (?, ?, ?, ?, ?)";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("sssss", $kode_penumpang, $passenger_name, $passenger_phone, $email, $hashed_password);
+                // Insert the data into the database including the hashed password
+                $sql = "INSERT INTO data_pnp (kode_penumpang, passenger_name, passenger_phone, email, password) VALUES (?, ?, ?, ?, ?)";
+                $stmt = $conn->prepare($sql);
+                $stmt->bind_param("sssss", $kode_penumpang, $passenger_name, $passenger_phone, $email, $hashed_password);
 
-        if ($stmt->execute()) {
-            header('Location: register.php?success=Registrasi berhasil!');
+                if ($stmt->execute()) {
+                    header('Location: register.php?success=Registrasi berhasil!');
+                } else {
+                    header('Location: register.php?error=Terjadi kesalahan: ' . $stmt->error);
+                }
+                $stmt->close();
+            } else {
+                header('Location: register.php?error=Email sudah digunakan!');
+            }
         } else {
-            header('Location: register.php?error=Terjadi kesalahan: ' . $stmt->error);
+            header('Location: register.php?error=Password dan konfirmasi password tidak cocok!');
         }
-        $stmt->close();
     } else {
         header('Location: register.php?error=Mohon isi data dengan benar!');
     }
