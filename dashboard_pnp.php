@@ -8,9 +8,15 @@ if (!isset($_SESSION['email'])) {
     exit();
 }
 
-// Ambil data penumpang dari tabel data_pnp
-$sql = "SELECT * FROM data_pnp";
-$result = $conn->query($sql);
+// Ambil email pengguna yang login
+$logged_in_email = $_SESSION['email'];
+
+// Ambil data penumpang dari tabel data_pnp yang sesuai dengan email yang login
+$sql = "SELECT * FROM data_pnp WHERE email = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("s", $logged_in_email);
+$stmt->execute();
+$result = $stmt->get_result();
 
 ?>
 <!DOCTYPE html>
@@ -41,18 +47,34 @@ $result = $conn->query($sql);
         .btn-primary, .btn-danger {
             border-radius: 30px;
         }
-        .logout-btn {
-            float: right;
-            margin-top: 8px;
+        .navbar {
+            margin-bottom: 20px;
         }
     </style>
 </head>
 <body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Dashboard Penumpang</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="logout.php">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
     <div class="container">
         <div class="table-wrapper">
             <div class="table-title">
-                <h2>Dashboard Penumpang</h2>
-                <a href="logout.php" class="btn btn-danger logout-btn">Logout</a>
+                <h2>Data Penumpang</h2>
             </div>
             <table class="table table-bordered table-striped">
                 <thead>
