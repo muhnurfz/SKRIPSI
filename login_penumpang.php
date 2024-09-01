@@ -122,46 +122,43 @@
             </div>
             <div class="form-group row">
                 <div class="col-md-6">
-                    <a class="btn btn-secondary btn-block" href="index.php">Kembali</a>
+                <a class="btn btn-secondary btn-block" href="index.php">Cancel</a>
                 </div>
                 <div class="col-md-6">
-                    <button type="submit" class="btn btn-primary btn-block" id="loginButton">Login</button>
+                    <button type="submit" class="btn btn-primary btn-block">Login</button>
                 </div>
             </div>
         </form>
-        <div id="loading" class="loading">
-            <div class="spinner-border text-primary" role="status">
-                <span class="sr-only">Loading...</span>
-            </div>
+        <div class="loading" id="loading">
+            <i class="fas fa-spinner fa-spin"></i> Processing...
         </div>
     </div>
 
-    <!-- Bootstrap JS and dependencies -->
+    <!-- jQuery and Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="https://kit.fontawesome.com/a076d05399.js"></script> <!-- Load FontAwesome -->
+
+    <!-- Script to toggle password visibility -->
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('loginForm').addEventListener('submit', function() {
-                document.getElementById('loginButton').disabled = true;
-                document.getElementById('loading').classList.add('active');
-            });
+        document.getElementById('togglePassword').addEventListener('click', function () {
+            const passwordField = document.getElementById('password');
+            const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordField.setAttribute('type', type);
+            this.classList.toggle('fa-eye-slash');
+        });
 
-            document.getElementById('togglePassword').addEventListener('click', function () {
-                const passwordField = document.getElementById('password');
-                const toggleIcon = document.getElementById('togglePassword');
-
-                if (passwordField.type === 'password') {
-                    passwordField.type = 'text';
-                    toggleIcon.classList.remove('fa-eye');
-                    toggleIcon.classList.add('fa-eye-slash');
-                } else {
-                    passwordField.type = 'password';
-                    toggleIcon.classList.remove('fa-eye-slash');
-                    toggleIcon.classList.add('fa-eye');
-                }
-            });
+        // Example script for form submission with loading indicator
+        document.getElementById('loginForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+            document.getElementById('loading').classList.add('active');
+            
+            // Simulate form submission with a timeout
+            setTimeout(() => {
+                document.getElementById('loading').classList.remove('active');
+                // Normally, you would submit the form here
+                // this.submit();
+            }, 2000);
         });
     </script>
 </body>
