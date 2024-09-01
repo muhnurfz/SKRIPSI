@@ -127,6 +127,7 @@
         <div class="form-group">
             <label for="confirm_password">Confirm Password</label>
             <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
+            <i id="togglePassword" class="fas fa-eye"></i>
             <small id="passwordError" class="form-text text-danger" style="display: none;">Passwords do not match.</small>
         </div>
 
