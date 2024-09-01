@@ -240,9 +240,11 @@
       <!-- Tombol Login di kanan atas -->
       <div class="d-flex justify-content-end mb-3">
           </div>
-          <div class="features">
-          <div style="display: flex; justify-content: flex-end;">
-    <p>Sudah punya akun? silahkan</p><a href="login_penumpang.php" class="btn btn-outline-primary">Login</a>
+          <div class="features" style="padding: 20px;">
+    <div style="display: flex; align-items: center; justify-content: flex-end; gap: 10px;">
+        <p style="margin: 0; font-size: 1rem; color: #333;">Sudah punya akun? silahkan</p>
+        <a href="login_penumpang.php" class="btn btn-outline-primary">Login</a>
+    </div>
 </div>
 
         <div class="row">
