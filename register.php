@@ -119,15 +119,16 @@
             <input type="email" class="form-control" id="email" name="email" required>
         </div>
         <div class="form-group" style="position: relative;">
-        <div class="form-group password-wrapper">
-            <label for="password">Password</label>
-            <input type="password" class="form-control" id="password" name="password" required>
-            <i id="togglePassword" class="fas fa-eye"></i>
+                <label for="password">Password</label>
+                <div class="password-wrapper">
+                    <input type="password" class="form-control" id="password" name="password" required>
+                    <i id="togglePassword" class="fas fa-eye"></i>
+                </div>
         </div>
-        <div class="form-group password-wrapper">
+        <div class="form-group">
             <label for="confirm_password">Confirm Password</label>
             <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
-            <i id="toggleConfirmPassword" class="fas fa-eye"></i>
+            <i id="togglePassword" class="fas fa-eye"></i>
             <small id="passwordError" class="form-text text-danger" style="display: none;">Passwords do not match.</small>
         </div>
     
@@ -150,7 +151,6 @@
         <p>Already have an account?<a href="login.php"> Login</a></p>
     </div>
 </div>
-
 <!-- Bootstrap JS and dependencies -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
