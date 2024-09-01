@@ -61,77 +61,112 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lupa Password</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            background-color: #f8f9fa;
-            font-family: 'Arial', sans-serif;
+            background-image: url('your-background-image.jpg'); /* Specify your background image URL here */
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        .card {
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        .forgot-password-container {
+            background-color: rgba(255, 255, 255, 0.85);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.25);
+            width: 100%;
+            max-width: 400px;
+            backdrop-filter: blur(10px);
         }
-        .card-header {
-            background-color: #007bff;
-            color: white;
-            border-top-left-radius: 8px;
-            border-top-right-radius: 8px;
-            text-align: center;
-            font-size: 1.25rem;
+        .btn-primary, .btn-secondary {
+            transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
+            border-radius: 30px;
         }
-        .btn-primary {
-            background-color: #007bff;
-            border-color: #007bff;
-            transition: background-color 0.3s ease;
+        .btn-primary:hover, .btn-primary:focus {
+            background-color: #004494; /* Darker shade */
+            border-color: #003a75;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
         }
-        .btn-primary:hover {
-            background-color: #0056b3;
-            border-color: #004085;
-        }
-        .btn-secondary {
-            background-color: #6c757d;
-            border-color: #6c757d;
-            transition: background-color 0.3s ease;
-        }
-        .btn-secondary:hover {
-            background-color: #5a6268;
+        .btn-secondary:hover, .btn-secondary:focus {
+            background-color: #5a6268; /* Darker shade */
             border-color: #4e555b;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+        }
+        .loading {
+            display: none;
+            text-align: center;
+            margin-top: 10px;
+        }
+        .loading.active {
+            display: block;
+        }
+        .form-control {
+            border-radius: 0.5rem;
+        }
+        h2 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .form-footer {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .form-footer a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .form-footer a:hover {
+            text-decoration: underline;
+        }
+        .alert-info {
+            text-align: center;
         }
     </style>
 </head>
 <body>
-    <div class="container mt-5">
-        <div class="row justify-content-center">
+<div class="forgot-password-container">
+    <h2 class="text-center">Lupa Password</h2>
+    <?php if (!empty($message)): ?>
+        <div class="alert alert-info">
+            <?= $message; ?>
+        </div>
+    <?php endif; ?>
+    <form action="" method="POST">
+        <div class="form-group">
+            <label for="email">Alamat Email</label>
+            <input type="email" name="email" class="form-control" id="email" placeholder="contoh@gmail.com" required>
+        </div>
+        <div class="form-group row">
             <div class="col-md-6">
-                <div class="card">
-                    <div class="card-header">
-                        <h3>Lupa Password</h3>
-                    </div>
-                    <div class="card-body">
-                        <?php if (!empty($message)): ?>
-                            <div class="alert alert-info">
-                                <?= $message; ?>
-                            </div>
-                        <?php endif; ?>
-                        <form action="" method="POST">
-                            <div class="form-group">
-                                <label for="email">Alamat Email</label>
-                                <input type="email" name="email" class="form-control" id="email" placeholder="Masukkan alamat email Anda" required>
-                            </div>
-                            <button type="submit" class="btn btn-primary btn-block">Kirim Link Reset Password</button>
-                            <a href="login_penumpang.php" class="btn btn-secondary btn-block mt-2">Kembali ke Login</a>
-                        </form>
-                    </div>
-                </div>
+                <a class="btn btn-secondary btn-block" href="login_penumpang.php">Kembali</a>
+            </div>
+            <div class="col-md-6">
+                <button type="submit" class="btn btn-primary btn-block">Kirim Link Reset</button>
             </div>
         </div>
+    </form>
+    <div id="loading" class="loading">
+        <div class="spinner-border text-primary" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
     </div>
+    <div class="form-footer">
+        <p>Sudah ingat password? <a href="login_penumpang.php">Login</a></p>
+    </div>
+</div>
 </body>
 </html>
