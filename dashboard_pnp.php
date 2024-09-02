@@ -11,13 +11,13 @@ if (!isset($_SESSION['email'])) {
 // Get the email of the logged-in user
 $logged_in_email = $_SESSION['email'];
 
-// // Fetch passenger data from `data_pnp` based on the logged-in user's email
-// $sql_pnp = "SELECT * FROM data_pnp WHERE email = ?";
-// $stmt_pnp = $conn->prepare($sql_pnp);
-// $stmt_pnp->bind_param("s", $logged_in_email);
-// $stmt_pnp->execute();
-// $result_pnp = $stmt_pnp->get_result();
-// $passenger = $result_pnp->fetch_assoc();
+// Fetch passenger data from `data_pnp` based on the logged-in user's email
+$sql_pnp = "SELECT * FROM data_pnp WHERE email = ?";
+$stmt_pnp = $conn->prepare($sql_pnp);
+$stmt_pnp->bind_param("s", $logged_in_email);
+$stmt_pnp->execute();
+$result_pnp = $stmt_pnp->get_result();
+$passenger = $result_pnp->fetch_assoc();
 
 // // Fetch transaction history from `orders` based on the logged-in user's email
 // $sql_orders = "SELECT * FROM orders WHERE email = ?";
@@ -244,20 +244,9 @@ $logged_in_email = $_SESSION['email'];
         </div>
         <a href="dashboard_pnp.php"><i class="fas fa-home"></i> Home</a>
         <a href="pesan_tiket_pnp.php"><i class="fas fa-ticket-alt"></i> Pesan Tiket</a>
-        <a href="riwayat_pnp.php"><i class="fas fa-history"></i> Riwayat Transaksi</a>
+        <a href="riwayat_transaksi_pnp.php"><i class="fas fa-history"></i> Riwayat Transaksi</a>
         <a href="logout_penumpang.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
     </div>
-
-    <!-- Content Area -->
-    <div class="content" id="content">
-        <div class="container">
-            <!-- Card for Booking Tickets
-            <div class="card mb-4">
-                <div class="card-body">
-                    <h5 class="card-title">Pesan Tiket</h5>
-                    <a href="pesan_tiket_pnp.php" class="btn btn-primary">Pesan Tiket</a>
-                </div>
-            </div> -->
 
     <!-- Bootstrap JS and dependencies -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

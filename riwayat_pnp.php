@@ -1,4 +1,3 @@
-
 <?php
 session_start();
 include('conn.php');
@@ -52,8 +51,6 @@ $formatted_date = $day_name . ', ' . date('d', strtotime($departure_date)) . ' '
 
 
 ?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -230,7 +227,7 @@ $formatted_date = $day_name . ', ' . date('d', strtotime($departure_date)) . ' '
     </style>
 </head>
 <body>
-    
+
     <!-- Top Navbar -->
     <nav class="navbar navbar-static-top">
         <span class="navbar-brand">Dashboard Penumpang</span>
@@ -247,12 +244,23 @@ $formatted_date = $day_name . ', ' . date('d', strtotime($departure_date)) . ' '
         </div>
         <a href="dashboard_pnp.php"><i class="fas fa-home"></i> Home</a>
         <a href="pesan_tiket_pnp.php"><i class="fas fa-ticket-alt"></i> Pesan Tiket</a>
-        <a href="riwayat_pnp.php"><i class="fas fa-history"></i> Riwayat Transaksi</a>
+        <a href="riwayat_transaksi_pnp.php"><i class="fas fa-history"></i> Riwayat Transaksi</a>
         <a href="logout_penumpang.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
     </div>
 
-<!-- Card for Transaction History -->
-   <div class="card">
+    <!-- Content Area -->
+    <div class="content" id="content">
+        <div class="container">
+            <!-- Card for Booking Tickets
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Pesan Tiket</h5>
+                    <a href="pesan_tiket_pnp.php" class="btn btn-primary">Pesan Tiket</a>
+                </div>
+            </div> -->
+
+            <!-- Card for Transaction History -->
+            <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Riwayat Transaksi</h5>
                     <div class="table-wrapper">
