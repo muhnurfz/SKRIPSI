@@ -36,9 +36,10 @@ $result_orders = $stmt_orders->get_result();
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
-      body {
-    background-color: #f8f9fa;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+   body {
+    display: flex;
+    margin: 0;
+    padding: 0;
 }
 
 .container {
@@ -60,19 +61,37 @@ $result_orders = $stmt_orders->get_result();
 }
 
 .navbar {
+    width: 250px;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #f8f9fa;
+    transition: transform 0.3s ease;
+}
+
+.navbar.collapsed {
     transform: translateX(-100%);
-    transition: transform 0.5s ease-in-out;
 }
 
-.navbar.show {
-    transform: translateX(0);
+.navbar-nav {
+    width: 100%;
 }
 
-.table-wrapper {
-    background-color: #fff;
+.navbar-toggler {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.container {
+    margin-left: 250px;
     padding: 20px;
-    border-radius: 10px;
-    overflow-x: auto;
+    width: calc(100% - 250px);
+    transition: margin-left 0.3s ease;
+}
+
+.container.collapsed {
+    margin-left: 0;
 }
 
 .table {
@@ -236,9 +255,13 @@ $result_orders = $stmt_orders->get_result();
 </body>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-    document.querySelector(".navbar").classList.add("show");
+  document.getElementById("sidebarToggle").addEventListener("click", function() {
+    var sidebar = document.getElementById("sidebar");
+    var content = document.querySelector(".content");
+    sidebar.classList.toggle("collapsed");
+    content.classList.toggle("collapsed");
 });
+
 </script>
 </html>
 <?php
