@@ -15,6 +15,15 @@ $logged_in_email = $_SESSION['email'];
 $sql = "SELECT * FROM data_pnp WHERE email = '$logged_in_email'";
 $result = $conn->query($sql);
 
+// Fetch passenger data from `data_pnp` based on the logged-in user's email
+$sql_pnp = "SELECT * FROM data_pnp WHERE email = ?";
+$stmt_pnp = $conn->prepare($sql_pnp);
+$stmt_pnp->bind_param("s", $logged_in_email);
+$stmt_pnp->execute();
+$result_pnp = $stmt_pnp->get_result();
+$passenger = $result_pnp->fetch_assoc();
+
+
 if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
 } else {
