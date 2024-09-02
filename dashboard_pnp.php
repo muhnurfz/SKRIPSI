@@ -28,11 +28,11 @@ $result_orders = $stmt_orders->get_result();
 
 // Status messages and corresponding CSS classes
 $status_classes = [
-    'verified' => 'verified',
-    'paid' => 'paid',
-    'pending' => 'pending',
-    'cancelled' => 'unpaid',
-    'unknown' => 'unpaid'
+    'verified' => 'LUNAS',
+    'paid' => 'Menunggu verifikasi',
+    'pending' => 'Menunggu pembayaran',
+    'cancelled' => 'Batal',
+    'unknown' => 'unknown'
 ];
 
 // Get the CSS class for the status
@@ -156,7 +156,11 @@ $status_class = isset($status_classes[$row['status_pembayaran']]) ? $status_clas
                                         <td><?php echo $row['passenger_name']; ?></td>
                                         <td><?php echo $row['destination']; ?></td>
                                         <td><?php echo $row['departure_date']; ?></td>
-                                        <td><?php echo ucfirst($row['status_pembayaran']); ?></td>
+                                        <td>
+                                        <span class="status <?php echo $status_class; ?>">
+                                            <?php echo ucfirst($row['status_pembayaran']); ?>
+                                        </span>
+                                        </td>
                                     </tr>
                                 <?php endwhile; ?>
                             <?php else: ?>
