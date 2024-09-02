@@ -167,7 +167,7 @@ $status_class = $status_classes[$status_pembayaran] ?? $status_classes['unknown'
                                         <td><?php echo $row['passenger_name']; ?></td>
                                         <td><?php echo $row['destination']; ?></td>
                                         <td><?php echo $row['departure_date']; ?></td>
-                                        <td><?php echo ucfirst($row['status_pembayaran']); ?></td>
+                                        <td class="status <?php echo $status_class; ?>"><?php echo $status_message; ?></td>
                                     </tr>
                                 <?php endwhile; ?>
                             <?php else: ?>
