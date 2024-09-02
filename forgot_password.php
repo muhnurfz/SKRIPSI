@@ -48,8 +48,93 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Konten email
             $mail->isHTML(true);
             $mail->Subject = 'Reset Password Akun Anda';
-            $mail->Body    = 'Klik link berikut untuk mereset password Anda: <a href="' . $reset_link . '">Reset Password</a>';
-            $mail->AltBody = 'Klik link berikut untuk mereset password Anda: ' . $reset_link;
+        // Konten email dengan HTML dan CSS untuk UI/UX yang lebih menarik
+$mail->Body = '
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reset Password</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333333;
+            margin: 0;
+            padding: 0;
+        }
+        .email-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .email-header {
+            text-align: center;
+            padding-bottom: 20px;
+        }
+        .email-header img {
+            width: 100px;
+            margin-bottom: 20px;
+        }
+        .email-content {
+            padding: 20px;
+        }
+        .email-content h1 {
+            font-size: 24px;
+            color: #333333;
+        }
+        .email-content p {
+            font-size: 16px;
+            line-height: 1.5;
+            color: #666666;
+        }
+        .email-content a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #ffffff;
+            background-color: #28a745;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .email-footer {
+            text-align: center;
+            padding-top: 20px;
+            font-size: 14px;
+            color: #999999;
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <div class="email-header">
+            <img src="https://example.com/logo.png" alt="Company Logo">
+        </div>
+        <div class="email-content">
+            <h1>Reset Password Anda</h1>
+            <p>Halo,</p>
+            <p>Kami menerima permintaan untuk mereset password akun Anda. Jika Anda tidak melakukan permintaan ini, abaikan saja email ini.</p>
+            <p>Jika Anda ingin melanjutkan, klik tombol di bawah ini untuk mereset password Anda:</p>
+            <a href="' . $reset_link . '">Reset Password</a>
+            <p>Link ini hanya berlaku selama 24 jam.</p>
+        </div>
+        <div class="email-footer">
+            <p>Jika tombol di atas tidak berfungsi, salin dan tempel link berikut ini di browser Anda:</p>
+            <p><a href="' . $reset_link . '">' . $reset_link . '</a></p>
+            <p>Terima kasih,<br>Tim Tiket Agung Indah Travel</p>
+        </div>
+    </div>
+</body>
+</html>
+';
+
+// Alternative plain text body in case the recipient's email client does not support HTML emails
+$mail->AltBody = 'Kami menerima permintaan untuk mereset password akun Anda. Jika Anda tidak melakukan permintaan ini, abaikan email ini. Jika Anda ingin melanjutkan, salin dan tempel link berikut ini di browser Anda: ' . $reset_link;
 
             // Kirim email
             $mail->send();
