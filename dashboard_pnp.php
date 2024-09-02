@@ -60,22 +60,44 @@ $passenger = $result_pnp->fetch_assoc();
     <title>Dashboard Penumpang</title>
     <!-- Bootstrap CSS -->
     <style>
-      .terms, .container-details {
-    margin-left: 260px; /* Sesuaikan dengan lebar sidebar */
-    padding: 20px; /* Opsional, untuk memberi ruang di sekitar konten */
+  
+/* Content CSS */
+.terms, .container-details {
+    margin-left: 260px;
+    padding: 20px;
+    background-color: #f7f7f7;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
 }
 
-.terms, .container-details {
-    z-index: 900; /* Pastikan ini lebih tinggi dari z-index sidebar */
-}
 @media (max-width: 768px) {
     .sidebar {
-        width: 100%; /* Sidebar akan menempati seluruh lebar pada tampilan kecil */
+        width: 100%;
+        height: auto;
+        position: relative;
     }
 
     .terms, .container-details {
         margin-left: 0;
+        padding: 15px;
     }
+}
+
+/* Overlay Effect */
+.overlay {
+    position: fixed;
+    display: none;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 900;
+}
+
+.sidebar.open + .overlay {
+    display: block;
 }
     </style>
 </head>
