@@ -60,39 +60,98 @@ $passenger = $result_pnp->fetch_assoc();
     <title>Dashboard Penumpang</title>
     <!-- Bootstrap CSS -->
     <style>
-      .terms {
-    width: 270px; /* Set width as requested */
-    background-color: #ffffff; /* White background for better contrast */
-    border: 1px solid #ddd; /* Light grey border for subtle separation */
-    border-radius: 8px; /* Rounded corners for a modern look */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+      /* General Styling */
+body {
+    font-family: Arial, sans-serif; /* Consistent font across the site */
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Terms Section Styling */
+.terms {
+    width: 270px; /* Set the width of the terms section */
+    background-color: #f9f9f9; /* Light background color for better contrast */
+    border: 1px solid #ddd; /* Light grey border */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
     padding: 20px; /* Padding inside the box */
-    margin: 20px 0; /* Margin to separate from other elements */
-    font-family: Arial, sans-serif; /* Ensure consistent font */
+    margin: 20px; /* Margin around the box */
 }
 
 .terms h2 {
-    font-size: 1.5rem; /* Slightly larger heading for emphasis */
-    color: #333; /* Dark grey color for better readability */
-    margin-bottom: 15px; /* Space below the heading */
+    font-size: 1.6rem; /* Larger heading for emphasis */
+    color: #333; /* Dark grey for readability */
+    margin-bottom: 15px; /* Space below heading */
 }
 
 .terms p {
-    font-size: 1rem; /* Standard font size for paragraphs */
-    color: #666; /* Slightly lighter grey for text */
-    line-height: 1.6; /* Increase line height for better readability */
-    margin-bottom: 10px; /* Space below each paragraph */
+    font-size: 1rem; /* Standard text size */
+    color: #555; /* Slightly lighter grey */
+    line-height: 1.6; /* Increase line height for readability */
+    margin-bottom: 10px; /* Space below paragraphs */
 }
 
 .terms ul {
-    list-style-type: disc; /* Bullet points for list items */
+    list-style-type: disc; /* Bullet points */
     margin-left: 20px; /* Space before the list */
 }
 
 .terms li {
-    font-size: 1rem; /* Standard font size for list items */
-    color: #666; /* Consistent color with paragraphs */
+    font-size: 1rem; /* Standard text size */
+    color: #555; /* Consistent color */
     margin-bottom: 5px; /* Space between list items */
+}
+
+/* Container Details Styling */
+.container-details {
+    padding: 20px;
+    margin: 20px;
+    border: 1px solid #ddd; /* Light grey border */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    background-color: #ffffff; /* White background for clarity */
+}
+
+.detail-item h3 {
+    font-size: 1.5rem; /* Emphasized heading */
+    color: #333; /* Dark grey for readability */
+    margin-bottom: 10px; /* Space below heading */
+}
+
+.detail-item p {
+    font-size: 1rem; /* Standard text size */
+    color: #555; /* Slightly lighter grey */
+    line-height: 1.6; /* Improve readability */
+    margin-bottom: 10px; /* Space below paragraphs */
+}
+
+.detail-item ul {
+    list-style-type: disc; /* Bullet points */
+    margin-left: 20px; /* Space before the list */
+}
+
+.detail-item li {
+    font-size: 1rem; /* Standard text size */
+    color: #555; /* Consistent color */
+    margin-bottom: 5px; /* Space between list items */
+}
+
+.btn-primary {
+    display: inline-block;
+    padding: 10px 15px;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #007bff; /* Primary button color */
+    border: none;
+    border-radius: 4px;
+    text-decoration: none;
+    text-align: center;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3; /* Darker shade for hover effect */
 }
 
     </style>
