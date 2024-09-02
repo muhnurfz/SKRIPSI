@@ -36,39 +36,61 @@ $result_orders = $stmt_orders->get_result();
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        body {
-            background-color: #f8f9fa;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        .container {
-            margin-top: 50px;
-        }
-        .card {
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.15);
-            margin-bottom: 20px;
-        }
-        .card-title {
-            margin-bottom: 15px;
-        }
-        .btn-primary, .btn-danger {
-            border-radius: 30px;
-        }
-        .navbar {
-            margin-bottom: 20px;
-        }
-        .table-wrapper {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 10px;
-        }
-        .status {
+      body {
+    background-color: #f8f9fa;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.container {
+    margin-top: 50px;
+}
+
+.card {
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+    margin-bottom: 20px;
+}
+
+.card-title {
+    margin-bottom: 15px;
+}
+
+.btn-primary, .btn-danger {
+    border-radius: 30px;
+}
+
+.navbar {
+    margin-bottom: 20px;
+}
+
+.table-wrapper {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    overflow-x: auto;
+}
+
+.table {
+    margin-bottom: 0;
+}
+
+.table th, .table td {
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+.table-hover tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+.status {
     display: inline-block;
     padding: 5px 10px;
     border-radius: 4px;
     font-size: 12px;
     text-align: center;
     color: #fff;
+    font-weight: bold;
 }
 
 .verified {
@@ -88,26 +110,45 @@ $result_orders = $stmt_orders->get_result();
     background-color: #dc3545; /* Red */
 }
 
+@media (max-width: 767.98px) {
+    .table-responsive-sm {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .table-wrapper {
+        padding: 10px;
+    }
+
+    .status {
+        font-size: 10px;
+        padding: 3px 6px;
+    }
+}
+
     </style>
 </head>
 <body>
     <!-- Navigation Bar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Dashboard Penumpang</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="logout_penumpang.php">Logout</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light flex-column align-items-start">
+    <a class="navbar-brand" href="dashboard_pnp.php">Dashboard Penumpang</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link" href="dashboard_pnp.php">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="logout_penumpang.php">Logout</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
 
     <div class="container">
         <!-- Card for Booking Tickets -->
@@ -123,7 +164,7 @@ $result_orders = $stmt_orders->get_result();
             <div class="card-body">
                 <h5 class="card-title">Riwayat Transaksi</h5>
                 <div class="table-wrapper">
-                    <table class="table table-bordered table-striped">
+                <table class="table table-bordered table-striped table-responsive-sm">
                         <thead>
                             <tr>
                                 <th>ID</th>
