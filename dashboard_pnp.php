@@ -36,7 +36,7 @@ $result_orders = $stmt_orders->get_result();
     <!-- Font Awesome for Icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <style>
-        body {
+       body {
             display: flex;
             flex-direction: column;
             min-height: 100vh;
@@ -47,6 +47,9 @@ $result_orders = $stmt_orders->get_result();
             background-color: #007bff;
             color: white;
             padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
         .navbar .navbar-brand {
             color: white;
@@ -54,16 +57,16 @@ $result_orders = $stmt_orders->get_result();
         }
         .navbar .profile-link {
             color: white;
-            margin-left: auto;
             display: flex;
             align-items: center;
+            text-decoration: none;
         }
         .navbar .profile-link i {
             margin-right: 5px;
         }
         .sidebar {
             width: 250px;
-            background-color: #f8f9fa;
+            background-color: #343a40;
             padding-top: 20px;
             height: 100vh;
             position: fixed;
@@ -71,7 +74,7 @@ $result_orders = $stmt_orders->get_result();
             left: 0;
             transition: transform 0.3s ease, width 0.3s ease;
             box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-            border-right: 1px solid #dee2e6;
+            border-right: 1px solid #495057;
             z-index: 1000; /* Ensure the sidebar is above the content */
         }
         .sidebar.collapsed {
@@ -81,8 +84,8 @@ $result_orders = $stmt_orders->get_result();
             padding: 15px 20px;
             display: flex;
             align-items: center;
-            font-size: 1.2rem;
-            color: #343a40;
+            font-size: 1.1rem;
+            color: #adb5bd;
             text-decoration: none;
             border-radius: 4px;
             transition: background-color 0.3s ease, color 0.3s ease;
@@ -91,29 +94,34 @@ $result_orders = $stmt_orders->get_result();
             margin-right: 10px;
         }
         .sidebar a:hover {
-            background-color: #e2e6ea;
-            color: #007bff;
+            background-color: #495057;
+            color: #ffffff;
         }
         .sidebar .profile {
             text-align: center;
             margin-bottom: 20px;
+            color: #ffffff;
         }
         .sidebar .profile h5 {
             margin: 0;
-            color: #495057;
             font-size: 1.2rem;
         }
         .sidebar .toggle-btn {
             position: absolute;
             top: 20px;
             right: -40px;
-            background-color: #007bff;
+            background-color: #28a745; /* Green color for toggle button */
             border: none;
             color: white;
             padding: 10px;
             border-radius: 0 4px 4px 0;
             cursor: pointer;
             z-index: 1000; /* Ensure button is above the content */
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        .sidebar .toggle-btn:hover {
+            background-color: #218838; /* Darker shade for hover effect */
+            transform: scale(1.1); /* Slightly enlarge button on hover */
         }
         .content {
             margin-left: 250px;
@@ -123,26 +131,6 @@ $result_orders = $stmt_orders->get_result();
         }
         .content.sidebar-collapsed {
             margin-left: 0;
-        }
-        .toggle-btn {
-        position: absolute;
-        top: 20px;
-        right: -40px;
-        background-color: #28a745; /* Change this to your desired color */
-        border: none;
-        color: white;
-        padding: 10px;
-        border-radius: 0 4px 4px 0;
-        cursor: pointer;
-        z-index: 1000; /* Ensure button is above the content */
-        transition: background-color 0.3s ease, transform 0.3s ease;
-        }
-        .toggle-btn:hover {
-            background-color: #218838; /* Darker shade for hover effect */
-            transform: scale(1.1); /* Slightly enlarge button on hover */
-        }
-        .toggle-btn:focus {
-            outline: none; /* Remove default focus outline */
         }
         .card {
             border-radius: 10px;
