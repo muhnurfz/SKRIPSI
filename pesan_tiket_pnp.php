@@ -580,21 +580,21 @@ routeSelect.addEventListener('change', () => {
         return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     }
    
-    function formatPhoneNumber(event) {
-        var input = event.target;
-        var value = input.value.replace(/\D/g, '');
-        if (value.length > 13) {
-            value = value.substring(0, 13);
-        }
-        var formattedValue = '';
-        for (var i = 0; i < value.length; i++) {
-            if (i > 0 && i % 4 === 0) {
-                formattedValue += '-';
-            }
-            formattedValue += value[i];
-        }
-        input.value = formattedValue;
-    }
+    // function formatPhoneNumber(event) {
+    //     var input = event.target;
+    //     var value = input.value.replace(/\D/g, '');
+    //     if (value.length > 13) {
+    //         value = value.substring(0, 13);
+    //     }
+    //     var formattedValue = '';
+    //     for (var i = 0; i < value.length; i++) {
+    //         if (i > 0 && i % 4 === 0) {
+    //             formattedValue += '-';
+    //         }
+    //         formattedValue += value[i];
+    //     }
+    //     input.value = formattedValue;
+    // }
   
 // Fungsi untuk format tanggal dalam format DD-MM-YYYY
 function formatDate(date) {
@@ -799,7 +799,7 @@ document.getElementById('destination').addEventListener('change', function() {
         <input type="text" id="passenger_name" name="passenger_name" value="<?php echo htmlspecialchars($passenger_name); ?>" required>
 
         <label for="passenger_phone">No Telepon Penumpang:</label>
-        <input type="tel" id="passenger_phone" name="passenger_phone" value="<?php echo htmlspecialchars($passenger_phone); ?>" required>
+        <input type="tel" id="passenger_phone" name="passenger_phone" value="<?php echo htmlspecialchars($passenger_phone); ?>" maxlength="19" required oninput="formatPhoneNumber(event)">
 
         <label for="email">Email Penumpang:</label>
         <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($email); ?>" placeholder="example@gmail.com" pattern="^[a-zA-Z0-9._%+-]+@gmail\.com$" title="Hanya alamat email dengan domain @gmail.com yang diterima" required>
