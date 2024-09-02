@@ -18,17 +18,48 @@ if (isset($_GET['email']) && isset($_GET['code'])) {
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("ss", $email, $code);
         if ($stmt->execute()) {
-            echo "Akun Anda telah dikonfirmasi. Anda dapat login sekarang.";
+            // Success message and redirect
+            $message = "Akun Anda telah dikonfirmasi. Anda dapat login sekarang.";
         } else {
-            echo "Terjadi kesalahan saat mengkonfirmasi akun.";
+            $message = "Terjadi kesalahan saat mengkonfirmasi akun.";
         }
     } else {
-        echo "Link konfirmasi tidak valid atau akun sudah dikonfirmasi.";
+        $message = "Link konfirmasi tidak valid atau akun sudah dikonfirmasi.";
     }
     $stmt->close();
 } else {
-    echo "Parameter tidak lengkap.";
+    $message = "Parameter tidak lengkap.";
 }
 
 $conn->close();
 ?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Konfirmasi Akun</title>
+    <script>
+        setTimeout(function() {
+            window.location.href = 'login_penumpang.php';
+        }, 3000); // Redirect after 3 seconds
+    </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+        }
+        .message {
+            font-size: 18px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="message">
+        <?php echo htmlspecialchars($message); ?>
+    </div>
+</body>
+</html>
