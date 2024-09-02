@@ -124,6 +124,26 @@ $result_orders = $stmt_orders->get_result();
         .content.sidebar-collapsed {
             margin-left: 0;
         }
+        .toggle-btn {
+        position: absolute;
+        top: 20px;
+        right: -40px;
+        background-color: #28a745; /* Change this to your desired color */
+        border: none;
+        color: white;
+        padding: 10px;
+        border-radius: 0 4px 4px 0;
+        cursor: pointer;
+        z-index: 1000; /* Ensure button is above the content */
+        transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        .toggle-btn:hover {
+            background-color: #218838; /* Darker shade for hover effect */
+            transform: scale(1.1); /* Slightly enlarge button on hover */
+        }
+        .toggle-btn:focus {
+            outline: none; /* Remove default focus outline */
+        }
         .card {
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
