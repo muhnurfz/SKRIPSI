@@ -43,25 +43,36 @@ $result_orders = $stmt_orders->get_result();
             margin: 0;
             font-family: Arial, sans-serif;
         }
+        .navbar {
+            background-color: #007bff;
+            color: white;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
         .navbar-static-top {
     display: flex;
-    justify-content: center;
+    justify-content: center; /* Menyelaraskan item secara horizontal ke tengah */
+    align-items: center; /* Menyelaraskan item secara vertikal ke tengah */
     width: 100%;
     background-color: #f8f9fa; /* Contoh warna background */
 }
-
-.navbar-brand {
-    margin-right: auto;
-    margin-left: auto;
-    font-weight: bold;
-}
+        .navbar .navbar-brand {
+            color: white;
+            font-size: 1.2rem;
+            text-align :center;
+            font-weight: bold;
+        }
         .navbar .profile-link {
             color: white;
             display: flex;
             align-items: center;
             text-decoration: none;
             position: absolute;
-            right: 20px; /* Sesuaikan dengan margin yang diinginkan */
+    right: 20px; /* Sesuaikan dengan margin yang diinginkan */
+    top: 50%;
+    transform: translateY(-50%);
         }
         .navbar .profile-link i {
             margin-right: 5px;
