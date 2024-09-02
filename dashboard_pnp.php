@@ -60,7 +60,12 @@ $result_orders = $stmt_orders->get_result();
 }
 
 .navbar {
-    margin-bottom: 20px;
+    transform: translateX(-100%);
+    transition: transform 0.5s ease-in-out;
+}
+
+.navbar.show {
+    transform: translateX(0);
 }
 
 .table-wrapper {
@@ -132,13 +137,13 @@ $result_orders = $stmt_orders->get_result();
 </head>
 <body>
     <!-- Navigation Bar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light flex-column align-items-start">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="dashboard_pnp.php">Dashboard Penumpang</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav flex-column">
+        <ul class="navbar-nav ml-auto">
             <li class="nav-item">
                 <a class="nav-link" href="dashboard_pnp.php">Home</a>
             </li>
@@ -229,8 +234,13 @@ $result_orders = $stmt_orders->get_result();
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
-</html>
 
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+    document.querySelector(".navbar").classList.add("show");
+});
+</script>
+</html>
 <?php
 $conn->close();
 ?>
