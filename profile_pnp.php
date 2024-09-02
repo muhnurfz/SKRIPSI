@@ -58,15 +58,16 @@ $conn->close();
     <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
-        body {
+    
+        body, html {
             background-color: #f8f9fa;
             font-family: Arial, sans-serif;
+            height: 100%;
             margin: 0;
-            padding: 0;
             display: flex;
             justify-content: center;
             align-items: center;
-            flex-direction: column;
+            background-color: #f8f9fa;
         }
 
         .container {
@@ -338,11 +339,6 @@ $conn->close();
                     <input type="password" class="form-control" id="password" name="password" required>
                     <i id="togglePassword" class="fas fa-eye"></i>
                 </div>
-            </div>
-            <div class="form-group">
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" class="form-control" required>
-                <i class="fas fa-eye toggle-password" id="togglePassword"></i>
             </div>
             <div class="form-group">
                 <button type="submit" class="btn btn-primary">Simpan</button>
