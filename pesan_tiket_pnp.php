@@ -30,30 +30,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $query = "SELECT * FROM data_pnp WHERE kode_penumpang = '$kode_penumpang' AND password = '$password'";
     $result = mysqli_query($conn, $query);
 
-   // Setelah melakukan query
-if (mysqli_num_rows($result) == 1) {
-    $user = mysqli_fetch_assoc($result);
+    if (mysqli_num_rows($result) == 1) {
+        $user = mysqli_fetch_assoc($result);
 
-    // Debugging: Lihat apakah passenger_phone ada di array $user
-    echo "Query berhasil, berikut hasilnya: <br>";
-    var_dump($user);
-    echo "<br>";
+        // Debugging: Lihat apakah passenger_phone ada di array $user
+        echo "Query berhasil, berikut hasilnya: ";
+        var_dump($user);
+        exit(); // Hentikan eksekusi untuk melihat hasil debug
 
-    // Menyimpan data pengguna ke dalam sesi
-    $_SESSION['kode_penumpang'] = $user['kode_penumpang'];
-    $_SESSION['passenger_name'] = $user['passenger_name'];
-    $_SESSION['passenger_phone'] = $user['passenger_phone'];
-    $_SESSION['email'] = $user['email'];
+        // Menyimpan data pengguna ke dalam sesi
+        $_SESSION['kode_penumpang'] = $user['kode_penumpang'];
+        $_SESSION['passenger_name'] = $user['passenger_name'];
+        $_SESSION['passenger_phone'] = $user['passenger_phone'];
+        $_SESSION['email'] = $user['email'];
 
-    // Debugging: Tampilkan session passenger_phone
-    echo "Session Passenger Phone: " . $_SESSION['passenger_phone'] . "<br>";
-
-    header('Location: pesan_tiket_pnp.php'); // Redirect ke halaman form pemesanan
-    exit();
-} else {
-    echo "Login gagal! Kode penumpang atau password salah.";
-}
-
+        header('Location: pesan_tiket_pnp.php'); // Redirect ke halaman form pemesanan
+        exit();
+    } else {
+        echo "Login gagal! Kode penumpang atau password salah.";
+    }
 }
 
 
@@ -804,7 +799,7 @@ document.getElementById('destination').addEventListener('change', function() {
         <input type="text" id="passenger_name" name="passenger_name" value="<?php echo htmlspecialchars($passenger_name); ?>" required>
 
         <label for="passenger_phone">No Telepon Penumpang:</label>
-        <input type="tel" id="passenger_phone" name="passenger_phone" value="<?php echo htmlspecialchars($passenger_phone); ?>" maxlength="19" required oninput="formatPhoneNumber(event)">
+        <input type="tel" id="passenger_phone" name="passenger_phone" value="<?php echo htmlspecialchars($passenger_phone) ; echo "Nilai passenger_phone: " . $passenger_phone;?>" maxlength="19" required oninput="formatPhoneNumber(event)">
 
         <label for="email">Email Penumpang:</label>
         <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($email); ?>" placeholder="example@gmail.com" pattern="^[a-zA-Z0-9._%+-]+@gmail\.com$" title="Hanya alamat email dengan domain @gmail.com yang diterima" required>
