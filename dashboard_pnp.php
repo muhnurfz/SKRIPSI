@@ -247,7 +247,7 @@ $result_orders = $stmt_orders->get_result();
     <!-- Content Area -->
     <div class="content" id="content">
         <div class="container">
-            <button class="btn btn-primary" id="toggleSidebar">Toggle Sidebar</button>
+            <button class="btn btn-primary" id="toggleSidebar">☰</button>
             <!-- Card for Booking Tickets -->
             <div class="card mb-4">
                 <div class="card-body">
