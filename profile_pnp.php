@@ -345,11 +345,13 @@ $conn->close();
             <label for="email">Email:</label>
             <input type="email" id="email" name="email" class="form-control" value="<?= htmlspecialchars($row['email']); ?>" required>
         </div>
-        <div class="form-group password-wrapper">
-            <label for="password">Password</label>
-            <input type="password" class="form-control" id="password" name="password" required>
-            <i id="togglePassword" class="fas fa-eye"></i>
-        </div>
+        <div class="form-group" style="position: relative;">
+                <label for="password">Password</label>
+                <div class="password-wrapper">
+                    <input type="password" class="form-control" id="password" name="password" required>
+                    <i id="togglePassword" class="fas fa-eye"></i>
+                </div>
+            </div>
         <div class="form-group">
             <button type="submit" class="btn btn-primary">Simpan</button>
         </div>
