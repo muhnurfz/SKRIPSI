@@ -38,30 +38,26 @@ $passenger = $result_pnp->fetch_assoc();
     margin: 0;
     font-family: Arial, sans-serif;
 }
-
 .navbar-static-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
+    padding: 5px 10px; /* Reduce padding to make the navbar shorter */
+    height: 50px; /* Adjust height as needed */
     background-color: #f8f9fa;
-    padding: 10px;
-    z-index: 1000;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .navbar-brand {
-    font-weight: bold;
+    font-size: 1.2rem; /* Adjust font size to match the new height */
+    margin-bottom: 0;
 }
 
 .profile-link {
-    display: flex;
-    align-items: center;
+    font-size: 0.9rem; /* Adjust font size to fit the shorter navbar */
 }
 
 .profile-link i {
-    margin-right: 5px;
+    margin-right: 3px; /* Reduce margin to fit the icon and text */
 }
+
 
 .sidebar {
     width: 250px;
