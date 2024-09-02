@@ -1,8 +1,7 @@
 <?php
-include('conn.php'); // Menghubungkan ke database
+session_start();
+include('conn.php');
 include('navbar.php');
-session_start(); // Memulai sesi
-
 
 // Check if the user is logged in
 if (!isset($_SESSION['email'])) {
@@ -13,6 +12,10 @@ if (!isset($_SESSION['email'])) {
 // Get the email of the logged-in user
 $logged_in_email = $_SESSION['email'];
 
+// Mendapatkan data penumpang berdasarkan email dari sesi login
+$sql = "SELECT * FROM data_pnp WHERE email = '$logged_in_email'";
+$result = $conn->query($sql);
+
 // Fetch passenger data from `data_pnp` based on the logged-in user's email
 $sql_pnp = "SELECT * FROM data_pnp WHERE email = ?";
 $stmt_pnp = $conn->prepare($sql_pnp);
@@ -22,30 +25,12 @@ $result_pnp = $stmt_pnp->get_result();
 $passenger = $result_pnp->fetch_assoc();
 
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $kode_penumpang = $_POST['kode_penumpang'];
-    $password = md5($_POST['password']); // Menggunakan MD5 untuk hashing password
-
-    // Query untuk memeriksa kode penumpang dan password
-    $query = "SELECT * FROM data_pnp WHERE kode_penumpang = '$kode_penumpang' AND password = '$password'";
-    $result = mysqli_query($conn, $query);
-
-    if (mysqli_num_rows($result) == 1) {
-        $user = mysqli_fetch_assoc($result);
-
-        // Menyimpan data pengguna ke dalam sesi
-        $_SESSION['kode_penumpang'] = $user['kode_penumpang'];
-        $_SESSION['passenger_name'] = $user['passenger_name'];
-        $_SESSION['passenger_phone'] = $user['passenger_phone'];
-        $_SESSION['email'] = $user['email'];
-
-        header('Location: pesan_tiket_pnp.php'); // Redirect ke halaman form pemesanan
-        exit();
-    } else {
-        echo "Login gagal! Kode penumpang atau password salah.";
-    }
+if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+} else {
+    echo "<script>alert('Data penumpang tidak ditemukan.'); window.location.href = 'login_penumpang.php';</script>";
+    exit();
 }
-
 
 // Determine the CSS class for the status
 $status_class = [
