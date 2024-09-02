@@ -135,59 +135,47 @@ $result_orders = $stmt_orders->get_result();
                             </tr>
                         </thead>
                         <tbody>
-                            <?php if ($result_orders->num_rows > 0): ?>
-                                <?php while($row = $result_orders->fetch_assoc()): ?>
-                                    <tr>
-                                        <td><?php echo $row['id']; ?></td>
-                                        <td><?php echo $row['booking_code']; ?></td>
-                                        <td><?php echo $row['passenger_name']; ?></td>
-                                        <td><?php echo $row['destination']; ?></td>
-                                        <td><?php echo $row['departure_date']; ?></td>
-                                        <td>   <?php
-        // Fetch the data from the orders table
-        if ($result_orders->num_rows > 0) {
-            while ($order = $result_orders->fetch_assoc()) {
-                $status_pembayaran = $order['status_pembayaran']; // Get status_pembayaran from the orders table
-                
+    <?php if ($result_orders->num_rows > 0): ?>
+        <?php while($row = $result_orders->fetch_assoc()): ?>
+            <?php
                 // Status messages
                 $status_messages = [
                     'verified' => 'LUNAS', 
-                    'paid' => 'Menunggu verfikasi',
+                    'paid' => 'Menunggu Verifikasi',
                     'pending' => 'Menunggu Pembayaran',
                     'cancelled' => 'Batal',
                     'unknown' => 'Unknown Status'
                 ];
 
                 // Get the status message
+                $status_pembayaran = $row['status_pembayaran'];
                 $status_message = isset($status_messages[$status_pembayaran]) ? $status_messages[$status_pembayaran] : $status_messages['unknown'];
 
                 // Determine the CSS class for the status
                 $status_class = [
                     'verified' => 'verified', 
-                    'paid' => 'pending',
+                    'paid' => 'paid',
+                    'pending' => 'pending',
                     'cancelled' => 'unpaid',
                     'unknown' => 'unpaid'
                 ][$status_pembayaran] ?? 'unpaid';
+            ?>
+            <tr>
+                <td><?php echo htmlspecialchars($row['id']); ?></td>
+                <td><?php echo htmlspecialchars($row['booking_code']); ?></td>
+                <td><?php echo htmlspecialchars($row['passenger_name']); ?></td>
+                <td><?php echo htmlspecialchars($row['destination']); ?></td>
+                <td><?php echo htmlspecialchars($row['departure_date']); ?></td>
+                <td><span class="status <?php echo $status_class; ?>"><?php echo ucfirst($status_message); ?></span></td>
+            </tr>
+        <?php endwhile; ?>
+    <?php else: ?>
+        <tr>
+            <td colspan="6" class="text-center">Tidak ada riwayat transaksi</td>
+        </tr>
+    <?php endif; ?>
+</tbody>
 
-                // Display or use the status message and class
-                echo "<tr>";
-                echo "<td>" . htmlspecialchars($order['passenger_name']) . "</td>"; // Nama Penumpang
-                echo "<td><span class='status $status_class'>" . ucfirst($status_message) . "</span></td>"; // Status Pembayaran
-                echo "<td>" . htmlspecialchars($order['booking_code']) . "</td>"; // Kode Pemesanan
-                echo "</tr>";
-            }
-        } else {
-            echo "<tr><td colspan='3'>No orders found for this user.</td></tr>";
-        }
-        ?></td>
-                                    </tr>
-                                <?php endwhile; ?>
-                            <?php else: ?>
-                                <tr>
-                                    <td colspan="6" class="text-center">Tidak ada riwayat transaksi</td>
-                                </tr>
-                            <?php endif; ?>
-                        </tbody>
                     </table>
                 </div>
             </div>
