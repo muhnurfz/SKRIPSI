@@ -273,6 +273,7 @@ $formatted_date = $day_name . ', ' . date('d', strtotime($departure_date)) . ' '
                                     <th>Tujuan</th>
                                     <th>Tanggal Berangkat</th>
                                     <th>Status Pembayaran</th>
+                                    <th>Keterangan</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -319,6 +320,7 @@ $formatted_date = $day_name . ', ' . date('d', strtotime($departure_date)) . ' '
 </td>
 
                                             <td><span class="status <?php echo $status_class; ?>"><?php echo ucfirst($status_message); ?></span></td>
+                                            <td><?php echo htmlspecialchars($row['comments']); ?></td>
                                         </tr>
                                     <?php endwhile; ?>
                                 <?php else: ?>
