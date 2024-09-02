@@ -234,6 +234,7 @@ $result_orders = $stmt_orders->get_result();
 <body>
 
     <!-- Sidebar -->
+    <button class="btn btn-primary" id="toggleSidebar">☰</button>
     <div class="sidebar" id="sidebar">
         <div class="profile">
             <h5>Hallo, <?php echo htmlspecialchars($passenger['passenger_name']); ?>!</h5>
@@ -247,7 +248,6 @@ $result_orders = $stmt_orders->get_result();
     <!-- Content Area -->
     <div class="content" id="content">
         <div class="container">
-            <button class="btn btn-primary" id="toggleSidebar">☰</button>
             <!-- Card for Booking Tickets -->
             <div class="card mb-4">
                 <div class="card-body">
