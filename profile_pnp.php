@@ -1,6 +1,7 @@
 <?php
 session_start();
 include('conn.php');
+include('navbar.php');
 
 // Check if the user is logged in
 if (!isset($_SESSION['email'])) {
@@ -164,98 +165,7 @@ $conn->close();
             color: #343a40;
         }
 
-        .navbar-static-top {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            background-color: #f8f9fa;
-            padding: 10px 0;
-        }
-
-        .navbar-brand {
-            font-weight: bold;
-        }
-
-        .profile-link {
-            position: absolute;
-            right: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-        }
-
-        .profile-link i {
-            margin-right: 5px;
-        }
-
-        .sidebar {
-            width: 250px;
-            background-color: #343a40;
-            padding-top: 20px;
-            height: 100vh;
-            position: fixed;
-            top: 0;
-            left: 0;
-            transition: transform 0.3s ease, width 0.3s ease;
-            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-            border-right: 1px solid #495057;
-            z-index: 1000;
-        }
-
-        .sidebar.collapsed {
-            transform: translateX(-250px);
-        }
-
-        .sidebar a {
-            padding: 15px 20px;
-            display: flex;
-            align-items: center;
-            font-size: 1.1rem;
-            color: #adb5bd;
-            text-decoration: none;
-            border-radius: 4px;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-
-        .sidebar a i {
-            margin-right: 10px;
-        }
-
-        .sidebar a:hover {
-            background-color: #495057;
-            color: #ffffff;
-        }
-
-        .sidebar .profile {
-            text-align: center;
-            margin-bottom: 20px;
-            color: #ffffff;
-        }
-
-        .sidebar .profile h5 {
-            margin: 0;
-            font-size: 1.2rem;
-        }
-
-        .sidebar .toggle-btn {
-            position: absolute;
-            top: 20px;
-            right: -40px;
-            background-color: #28a745;
-            border: none;
-            color: white;
-            padding: 10px;
-            border-radius: 0 4px 4px 0;
-            cursor: pointer;
-            z-index: 1000;
-            transition: background-color 0.3s ease, transform 0.3s ease;
-        }
-
-        .sidebar .toggle-btn:hover {
-            background-color: #218838;
-            transform: scale(1.1);
-        }
-
+       
         .content {
             margin-left: 250px;
             padding: 20px;
@@ -346,26 +256,7 @@ $conn->close();
         </div>
     <?php endif; ?>    
 
-    <!-- Top Navbar -->
-    <nav class="navbar navbar-static-top">
-        <span class="navbar-brand">Dashboard Penumpang</span>
-        <a href="profile_pnp.php" class="profile-link">
-            <i class="fas fa-user"></i> Profil
-        </a>
-    </nav>
-
-    <!-- Sidebar -->
-    <div class="sidebar" id="sidebar">
-        <button class="btn btn-primary toggle-btn" id="toggleSidebar">☰</button>
-        <div class="profile">
-            <h5>Hallo, <?php echo htmlspecialchars($passenger['passenger_name']); ?>!</h5>
-        </div>
-        <a href="dashboard_pnp.php"><i class="fas fa-home"></i> Home</a>
-        <a href="pesan_tiket_pnp.php"><i class="fas fa-ticket-alt"></i> Pesan Tiket</a>
-        <a href="riwayat_pnp.php"><i class="fas fa-history"></i> Riwayat Transaksi</a>
-        <a href="logout_penumpang.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
-    </div>
-
+ 
 <!-- Content -->
 <div class="container content" id="content">
     <h2>Edit Profil Penumpang</h2>
@@ -406,13 +297,6 @@ $conn->close();
             var type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
             passwordInput.setAttribute('type', type);
             this.classList.toggle('fa-eye-slash');
-        });
-
-        document.getElementById('toggleSidebar').addEventListener('click', function () {
-            var sidebar = document.getElementById('sidebar');
-            var content = document.getElementById('content');
-            sidebar.classList.toggle('collapsed');
-            content.classList.toggle('sidebar-collapsed');
         });
         document.addEventListener('DOMContentLoaded', function() {
             var notification = document.getElementById('notification');
