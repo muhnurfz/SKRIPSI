@@ -272,6 +272,34 @@ $conn->close();
             color: #007bff;
             font-size: 1.2em;
         }
+        .notification {
+            display: none;
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .notification.show {
+            display: block;
+            opacity: 1;
+        }
+
+        .notification .close-btn {
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
         @media (max-width: 767.98px) {
             .table-responsive-sm {
                 display: block;
@@ -304,6 +332,12 @@ $conn->close();
     </style>
 </head>
 <body>
+
+    <!-- Notification Message -->
+    <div id="successNotification" class="notification">
+        <span class="close-btn" onclick="this.parentElement.style.display='none';">&times;</span>
+        Data berhasil diperbarui!
+    </div>
 
     <!-- Top Navbar -->
     <nav class="navbar navbar-static-top">
@@ -373,6 +407,15 @@ $conn->close();
             sidebar.classList.toggle('collapsed');
             content.classList.toggle('sidebar-collapsed');
         });
+
+        <?php if ($conn->query($update_sql) === TRUE): ?>
+            document.getElementById('successNotification').classList.add('show');
+            setTimeout(function() {
+                document.getElementById('successNotification').classList.remove('show');
+            }, 3000);
+        <?php else: ?>
+            alert("Error: <?= $conn->error; ?>");
+        <?php endif; ?>
     </script>
 
     <!-- Bootstrap JS and dependencies -->
