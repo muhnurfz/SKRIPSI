@@ -12,6 +12,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if (mysqli_num_rows($result) == 1) {
         $user = mysqli_fetch_assoc($result);
+
+        // Debugging: Lihat apakah passenger_phone ada di array $user
+        echo "Query berhasil, berikut hasilnya: ";
+        var_dump($user);
+        exit(); // Hentikan eksekusi untuk melihat hasil debug
+
         // Menyimpan data pengguna ke dalam sesi
         $_SESSION['kode_penumpang'] = $user['kode_penumpang'];
         $_SESSION['passenger_name'] = $user['passenger_name'];
@@ -30,11 +36,8 @@ $passenger_name = isset($_SESSION['passenger_name']) ? $_SESSION['passenger_name
 $passenger_phone = isset($_SESSION['passenger_phone']) ? $_SESSION['passenger_phone'] : '';
 $email = isset($_SESSION['email']) ? $_SESSION['email'] : '';
 
-
-// Debug untuk memeriksa apakah variabel sesi sudah terisi
-var_dump($_SESSION['passenger_phone']); 
-
 ?>
+
 
 
 <!DOCTYPE html>
