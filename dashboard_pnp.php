@@ -73,12 +73,7 @@ $passenger = $result_pnp->fetch_assoc();
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
-        document.getElementById('toggleSidebar').addEventListener('click', function() {
-            var sidebar = document.getElementById('sidebar');
-            var content = document.getElementById('content');
-            sidebar.classList.toggle('collapsed');
-            content.classList.toggle('sidebar-collapsed');
-        });
+       
     </script>
 </body>
 </html>
