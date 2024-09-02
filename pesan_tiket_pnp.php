@@ -934,7 +934,7 @@ document.getElementById('destination').addEventListener('change', function() {
     </script>
 </head>
 <body>
-<?php include('dashboard_pnp.php'); ?>
+<?php include('navbar.php'); ?>
 
 <div id="notification-container"></div>
 
