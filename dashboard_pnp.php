@@ -35,49 +35,73 @@ $result_orders = $stmt_orders->get_result();
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
-         body {
-            display: flex;
-            flex-wrap: nowrap;
-            min-height: 100vh;
-            margin: 0;
-        }
-        .sidebar {
-            width: 250px;
-            background-color: #f8f9fa;
-            padding-top: 20px;
-            height: 100vh;
-            position: fixed;
-            top: 0;
-            left: 0;
-            transition: transform 0.3s ease;
-            transform: translateX(0); /* Show by default */
-        }
-        .sidebar.collapsed {
-            transform: translateX(-100%); /* Hide sidebar */
-        }
-        .sidebar a {
-            padding: 10px 15px;
-            display: block;
-            font-size: 1.1rem;
-            color: #343a40;
-            text-decoration: none;
-        }
-        .sidebar a:hover {
-            background-color: #e9ecef;
-            color: #007bff;
-        }
-        .content {
-            margin-left: 260px;
-            padding: 20px;
-            flex-grow: 1;
-            transition: margin-left 0.3s ease;
-        }
-        .content.sidebar-collapsed {
-            margin-left: 0;
-        }
-        .navbar-toggler {
-            margin-left: auto;
-        }
+       body {
+    display: flex;
+    flex-wrap: nowrap;
+    min-height: 100vh;
+    margin: 0;
+    font-family: Arial, sans-serif; /* Ensure consistent font */
+}
+
+.sidebar {
+    width: 250px;
+    background-color: #f8f9fa;
+    padding-top: 20px;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    transition: transform 0.3s ease, width 0.3s ease;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    transform: translateX(0); /* Show by default */
+    border-right: 1px solid #dee2e6; /* Subtle border for separation */
+}
+
+.sidebar.collapsed {
+    transform: translateX(-250px); /* Hide sidebar */
+}
+
+.sidebar a {
+    padding: 15px 20px; /* Increased padding for better touch targets */
+    display: block;
+    font-size: 1.2rem;
+    color: #343a40;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.sidebar a:hover {
+    background-color: #e2e6ea;
+    color: #007bff;
+}
+
+.sidebar .profile {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.sidebar .profile h5 {
+    margin: 0;
+    color: #495057;
+    font-size: 1.2rem;
+}
+
+.content {
+    margin-left: 250px;
+    padding: 20px;
+    flex-grow: 1;
+    transition: margin-left 0.3s ease;
+}
+
+.content.sidebar-collapsed {
+    margin-left: 0;
+}
+
+.navbar-toggler {
+    margin-left: auto;
+}
+
 .container {
     margin-top: 50px;
 }
@@ -105,6 +129,7 @@ $result_orders = $stmt_orders->get_result();
     padding: 20px;
     border-radius: 10px;
     overflow-x: auto;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 }
 
 .table {
