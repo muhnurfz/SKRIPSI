@@ -2,6 +2,25 @@
 include('conn.php'); // Menghubungkan ke database
 session_start(); // Memulai sesi
 
+
+// Check if the user is logged in
+if (!isset($_SESSION['email'])) {
+    header("Location: login_penumpang.php");
+    exit();
+}
+
+// Get the email of the logged-in user
+$logged_in_email = $_SESSION['email'];
+
+// Fetch passenger data from `data_pnp` based on the logged-in user's email
+$sql_pnp = "SELECT * FROM data_pnp WHERE email = ?";
+$stmt_pnp = $conn->prepare($sql_pnp);
+$stmt_pnp->bind_param("s", $logged_in_email);
+$stmt_pnp->execute();
+$result_pnp = $stmt_pnp->get_result();
+$passenger = $result_pnp->fetch_assoc();
+
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $kode_penumpang = $_POST['kode_penumpang'];
     $password = md5($_POST['password']); // Menggunakan MD5 untuk hashing password
@@ -77,7 +96,87 @@ $email = isset($_SESSION['email']) ? $_SESSION['email'] : '';
             align-items: center;
             height: 100vh;
         }
+        .navbar-static-top {
+    display: flex;
+    justify-content: center; /* Menyelaraskan item secara horizontal ke tengah */
+    align-items: center; /* Menyelaraskan item secara vertikal ke tengah */
+    width: 100%;
+    background-color: #f8f9fa; /* Contoh warna background */
+}
 
+.navbar-brand {
+    font-weight: bold;
+}
+
+.profile-link {
+    position: absolute;
+    right: 20px; /* Sesuaikan dengan margin yang diinginkan */
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+        .navbar .profile-link i {
+            margin-right: 5px;
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #343a40;
+            padding-top: 20px;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            transition: transform 0.3s ease, width 0.3s ease;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            border-right: 1px solid #495057;
+            z-index: 1000; /* Ensure the sidebar is above the content */
+        }
+        .sidebar.collapsed {
+            transform: translateX(-250px);
+        }
+        .sidebar a {
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            font-size: 1.1rem;
+            color: #adb5bd;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .sidebar a i {
+            margin-right: 10px;
+        }
+        .sidebar a:hover {
+            background-color: #495057;
+            color: #ffffff;
+        }
+        .sidebar .profile {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+        .sidebar .profile h5 {
+            margin: 0;
+            font-size: 1.2rem;
+        }
+        .sidebar .toggle-btn {
+            position: absolute;
+            top: 20px;
+            right: -40px;
+            background-color: #28a745; /* Green color for toggle button */
+            border: none;
+            color: white;
+            padding: 10px;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            z-index: 1000; /* Ensure button is above the content */
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        .sidebar .toggle-btn:hover {
+            background-color: #218838; /* Darker shade for hover effect */
+            transform: scale(1.1); /* Slightly enlarge button on hover */
+        }
         .container {
             width: 90%; /* Adjust width for better mobile responsiveness */
             max-width: 800px; /* Set a maximum width */
@@ -405,6 +504,7 @@ $email = isset($_SESSION['email']) ? $_SESSION['email'] : '';
         }
     </style>
     
+      
     <script>
  document.addEventListener('DOMContentLoaded', function() {
     var today = new Date();
@@ -753,152 +853,13 @@ document.getElementById('destination').addEventListener('change', function() {
         }
     }
 
-    // function updateScheduleInfo() {
-    //     var route = document.getElementById("route").value;
-    //     var scheduleInfo = document.getElementById("schedule-info");
-    //     var message = '';
+    document.getElementById('toggleSidebar').addEventListener('click', function() {
+            var sidebar = document.getElementById('sidebar');
+            var content = document.getElementById('content');
+            sidebar.classList.toggle('collapsed');
+            content.classList.toggle('sidebar-collapsed');
+        });
 
-    //     if (route === 'ponorogo') {
-    //         message = 'Jadwal keberangkatan untuk rute Ponorogo adalah jam 13.30 WIB | Dengan estimasi jam 03.00 WIB tiba di Ponorogo';
-    //     } else if (route === 'solo') {
-    //         message = 'Jadwal keberangkatan untuk rute Solo adalah jam 14.00 WIB | Dengan estimasi jam 02.00 WIB tiba di Matesih';
-    //     } 
-    //     else if (route === 'bojonegoro') {
-    //         message = 'Jadwal keberangkatan untuk rute Bojonegoro adalah jam 14.30 WIB | Dengan estimasi jam 04.00 WIB tiba di Bojonegoro';
-    //     } 
-    //     else if (route === 'gemolong') {
-    //         message = 'Jadwal keberangkatan untuk rute Gemolong adalah jam 14.40 WIB | Dengan estimasi jam 03.00 WIB tiba di Gemolong';
-    //     } 
-
-    //     scheduleInfo.textContent = message;
-    // }
-    // function formatDate(date) {
-    //         var day = date.getDate();
-    //         var month = date.getMonth() + 1; // January is 0!
-    //         var year = date.getFullYear();
-
-    //         // Add leading zeroes if day or month is less than 10
-    //         if (day < 10) day = '0' + day;
-    //         if (month < 10) month = '0' + month;
-
-    //         return day + '/' + month + '/' + year;
-    //     }
-
-    //     document.getElementById('departure').addEventListener('change', function() {
-    //         var departureElement = document.getElementById('departure');
-    //         var departure = departureElement.value;
-    //         var departureDateInput = document.getElementById('departure_date').value;
-            
-    //         if (!departureDateInput) {
-    //             alert("Please select a departure date.");
-    //             return;
-    //         }
-            
-    //         var departureTime;
-    //         switch (departure) {
-    //             case 'Balaraja':
-    //                 departureTime = '12.00 WIB';
-    //                 break;
-    //             case 'BSD Serpong':
-    //                 departureTime = '13.30 WIB';
-    //                 break;
-    //             case 'Samsat BSD':
-    //                 departureTime = '14.00 WIB';
-    //                 break;
-    //             case 'Cilenggang':
-    //                 departureTime = '14.30 WIB';
-    //                 break;
-    //             default:
-    //                 departureTime = '';
-    //         }
-
-    //         // Convert input date string to a Date object
-    //         var departureDate = new Date(departureDateInput);
-    //         var formattedDepartureDate = formatDate(departureDate);
-    //         document.getElementById('departure-location').textContent = departure + ' (' + formattedDepartureDate + ' ' + departureTime + ')';
-
-    //         // Save departure date for later use
-    //         departureElement.dataset.date = formattedDepartureDate;
-    //     });
-
-    //     document.getElementById('destination').addEventListener('change', function() {
-    //         var destination = document.getElementById('destination').value;
-    //         var arrivalTime;
-    //         var departureDateInput = document.getElementById('departure').dataset.date;
-            
-    //         if (!departureDateInput) {
-    //             alert("Please select a departure location.");
-    //             return;
-    //         }
-
-    //         // Convert input date string to a Date object
-    //         var departureDate = new Date(departureDateInput.split('/').reverse().join('-'));
-    //         switch (destination) {
-    //             case 'Sragen':
-    //                 arrivalTime = '23.00 WIB';
-    //                 break;
-    //             case 'Ngawi':
-    //                 arrivalTime = '00.00 WIB';
-    //                 break;
-    //             case 'Madiun':
-    //                 arrivalTime = '01.30 WIB';
-    //                 break;
-    //             case 'Ponorogo':
-    //                 arrivalTime = '03.00 WIB';
-    //                 break;
-    //             case 'Semarang':
-    //                 arrivalTime = '22.00 WIB';
-    //                 break;
-    //             case 'Salatiga':
-    //                 arrivalTime = '00.00 WIB';
-    //                 break;
-    //             case 'Boyolali':
-    //                 arrivalTime = '01.00 WIB';
-    //                 break;
-    //             case 'Solo':
-    //                 arrivalTime = '02.00 WIB';
-    //                 break;
-    //             case 'Matesih':
-    //                 arrivalTime = '04.00 WIB';
-    //                 break;
-    //             case 'Wirosari':
-    //                 arrivalTime = '01.00 WIB';
-    //                 break;
-    //             case 'Blora':
-    //                 arrivalTime = '02.00 WIB';
-    //                 break;
-    //             case 'Cepu':
-    //                 arrivalTime = '03.00 WIB';
-    //                 break;
-    //             case 'Bojonegoro':
-    //                 arrivalTime = '04.00 WIB';
-    //                 break;
-    //             case 'Gubug':
-    //                 arrivalTime = '23.30 WIB';
-    //                 break;
-    //             case 'Godong':
-    //                 arrivalTime = '00.00 WIB';
-    //                 break;
-    //             case 'Purwodadi':
-    //                 arrivalTime = '00.30 WIB';
-    //                 break;
-    //             case 'Sumberlawang':
-    //                 arrivalTime = '01.00 WIB';
-    //                 break;
-    //             case 'Gemolong':
-    //                 arrivalTime = '02.00 WIB';
-    //                 break;
-    //             default:
-    //                 arrivalTime = '';
-    //         }
-
-    //         // Calculate arrival date
-    //         var arrivalDate = new Date(departureDate);
-    //         arrivalDate.setDate(arrivalDate.getDate() + 1); // Add 1 day for arrival
-
-    //         var formattedArrivalDate = formatDate(arrivalDate);
-    //         document.getElementById('destination-location').textContent = destination + ' (' + formattedArrivalDate + ' ' + arrivalTime + ')';
-    //     });
     // Trigger initial check when route or departure date changes
     document.getElementById("route").addEventListener("change", checkReservedSeats);
     document.getElementById("departure_date").addEventListener("change", checkReservedSeats);
@@ -918,6 +879,26 @@ document.getElementById('destination').addEventListener('change', function() {
 <body>
 
 <div id="notification-container"></div>
+
+    <!-- Top Navbar -->
+    <nav class="navbar navbar-static-top">
+        <span class="navbar-brand">Dashboard Penumpang</span>
+        <a href="profile_pnp.php" class="profile-link">
+            <i class="fas fa-user"></i> Profil
+        </a>
+    </nav>
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <button class="btn btn-primary toggle-btn" id="toggleSidebar">☰</button>
+        <div class="profile">
+            <h5>Hallo, <?php echo htmlspecialchars($passenger['passenger_name']); ?>!</h5>
+        </div>
+        <a href="dashboard_pnp.php"><i class="fas fa-home"></i> Home</a>
+        <a href="pesan_tiket_pnp.php"><i class="fas fa-ticket-alt"></i> Pesan Tiket</a>
+        <a href="riwayat_pnp.php"><i class="fas fa-history"></i> Riwayat Transaksi</a>
+        <a href="logout_penumpang.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    </div>
 
     <div class="container">
         <h2>Form Pemesanan Tiket Bus</h2>
