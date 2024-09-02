@@ -2,24 +2,6 @@
 include('conn.php'); // Menghubungkan ke database
 session_start(); // Memulai sesi
 
-
-// Check if the user is logged in
-if (!isset($_SESSION['email'])) {
-    header("Location: login_penumpang.php");
-    exit();
-}
-
-// Get the email of the logged-in user
-$logged_in_email = $_SESSION['email'];
-
-// Fetch passenger data from `data_pnp` based on the logged-in user's email
-$sql_pnp = "SELECT * FROM data_pnp WHERE email = ?";
-$stmt_pnp = $conn->prepare($sql_pnp);
-$stmt_pnp->bind_param("s", $logged_in_email);
-$stmt_pnp->execute();
-$result_pnp = $stmt_pnp->get_result();
-$passenger = $result_pnp->fetch_assoc();
-
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $kode_penumpang = $_POST['kode_penumpang'];
     $password = md5($_POST['password']); // Menggunakan MD5 untuk hashing password
@@ -934,7 +916,6 @@ document.getElementById('destination').addEventListener('change', function() {
     </script>
 </head>
 <body>
-<?php include('navbar.php'); ?>
 
 <div id="notification-container"></div>
 
