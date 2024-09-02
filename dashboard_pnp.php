@@ -25,8 +25,7 @@ $stmt_orders = $conn->prepare($sql_orders);
 $stmt_orders->bind_param("s", $logged_in_email);
 $stmt_orders->execute();
 $result_orders = $stmt_orders->get_result();
-?>
-<!DOCTYPE html>
+?><!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -34,12 +33,33 @@ $result_orders = $stmt_orders->get_result();
     <title>Dashboard Penumpang</title>
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <style>
         body {
             display: flex;
+            flex-direction: column;
             min-height: 100vh;
             margin: 0;
             font-family: Arial, sans-serif;
+        }
+        .navbar {
+            background-color: #007bff;
+            color: white;
+            padding: 10px;
+        }
+        .navbar .navbar-brand {
+            color: white;
+            font-size: 1.2rem;
+        }
+        .navbar .profile-link {
+            color: white;
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+        }
+        .navbar .profile-link i {
+            margin-right: 5px;
         }
         .sidebar {
             width: 250px;
@@ -59,12 +79,16 @@ $result_orders = $stmt_orders->get_result();
         }
         .sidebar a {
             padding: 15px 20px;
-            display: block;
+            display: flex;
+            align-items: center;
             font-size: 1.2rem;
             color: #343a40;
             text-decoration: none;
             border-radius: 4px;
             transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .sidebar a i {
+            margin-right: 10px;
         }
         .sidebar a:hover {
             background-color: #e2e6ea;
@@ -110,9 +134,6 @@ $result_orders = $stmt_orders->get_result();
         }
         .btn-primary, .btn-danger {
             border-radius: 30px;
-        }
-        .navbar {
-            margin-bottom: 20px;
         }
         .table-wrapper {
             background-color: #fff;
@@ -172,16 +193,24 @@ $result_orders = $stmt_orders->get_result();
 </head>
 <body>
 
+    <!-- Top Navbar -->
+    <nav class="navbar navbar-static-top">
+        <span class="navbar-brand">Dashboard Penumpang</span>
+        <a href="profile.php" class="profile-link">
+            <i class="fas fa-user"></i> Profil
+        </a>
+    </nav>
+
     <!-- Sidebar -->
     <div class="sidebar" id="sidebar">
         <button class="btn btn-primary toggle-btn" id="toggleSidebar">☰</button>
         <div class="profile">
             <h5>Hallo, <?php echo htmlspecialchars($passenger['passenger_name']); ?>!</h5>
         </div>
-        <a href="dashboard_pnp.php">Home</a>
-        <a href="pesan_tiket_pnp.php">Pesan Tiket</a>
-        <a href="riwayat_transaksi_pnp.php">Riwayat Transaksi</a>
-        <a href="logout_penumpang.php">Logout</a>
+        <a href="dashboard_pnp.php"><i class="fas fa-home"></i> Home</a>
+        <a href="pesan_tiket_pnp.php"><i class="fas fa-ticket-alt"></i> Pesan Tiket</a>
+        <a href="riwayat_transaksi_pnp.php"><i class="fas fa-history"></i> Riwayat Transaksi</a>
+        <a href="logout_penumpang.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
     </div>
 
     <!-- Content Area -->
@@ -251,18 +280,17 @@ $result_orders = $stmt_orders->get_result();
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 
     <!-- Bootstrap JS and dependencies -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
         document.getElementById('toggleSidebar').addEventListener('click', function() {
-            const sidebar = document.getElementById('sidebar');
-            const content = document.getElementById('content');
+            var sidebar = document.getElementById('sidebar');
+            var content = document.getElementById('content');
             sidebar.classList.toggle('collapsed');
             content.classList.toggle('sidebar-collapsed');
         });
