@@ -31,6 +31,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 
+
+// Determine the CSS class for the status
+$status_class = [
+    'verified' => 'verified', 
+    'paid' => 'pending',
+    'cancelled' => 'unpaid',
+    'unknown' => 'unpaid'
+][$status_pembayaran] ?? 'unpaid';
+
+// Initialize message content
+$message = "";
+
 // Mengambil data dari sesi untuk mengisi form secara otomatis
 $passenger_name = isset($_SESSION['passenger_name']) ? $_SESSION['passenger_name'] : '';
 $passenger_phone = isset($_SESSION['passenger_phone']) ? $_SESSION['passenger_phone'] : '';

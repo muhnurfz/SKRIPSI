@@ -110,12 +110,12 @@
         </div>
         <div class="form-group">
             <label for="passenger_phone">Nomor Telepon</label>
-            <input type="text" class="form-control" id="passenger_phone" name="passenger_phone" placeholder="+62 812 3456 7890" required>
+            <input type="text" class="form-control" id="passenger_phone" name="passenger_phone"  required>
             <small id="phoneError" class="form-text text-danger" style="display: none;">Nomor telepon tidak valid.</small>
         </div>
         <div class="form-group">
             <label for="email">Email</label>
-            <input type="email" class="form-control" id="email" name="email" required>
+            <input type="email" class="form-control" id="email" name="email" placeholder="contoh@gmail.com"required>
         </div>
         <div class="form-group" style="position: relative;">
                 <label for="password">Password</label>

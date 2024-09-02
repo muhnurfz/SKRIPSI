@@ -26,6 +26,30 @@ $stmt_orders->bind_param("s", $logged_in_email);
 $stmt_orders->execute();
 $result_orders = $stmt_orders->get_result();
 
+// Status messages and corresponding CSS classes
+$status_messages = [
+    'verified' => 'LUNAS', 
+    'paid' => 'Menunggu verifikasi',
+    'pending' => 'Menunggu Pembayaran',
+    'cancelled' => 'Batal',
+    'unknown' => 'Unknown Status'
+];
+
+$status_classes = [
+    'verified' => 'verified', 
+    'paid' => 'paid',
+    'pending' => 'pending',
+    'cancelled' => 'unpaid',
+    'unknown' => 'unpaid'
+];
+
+// Get the status from the database
+$status_pembayaran = $row['status_pembayaran'];
+
+// Determine the status message and CSS class
+$status_message = $status_messages[$status_pembayaran] ?? $status_messages['unknown'];
+$status_class = $status_classes[$status_pembayaran] ?? $status_classes['unknown'];
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -62,6 +86,32 @@ $result_orders = $stmt_orders->get_result();
             padding: 20px;
             border-radius: 10px;
         }
+        .status {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            text-align: center;
+            color: #fff;
+        }
+
+        .verified {
+            background-color: #28a745; /* Green */
+        }
+
+        .paid {
+            background-color: #4cbccc; /* Light Blue */
+        }
+
+        .pending {
+            background-color: #ffc107; /* Yellow */
+            color: black;
+        }
+
+        .unpaid {
+            background-color: #dc3545; /* Red */
+        }
+
     </style>
 </head>
 <body>
@@ -131,14 +181,7 @@ $result_orders = $stmt_orders->get_result();
             </div>
         </div>
 
-        <!-- Card for Other Options -->
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">Pilihan Lainnya</h5>
-                <a href="#" class="btn btn-danger">Opsi Lain</a>
-            </div>
-        </div>
-    </div>
+    
 
     <!-- Bootstrap JS and dependencies -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
