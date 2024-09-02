@@ -25,7 +25,8 @@ $stmt_orders = $conn->prepare($sql_orders);
 $stmt_orders->bind_param("s", $logged_in_email);
 $stmt_orders->execute();
 $result_orders = $stmt_orders->get_result();
-?><!DOCTYPE html>
+?>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -34,7 +35,7 @@ $result_orders = $stmt_orders->get_result();
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        body {
+      body {
             display: flex;
             flex-wrap: nowrap;
             min-height: 100vh;
@@ -144,58 +145,97 @@ $result_orders = $stmt_orders->get_result();
             background-color: #f1f1f1;
         }
 
-        .status {
-            display: inline-block;
-            padding: 5px 10px;
-            border-radius: 4px;
-            font-size: 12px;
-            text-align: center;
-            color: #fff;
-            font-weight: bold;
+.status {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    text-align: center;
+    color: #fff;
+    font-weight: bold;
+}
+
+.verified {
+    background-color: #28a745; /* Green */
+}
+
+.paid {
+    background-color: #4cbccc; /* Light Blue */
+}
+
+.pending {
+    background-color: #ffc107; /* Yellow */
+    color: black;
+}
+
+.unpaid {
+    background-color: #dc3545; /* Red */
+}
+
+@media (max-width: 767.98px) {
+    .table-responsive-sm {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .table-wrapper {
+        padding: 10px;
+    }
+
+    .status {
+        font-size: 10px;
+        padding: 3px 6px;
+    }
+}
+
+    </style>
+</head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Penumpang</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            display: flex;
         }
-
-        .verified {
-            background-color: #28a745; /* Green */
+        .sidebar {
+            width: 250px;
+            background-color: #f8f9fa;
+            padding-top: 20px;
         }
-
-        .paid {
-            background-color: #4cbccc; /* Light Blue */
+        .sidebar a {
+            padding: 10px 15px;
+            display: block;
+            font-size: 1.1rem;
+            color: #343a40;
+            text-decoration: none;
         }
-
-        .pending {
-            background-color: #ffc107; /* Yellow */
-            color: black;
+        .sidebar a:hover {
+            background-color: #e9ecef;
+            color: #007bff;
         }
-
-        .unpaid {
-            background-color: #dc3545; /* Red */
+        .content {
+            flex-grow: 1;
+            padding: 20px;
         }
-
-        @media (max-width: 767.98px) {
-            .table-responsive-sm {
-                display: block;
-                width: 100%;
-                overflow-x: auto;
-                -webkit-overflow-scrolling: touch;
-            }
-
-            .table-wrapper {
-                padding: 10px;
-            }
-
-            .status {
-                font-size: 10px;
-                padding: 3px 6px;
-            }
+        .profile {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #f1f1f1;
+            border-radius: 5px;
         }
     </style>
 </head>
 <body>
 
-    <!-- Sidebar -->
-    <div class="sidebar" id="sidebar">
-        <div class="profile">
-            <h5>Hallo, <?php echo htmlspecialchars($passenger['passenger_name']); ?>!</h5>
+<div class="sidebar" id="sidebar">
+<div class="profile">
+        <h5>Hallo, <?php echo htmlspecialchars($passenger['passenger_name']); ?>!</h5>
         </div>
         <a href="dashboard_pnp.php">Home</a>
         <a href="pesan_tiket_pnp.php">Pesan Tiket</a>
@@ -204,10 +244,10 @@ $result_orders = $stmt_orders->get_result();
     </div>
 
     <!-- Content Area -->
-    <div class="content" id="content">
+    <div class="content">
         <div class="container">
-            <button class="btn btn-primary" id="toggleSidebar">Toggle Sidebar</button>
-            <!-- Card for Booking Tickets -->
+        <button class="btn btn-primary" id="toggleSidebar">☰</button>
+        <!-- Card for Booking Tickets -->
             <div class="card mb-4">
                 <div class="card-body">
                     <h5 class="card-title">Pesan Tiket</h5>
@@ -279,8 +319,8 @@ $result_orders = $stmt_orders->get_result();
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script>
-        document.getElementById('toggleSidebar').addEventListener('click', function() {
+<script>
+         document.getElementById('toggleSidebar').addEventListener('click', function() {
             const sidebar = document.getElementById('sidebar');
             const content = document.getElementById('content');
             sidebar.classList.toggle('collapsed');
