@@ -1,6 +1,6 @@
 <?php
-include('conn.php');
 session_start();
+include('conn.php');
 
 // Check if the user is logged in
 if (!isset($_SESSION['email'])) {
@@ -25,7 +25,6 @@ $stmt_orders = $conn->prepare($sql_orders);
 $stmt_orders->bind_param("s", $logged_in_email);
 $stmt_orders->execute();
 $result_orders = $stmt_orders->get_result();
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -174,9 +173,8 @@ $result_orders = $stmt_orders->get_result();
     <!-- Sidebar -->
     <div class="sidebar">
         <div class="profile">
-            <h5><?php echo $passenger_name; ?></h5>
-            <p><?php echo $passenger_phone; ?></p>
-            <p><?php echo $email; ?></p>
+        <h5>Hallo, <?php echo htmlspecialchars($passenger['passenger_name']); ?>!</h5>
+           
         </div>
         <a href="dashboard_pnp.php">Home</a>
         <a href="pesan_tiket_pnp.php">Pesan Tiket</a>
