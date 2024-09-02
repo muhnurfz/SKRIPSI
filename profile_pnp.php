@@ -18,10 +18,11 @@ $result = $conn->query($sql);
 if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
 } else {
-    echo "Data penumpang tidak ditemukan.";
+    echo "<script>alert('Data penumpang tidak ditemukan.'); window.location.href = 'login_penumpang.php';</script>";
     exit();
 }
 
+$message = '';
 // Memproses form saat di-submit
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $passenger_name = $_POST['passenger_name'];
@@ -38,9 +39,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                   WHERE email = '$logged_in_email'";
 
     if ($conn->query($update_sql) === TRUE) {
-        echo "Data berhasil diperbarui!";
+        $message = 'Data berhasil diperbarui!';
+        $message_type = 'success';
     } else {
-        echo "Error: " . $conn->error;
+        $message = 'Error: ' . $conn->error;
+        $message_type = 'error';
     }
 }
 
@@ -282,14 +285,19 @@ $conn->close();
             border-radius: 5px;
             display: none;
             z-index: 1000;
+            transition: opacity 0.5s ease-in-out;
         }
         .notification.error {
             background-color: #f44336;
         }
         .notification.show {
             display: block;
+            opacity: 1;
         }
-
+        .notification.fade {
+            opacity: 0;
+            transition: opacity 0.5s ease-out;
+        }
         @media (max-width: 767.98px) {
             .table-responsive-sm {
                 display: block;
@@ -322,9 +330,13 @@ $conn->close();
     </style>
 </head>
 <body>
-<div class="notification <?php echo isset($message) ? (strpos($message, 'Error') !== false ? 'error' : '') : ''; ?> <?php echo isset($message) ? 'show' : ''; ?>">
-        <?php echo $message; ?>
-    </div>
+  <!-- Notification div -->
+  <?php if (!empty($message)): ?>
+        <div class="notification <?php echo $message_type; ?> show" id="notification">
+            <?php echo $message; ?>
+        </div>
+    <?php endif; ?>    
+
     <!-- Top Navbar -->
     <nav class="navbar navbar-static-top">
         <span class="navbar-brand">Dashboard Penumpang</span>
@@ -393,13 +405,16 @@ $conn->close();
             sidebar.classList.toggle('collapsed');
             content.classList.toggle('sidebar-collapsed');
         });
-
         document.addEventListener('DOMContentLoaded', function() {
-            var notification = document.querySelector('.notification');
+            var notification = document.getElementById('notification');
             if (notification) {
+                // Hide the notification after 5 seconds
                 setTimeout(function() {
-                    notification.classList.remove('show');
-                }, 5000); // Hide the notification after 5 seconds
+                    notification.classList.add('fade');
+                    setTimeout(function() {
+                        notification.classList.remove('show', 'fade');
+                    }, 500); // Match with transition duration
+                }, 5000);
             }
         });
     </script>
