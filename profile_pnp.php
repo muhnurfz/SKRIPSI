@@ -58,16 +58,15 @@ $conn->close();
     <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
-    
-        body, html {
+        body {
             background-color: #f8f9fa;
             font-family: Arial, sans-serif;
-            height: 100%;
             margin: 0;
+            padding: 0;
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: #f8f9fa;
+            flex-direction: column;
         }
 
         .container {
@@ -239,6 +238,8 @@ $conn->close();
             padding: 20px;
             flex-grow: 1;
             transition: margin-left 0.3s ease;
+            max-width: 800px; /* set a maximum width for the content area */
+            margin: 0 auto; /* center the content area horizontally */
         }
 
         .content.sidebar-collapsed {
