@@ -46,6 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 $conn->close();
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -57,7 +58,6 @@ $conn->close();
     <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
-        /* Your existing styles */
         body {
             background-color: #f8f9fa;
             font-family: Arial, sans-serif;
@@ -66,6 +66,7 @@ $conn->close();
             display: flex;
             justify-content: center;
             align-items: center;
+            height: 100vh;
             flex-direction: column;
         }
 
@@ -76,7 +77,6 @@ $conn->close();
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
             max-width: 500px;
             width: 100%;
-            transition: margin-left 0.3s ease;
         }
 
         .form-group {
@@ -97,9 +97,14 @@ $conn->close();
             border-color: #4CAF50;
         }
 
-        .non-editable {
-            pointer-events: none;
-            background-color: #e9ecef;
+        .form-group .toggle-password {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #6c757d;
+            font-size: 18px; /* Adjust size if needed */
         }
 
         .btn-primary {
@@ -240,15 +245,6 @@ $conn->close();
             margin-left: 0;
         }
 
-        .form-group .toggle-password {
-            position: absolute;
-            right: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            cursor: pointer;
-            color: #6c757d;
-        }
-
         @media (max-width: 767.98px) {
             .table-responsive-sm {
                 display: block;
@@ -278,7 +274,6 @@ $conn->close();
                 transform: translateX(0);
             }
         }
-
     </style>
 </head>
 <body>
