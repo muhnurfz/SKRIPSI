@@ -174,23 +174,11 @@ $result_orders = $stmt_orders->get_result();
     <!-- Sidebar -->
     <div class="sidebar">
         <div class="profile">
-            <?php
-                // Fetch user profile data from the `data_pnp` table
-                $kode_penumpang = 'PNP123'; // Replace with actual kode_penumpang from session or login
-                $query = "SELECT passenger_name, passenger_phone, email FROM data_pnp WHERE kode_penumpang = '$kode_penumpang'";
-                $result_profile = $conn->query($query);
-
-                if ($result_profile->num_rows > 0) {
-                    $profile = $result_profile->fetch_assoc();
-                    echo "<h5>" . htmlspecialchars($profile['passenger_name']) . "</h5>";
-                    echo "<p>" . htmlspecialchars($profile['passenger_phone']) . "</p>";
-                    echo "<p>" . htmlspecialchars($profile['email']) . "</p>";
-                } else {
-                    echo "<p>Profile data not found.</p>";
-                }
-            ?>
+            <h5><?php echo $passenger_name; ?></h5>
+            <p><?php echo $passenger_phone; ?></p>
+            <p><?php echo $email; ?></p>
         </div>
-        <a href="index.php">Home</a>
+        <a href="dashboard_pnp.php">Home</a>
         <a href="pesan_tiket_pnp.php">Pesan Tiket</a>
         <a href="riwayat_transaksi_pnp.php">Riwayat Transaksi</a>
         <a href="logout_penumpang.php">Logout</a>
