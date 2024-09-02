@@ -234,8 +234,8 @@ $result_orders = $stmt_orders->get_result();
 <body>
 
     <!-- Sidebar -->
-    <button class="btn btn-primary" id="toggleSidebar">☰</button>
     <div class="sidebar" id="sidebar">
+        <button class="btn btn-primary" id="toggleSidebar">☰</button>
         <div class="profile">
             <h5>Hallo, <?php echo htmlspecialchars($passenger['passenger_name']); ?>!</h5>
         </div>
