@@ -1,11 +1,36 @@
 <?php
-include('conn.php');
-session_start();
+include('conn.php'); // Menghubungkan ke database
+session_start(); // Memulai sesi
 
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $kode_penumpang = $_POST['kode_penumpang'];
+    $password = md5($_POST['password']); // Menggunakan MD5 untuk hashing password
+
+    // Query untuk memeriksa kode penumpang dan password
+    $query = "SELECT * FROM data_pnp WHERE kode_penumpang = '$kode_penumpang' AND password = '$password'";
+    $result = mysqli_query($conn, $query);
+
+    if (mysqli_num_rows($result) == 1) {
+        $user = mysqli_fetch_assoc($result);
+        // Menyimpan data pengguna ke dalam sesi
+        $_SESSION['kode_penumpang'] = $user['kode_penumpang'];
+        $_SESSION['passenger_name'] = $user['passenger_name'];
+        $_SESSION['passenger_phone'] = $user['passenger_phone'];
+        $_SESSION['email'] = $user['email'];
+
+        header('Location: pesan_tiket_pnp.php'); // Redirect ke halaman form pemesanan
+        exit();
+    } else {
+        echo "Login gagal! Kode penumpang atau password salah.";
+    }
+}
+
+// Mengambil data dari sesi untuk mengisi form secara otomatis
 $passenger_name = isset($_SESSION['passenger_name']) ? $_SESSION['passenger_name'] : '';
 $passenger_phone = isset($_SESSION['passenger_phone']) ? $_SESSION['passenger_phone'] : '';
 $email = isset($_SESSION['email']) ? $_SESSION['email'] : '';
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
