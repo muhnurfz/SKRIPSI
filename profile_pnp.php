@@ -84,16 +84,20 @@ $conn->close();
         }
 
         .form-control {
-            padding: 10px;
-            height: auto;
-            width: 100%;
-            box-sizing: border-box;
-            margin-bottom: 10px;
+            padding: 12px;
+        height: auto;
+        width: 100%;
+        box-sizing: border-box;
+        margin-bottom: 10px;
+        border: 1px solid #ced4da;
+        border-radius: 5px;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        transition: border-color 0.3s, box-shadow 0.3s;
         }
 
         .form-control:focus {
-            box-shadow: none;
-            border-color: #4CAF50;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+            border-color: #80bdff;   
         }
 
         .form-group .toggle-password {
@@ -107,19 +111,26 @@ $conn->close();
         }
 
         .btn-primary {
-            background-color: #4CAF50;
-            border-color: #4CAF50;
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            border: none;
             color: white;
-            padding: 10px 15px;
+            padding: 12px 20px;
             border-radius: 5px;
             cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background 0.3s, transform 0.2s;
         }
 
         .btn-primary:hover {
-            background-color: #45a049;
-            border-color: #45a049;
+            background: linear-gradient(45deg, #45a049, #3e8e41);
+            transform: translateY(-2px);
         }
 
+        h2 {
+        margin-bottom: 20px;
+        text-align: center;
+        color: #343a40;
+     }
         .btn-secondary {
             background-color: #6c757d;
             border-color: #6c757d;
@@ -314,38 +325,36 @@ $conn->close();
         <a href="logout_penumpang.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
     </div>
 
-    <!-- Content -->
-    <div class="container content" id="content">
-        <h2>Edit Profil Penumpang</h2>
-        <form method="POST">
-            <div class="form-group">
-                <label for="kode_penumpang">Kode Penumpang:</label>
-                <input type="text" id="kode_penumpang" name="kode_penumpang" class="form-control non-editable" value="<?= htmlspecialchars($row['kode_penumpang']); ?>" readonly>
-            </div>
-            <div class="form-group">
-                <label for="passenger_name">Nama Penumpang:</label>
-                <input type="text" id="passenger_name" name="passenger_name" class="form-control" value="<?= htmlspecialchars($row['passenger_name']); ?>" required>
-            </div>
-            <div class="form-group">
-                <label for="passenger_phone">No. Telepon:</label>
-                <input type="text" id="passenger_phone" name="passenger_phone" class="form-control" value="<?= htmlspecialchars($row['passenger_phone']); ?>" required>
-            </div>
-            <div class="form-group">
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" class="form-control" value="<?= htmlspecialchars($row['email']); ?>" required>
-            </div>
-            <div class="form-group" style="position: relative;">
-                <label for="password">Password</label>
-                <div class="password-wrapper">
-                    <input type="password" class="form-control" id="password" name="password" required>
-                    <i id="togglePassword" class="fas fa-eye"></i>
-                </div>
-            </div>
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary">Simpan</button>
-            </div>
-        </form>
-    </div>
+<!-- Content -->
+<div class="container content" id="content">
+    <h2>Edit Profil Penumpang</h2>
+    <form method="POST">
+        <div class="form-group">
+            <label for="kode_penumpang">Kode Penumpang:</label>
+            <input type="text" id="kode_penumpang" name="kode_penumpang" class="form-control non-editable" value="<?= htmlspecialchars($row['kode_penumpang']); ?>" readonly>
+        </div>
+        <div class="form-group">
+            <label for="passenger_name">Nama Penumpang:</label>
+            <input type="text" id="passenger_name" name="passenger_name" class="form-control" value="<?= htmlspecialchars($row['passenger_name']); ?>" required>
+        </div>
+        <div class="form-group">
+            <label for="passenger_phone">No. Telepon:</label>
+            <input type="text" id="passenger_phone" name="passenger_phone" class="form-control" value="<?= htmlspecialchars($row['passenger_phone']); ?>" required>
+        </div>
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" class="form-control" value="<?= htmlspecialchars($row['email']); ?>" required>
+        </div>
+        <div class="form-group password-wrapper">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" id="password" name="password" required>
+            <i id="togglePassword" class="fas fa-eye"></i>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Simpan</button>
+        </div>
+    </form>
+</div>
 
     <!-- JavaScript -->
     <script>
