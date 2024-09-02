@@ -259,7 +259,7 @@
             <div class="col-md-4">
                 <div class="feature-item">
                     <h3>Pembayaran</h3>
-                    <p>Langkah cepat untuk membayar tiket Anda</p>
+                    <p>Langkah cepat untuk membayar tiket Anda LET TESTING </p>
                     <a href="payment_form.php" class="btn btn-primary">Bayar tiket</a>
                 </div>
             </div>
