@@ -46,21 +46,23 @@ $result_orders = $stmt_orders->get_result();
         .navbar-static-top {
     display: flex;
     justify-content: center;
-    position: relative;
+    width: 100%;
     background-color: #f8f9fa; /* Contoh warna background */
 }
 
 .navbar-brand {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
+    margin-right: auto;
+    margin-left: auto;
     font-weight: bold;
 }
-
-.profile-link {
-    margin-left: auto; /* Menggeser profil ke kanan */
-}
-
+        .navbar .profile-link {
+            color: white;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            position: absolute;
+            right: 20px; /* Sesuaikan dengan margin yang diinginkan */
+        }
         .navbar .profile-link i {
             margin-right: 5px;
         }
