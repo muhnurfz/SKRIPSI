@@ -1,5 +1,10 @@
 <?php
 include('conn.php');
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+require 'PHPMailer/src/Exception.php';
+require 'PHPMailer/src/PHPMailer.php';
+require 'PHPMailer/src/SMTP.php';
 
 // Generate kode penumpang
 function generateKodePenumpang($name) {
@@ -58,12 +63,65 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $hashed_password = md5($password); // Consider using a more secure hashing method
 
                 // Insert the data into the database including the hashed password
-                $sql = "INSERT INTO data_pnp (kode_penumpang, passenger_name, passenger_phone, email, password) VALUES (?, ?, ?, ?, ?)";
+                $sql = "INSERT INTO data_pnp (kode_penumpang, passenger_name, passenger_phone, email, password, status_konfirmasi) VALUES (?, ?, ?, ?, ?, 0)";
                 $stmt = $conn->prepare($sql);
                 $stmt->bind_param("sssss", $kode_penumpang, $passenger_name, $passenger_phone, $email, $hashed_password);
 
                 if ($stmt->execute()) {
-                    header('Location: register.php?success=Registrasi berhasil!');
+                    // Send confirmation email
+                    $mail = new PHPMailer(true);
+                    try {
+                        // Server settings
+                        $mail->isSMTP();
+                        $mail->Host = 'smtp.hostinger.com'; // Host SMTP Anda
+                        $mail->SMTPAuth = true;
+                        $mail->Username = 'customer.service@tiket.agungindahtrav.com'; // Alamat email pengirim
+                        $mail->Password = '1Customer.service'; // Password email pengirim
+                        $mail->SMTPSecure = 'ssl'; // Atau 'tls' jika menggunakan port 587
+                        $mail->Port = 465; // Gunakan port 465 untuk 'ssl' atau port 587 untuk 'tls'
+
+                        // Penerima dan pengirim
+                        $mail->setFrom('customer.service@tiket.agungindahtrav.com', 'Tiket Agung Indah Travel');
+                        $mail->addAddress($email);
+
+                        // Konten email
+                        $mail->isHTML(true); // Set email format to HTML
+                        $mail->Subject = 'Konfirmasi Registrasi';
+                        $mail->Body    = '
+<html>
+<head>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .container { width: 100%; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; }
+        .header { background-color: #007bff; color: #fff; padding: 10px; text-align: center; }
+        .content { padding: 20px; }
+        .button { display: inline-block; padding: 10px 20px; font-size: 16px; color: #fff; background-color: #007bff; text-decoration: none; border-radius: 5px; }
+        .footer { text-align: center; font-size: 12px; color: #777; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Selamat Datang di Tiket Agung Indah Travel</h1>
+        </div>
+        <div class="content">
+            <p>Terima kasih telah mendaftar di situs kami. Untuk menyelesaikan proses pendaftaran, silakan klik tombol di bawah ini untuk mengkonfirmasi akun Anda.</p>
+            <a href="http://example.com/konfirmasi_pnp.php?email=' . urlencode($email) . '&code=' . urlencode($kode_penumpang) . '" class="button">Konfirmasi Akun</a>
+            <p>Jika Anda tidak melakukan pendaftaran, abaikan email ini.</p>
+        </div>
+        <div class="footer">
+            &copy; ' . date('Y') . ' Tiket Agung Indah Travel. All rights reserved.
+        </div>
+    </div>
+</body>
+</html>
+';
+
+                        $mail->send();
+                        header('Location: register.php?success=Registrasi berhasil! Silakan cek email Anda untuk konfirmasi.');
+                    } catch (Exception $e) {
+                        header('Location: register.php?error=Registrasi berhasil, tetapi gagal mengirim email konfirmasi: ' . $mail->ErrorInfo);
+                    }
                 } else {
                     header('Location: register.php?error=Terjadi kesalahan: ' . $stmt->error);
                 }
@@ -82,3 +140,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 $conn->close();
+?>

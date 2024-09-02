@@ -14,12 +14,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         if ($result->num_rows > 0) {
             $user = $result->fetch_assoc();
-            $_SESSION['user_id'] = $user['id'];
-            $_SESSION['passenger_name'] = $user['passenger_name'];
-            $_SESSION['email'] = $user['email'];
+            
+            // Check if the account is confirmed
+            if ($user['status_konfirmasi'] == 1) {
+                $_SESSION['user_id'] = $user['id'];
+                $_SESSION['passenger_name'] = $user['passenger_name'];
+                $_SESSION['email'] = $user['email'];
 
-            header("Location: dashboard_pnp.php");
-            exit();
+                header("Location: dashboard_pnp.php");
+                exit();
+            } else {
+                $error = "Akun Anda belum dikonfirmasi. Silakan periksa email Anda untuk konfirmasi.";
+            }
         } else {
             $error = "Email atau password salah.";
         }
@@ -27,6 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
