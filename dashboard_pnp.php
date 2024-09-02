@@ -25,7 +25,33 @@ $stmt_orders = $conn->prepare($sql_orders);
 $stmt_orders->bind_param("s", $logged_in_email);
 $stmt_orders->execute();
 $result_orders = $stmt_orders->get_result();
-?><!DOCTYPE html>
+
+
+// Array of Indonesian day names
+$days_in_indonesian = [
+    'Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'
+];
+
+// Array of Indonesian month names
+$months_in_indonesian = [
+    'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
+    'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
+];
+
+// Get Indonesian day name
+$day_index = date('w', strtotime($departure_date));
+$day_name = $days_in_indonesian[$day_index];
+
+// Get Indonesian month name
+$month_index = date('n', strtotime($departure_date)) - 1;
+$month_name = $months_in_indonesian[$month_index];
+
+// Format date in Indonesian
+$formatted_date = $day_name . ', ' . date('d', strtotime($departure_date)) . ' ' . $month_name . ' ' . date('Y', strtotime($departure_date));
+
+
+?>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -275,7 +301,23 @@ $result_orders = $stmt_orders->get_result();
                                             <td><?php echo htmlspecialchars($row['booking_code']); ?></td>
                                             <td><?php echo htmlspecialchars($row['passenger_name']); ?></td>
                                             <td><?php echo htmlspecialchars($row['destination']); ?></td>
-                                            <td><?php echo htmlspecialchars($row['departure_date']); ?></td>
+                                            <td>
+    <?php 
+        // Get the departure date from the row
+        $departure_date = $row['departure_date'];
+        
+        // Get Indonesian month name
+        $month_index = date('n', strtotime($departure_date)) - 1;
+        $month_name = $months_in_indonesian[$month_index];
+        
+        // Format date in DD/MMMM/YYYY format
+        $formatted_date = date('d', strtotime($departure_date)) . ' ' . $month_name . ' ' . date('Y', strtotime($departure_date));
+        
+        // Output the formatted date
+        echo htmlspecialchars($formatted_date); 
+    ?>
+</td>
+
                                             <td><span class="status <?php echo $status_class; ?>"><?php echo ucfirst($status_message); ?></span></td>
                                         </tr>
                                     <?php endwhile; ?>
