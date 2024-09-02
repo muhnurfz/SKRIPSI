@@ -54,6 +54,7 @@ $result_orders = $stmt_orders->get_result();
         .navbar .navbar-brand {
             color: white;
             font-size: 1.2rem;
+            text-align :center;
         }
         .navbar .profile-link {
             color: white;
