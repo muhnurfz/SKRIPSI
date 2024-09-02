@@ -233,9 +233,10 @@ $result_orders = $stmt_orders->get_result();
 </head>
 <body>
 
-<div class="sidebar" id="sidebar">
-<div class="profile">
-        <h5>Hallo, <?php echo htmlspecialchars($passenger['passenger_name']); ?>!</h5>
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="profile">
+            <h5>Hallo, <?php echo htmlspecialchars($passenger['passenger_name']); ?>!</h5>
         </div>
         <a href="dashboard_pnp.php">Home</a>
         <a href="pesan_tiket_pnp.php">Pesan Tiket</a>
@@ -244,10 +245,10 @@ $result_orders = $stmt_orders->get_result();
     </div>
 
     <!-- Content Area -->
-    <div class="content">
+    <div class="content" id="content">
         <div class="container">
-        <button class="btn btn-primary" id="toggleSidebar">☰</button>
-        <!-- Card for Booking Tickets -->
+            <button class="btn btn-primary" id="toggleSidebar">Toggle Sidebar</button>
+            <!-- Card for Booking Tickets -->
             <div class="card mb-4">
                 <div class="card-body">
                     <h5 class="card-title">Pesan Tiket</h5>
@@ -319,8 +320,8 @@ $result_orders = $stmt_orders->get_result();
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<script>
-         document.getElementById('toggleSidebar').addEventListener('click', function() {
+    <script>
+        document.getElementById('toggleSidebar').addEventListener('click', function() {
             const sidebar = document.getElementById('sidebar');
             const content = document.getElementById('content');
             sidebar.classList.toggle('collapsed');
