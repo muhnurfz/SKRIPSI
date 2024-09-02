@@ -29,6 +29,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 $passenger_name = isset($_SESSION['passenger_name']) ? $_SESSION['passenger_name'] : '';
 $passenger_phone = isset($_SESSION['passenger_phone']) ? $_SESSION['passenger_phone'] : '';
 $email = isset($_SESSION['email']) ? $_SESSION['email'] : '';
+
+
+// Debug untuk memeriksa apakah variabel sesi sudah terisi
+var_dump($_SESSION['passenger_phone']); 
+
 ?>
 
 
