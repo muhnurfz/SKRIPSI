@@ -35,11 +35,49 @@ $result_orders = $stmt_orders->get_result();
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
-      body {
-    background-color: #f8f9fa;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
+         body {
+            display: flex;
+            flex-wrap: nowrap;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #f8f9fa;
+            padding-top: 20px;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            transition: transform 0.3s ease;
+            transform: translateX(0); /* Show by default */
+        }
+        .sidebar.collapsed {
+            transform: translateX(-100%); /* Hide sidebar */
+        }
+        .sidebar a {
+            padding: 10px 15px;
+            display: block;
+            font-size: 1.1rem;
+            color: #343a40;
+            text-decoration: none;
+        }
+        .sidebar a:hover {
+            background-color: #e9ecef;
+            color: #007bff;
+        }
+        .content {
+            margin-left: 260px;
+            padding: 20px;
+            flex-grow: 1;
+            transition: margin-left 0.3s ease;
+        }
+        .content.sidebar-collapsed {
+            margin-left: 0;
+        }
+        .navbar-toggler {
+            margin-left: auto;
+        }
 .container {
     margin-top: 50px;
 }
