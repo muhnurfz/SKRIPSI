@@ -46,59 +46,339 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 $conn->close();
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Profil Penumpang</title>
+    <title>Dashboard Penumpang</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
-        label {
-            display: block;
-            margin: 10px 0 5px;
-        }
-        input[type="text"], input[type="email"], input[type="password"] {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 10px;
-            box-sizing: border-box;
-        }
-        .non-editable {
-            pointer-events: none;
-            background-color: #f0f0f0;
-        }
-        button {
-            padding: 10px 15px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
+      body {
+    background-color: #f8f9fa;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+}
+
+.container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    width: 100%;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-control {
+    padding: 10px;
+    height: auto;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+}
+
+.form-control:focus {
+    box-shadow: none;
+    border-color: #4CAF50;
+}
+
+.non-editable {
+    pointer-events: none;
+    background-color: #e9ecef;
+}
+
+.btn-primary {
+    background-color: #4CAF50;
+    border-color: #4CAF50;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-primary:hover {
+    background-color: #45a049;
+    border-color: #45a049;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    border-color: #6c757d;
+    color: white;
+    padding: 10px 15px;
+    margin-top: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+    border-color: #545b62;
+}
+
+h2 {
+    margin-bottom: 20px;
+    text-align: center;
+    color: #343a40;
+}
+
+.navbar-static-top {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    background-color: #f8f9fa;
+    padding: 10px 0;
+}
+
+.navbar-brand {
+    font-weight: bold;
+}
+
+.profile-link {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.profile-link i {
+    margin-right: 5px;
+}
+
+.sidebar {
+    width: 250px;
+    background-color: #343a40;
+    padding-top: 20px;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    transition: transform 0.3s ease, width 0.3s ease;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    border-right: 1px solid #495057;
+    z-index: 1000;
+}
+
+.sidebar.collapsed {
+    transform: translateX(-250px);
+}
+
+.sidebar a {
+    padding: 15px 20px;
+    display: flex;
+    align-items: center;
+    font-size: 1.1rem;
+    color: #adb5bd;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.sidebar a i {
+    margin-right: 10px;
+}
+
+.sidebar a:hover {
+    background-color: #495057;
+    color: #ffffff;
+}
+
+.sidebar .profile {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #ffffff;
+}
+
+.sidebar .profile h5 {
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+.sidebar .toggle-btn {
+    position: absolute;
+    top: 20px;
+    right: -40px;
+    background-color: #28a745;
+    border: none;
+    color: white;
+    padding: 10px;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+    z-index: 1000;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.sidebar .toggle-btn:hover {
+    background-color: #218838;
+    transform: scale(1.1);
+}
+
+.content {
+    margin-left: 250px;
+    padding: 20px;
+    flex-grow: 1;
+    transition: margin-left 0.3s ease;
+}
+
+.content.sidebar-collapsed {
+    margin-left: 0;
+}
+
+.card {
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+    margin-bottom: 20px;
+}
+
+.card-title {
+    margin-bottom: 15px;
+}
+
+.table-wrapper {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    overflow-x: auto;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.table {
+    margin-bottom: 0;
+    width: 100%;
+}
+
+.table th,
+.table td {
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+.table-hover tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+.status {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    text-align: center;
+    color: #fff;
+    font-weight: bold;
+}
+
+.status.verified {
+    background-color: #28a745;
+}
+
+.status.paid {
+    background-color: #4cbccc;
+}
+
+.status.pending {
+    background-color: #ffc107;
+    color: black;
+}
+
+.status.unpaid {
+    background-color: #dc3545;
+}
+
+@media (max-width: 767.98px) {
+    .table-responsive-sm {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .table-wrapper {
+        padding: 10px;
+    }
+
+    .status {
+        font-size: 10px;
+        padding: 3px 6px;
+    }
+}
+
     </style>
 </head>
 <body>
-    <h2>Edit Profil Penumpang</h2>
-    <form method="POST">
-        <label for="kode_penumpang">Kode Penumpang:</label>
-        <input type="text" id="kode_penumpang" name="kode_penumpang" class="non-editable" value="<?= htmlspecialchars($row['kode_penumpang']); ?>" readonly>
 
-        <label for="passenger_name">Nama Penumpang:</label>
-        <input type="text" id="passenger_name" name="passenger_name" value="<?= htmlspecialchars($row['passenger_name']); ?>" required>
+    <!-- Top Navbar -->
+    <nav class="navbar navbar-static-top">
+        <span class="navbar-brand">Dashboard Penumpang</span>
+        <a href="profile_pnp.php" class="profile-link">
+            <i class="fas fa-user"></i> Profil
+        </a>
+    </nav>
 
-        <label for="passenger_phone">No. Telepon:</label>
-        <input type="text" id="passenger_phone" name="passenger_phone" value="<?= htmlspecialchars($row['passenger_phone']); ?>" required>
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <button class="btn btn-primary toggle-btn" id="toggleSidebar">☰</button>
+        <div class="profile">
+            <h5>Hallo, <?php echo htmlspecialchars($passenger['passenger_name']); ?>!</h5>
+        </div>
+        <a href="dashboard_pnp.php"><i class="fas fa-home"></i> Home</a>
+        <a href="pesan_tiket_pnp.php"><i class="fas fa-ticket-alt"></i> Pesan Tiket</a>
+        <a href="riwayat_pnp.php"><i class="fas fa-history"></i> Riwayat Transaksi</a>
+        <a href="logout_penumpang.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    </div>
 
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" value="<?= htmlspecialchars($row['email']); ?>" required>
+    <div class="container">
+        <h2>Edit Profil Penumpang</h2>
+        <form method="POST">
+            <div class="form-group">
+                <label for="kode_penumpang">Kode Penumpang:</label>
+                <input type="text" id="kode_penumpang" name="kode_penumpang" class="form-control non-editable" value="<?= htmlspecialchars($row['kode_penumpang']); ?>" readonly>
+            </div>
+            <div class="form-group">
+                <label for="passenger_name">Nama Penumpang:</label>
+                <input type="text" id="passenger_name" name="passenger_name" class="form-control" value="<?= htmlspecialchars($row['passenger_name']); ?>" required>
+            </div>
+            <div class="form-group">
+                <label for="passenger_phone">No. Telepon:</label>
+                <input type="text" id="passenger_phone" name="passenger_phone" class="form-control" value="<?= htmlspecialchars($row['passenger_phone']); ?>" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" class="form-control" value="<?= htmlspecialchars($row['email']); ?>" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Simpan Perubahan</button>
+            <a href="dashboard_pnp.php" class="btn btn-secondary btn-block">Kembali ke Dashboard</a>
+        </form>
+    </div>
 
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required>
-
-        <button type="submit">Simpan Perubahan</button>
-    </form>
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        document.getElementById('toggleSidebar').addEventListener('click', function() {
+            var sidebar = document.getElementById('sidebar');
+            var content = document.getElementById('content');
+            sidebar.classList.toggle('collapsed');
+            content.classList.toggle('sidebar-collapsed');
+        });
+    </script>
 </body>
 </html>
