@@ -190,7 +190,7 @@ $result_orders = $stmt_orders->get_result();
                 }
             ?>
         </div>
-        <a href="dashboard_pnp.php">Home</a>
+        <a href="index.php">Home</a>
         <a href="pesan_tiket_pnp.php">Pesan Tiket</a>
         <a href="riwayat_transaksi_pnp.php">Riwayat Transaksi</a>
         <a href="logout_penumpang.php">Logout</a>
