@@ -60,7 +60,41 @@ $passenger = $result_pnp->fetch_assoc();
     <title>Dashboard Penumpang</title>
     <!-- Bootstrap CSS -->
     <style>
-      
+      .terms {
+    width: 270px; /* Set width as requested */
+    background-color: #ffffff; /* White background for better contrast */
+    border: 1px solid #ddd; /* Light grey border for subtle separation */
+    border-radius: 8px; /* Rounded corners for a modern look */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+    padding: 20px; /* Padding inside the box */
+    margin: 20px 0; /* Margin to separate from other elements */
+    font-family: Arial, sans-serif; /* Ensure consistent font */
+}
+
+.terms h2 {
+    font-size: 1.5rem; /* Slightly larger heading for emphasis */
+    color: #333; /* Dark grey color for better readability */
+    margin-bottom: 15px; /* Space below the heading */
+}
+
+.terms p {
+    font-size: 1rem; /* Standard font size for paragraphs */
+    color: #666; /* Slightly lighter grey for text */
+    line-height: 1.6; /* Increase line height for better readability */
+    margin-bottom: 10px; /* Space below each paragraph */
+}
+
+.terms ul {
+    list-style-type: disc; /* Bullet points for list items */
+    margin-left: 20px; /* Space before the list */
+}
+
+.terms li {
+    font-size: 1rem; /* Standard font size for list items */
+    color: #666; /* Consistent color with paragraphs */
+    margin-bottom: 5px; /* Space between list items */
+}
+
     </style>
 </head>
 <body>
