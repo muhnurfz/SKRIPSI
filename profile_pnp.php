@@ -273,31 +273,21 @@ $conn->close();
             font-size: 1.2em;
         }
         .notification {
-            display: none;
+            position: fixed;
+            top: 10px;
+            right: 10px;
             background-color: #4CAF50;
             color: white;
             padding: 15px;
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 1000;
             border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            opacity: 0;
-            transition: opacity 0.5s ease-in-out;
+            display: none;
+            z-index: 1000;
         }
-
+        .notification.error {
+            background-color: #f44336;
+        }
         .notification.show {
             display: block;
-            opacity: 1;
-        }
-
-        .notification .close-btn {
-            position: absolute;
-            top: 5px;
-            right: 10px;
-            font-size: 16px;
-            cursor: pointer;
         }
 
         @media (max-width: 767.98px) {
@@ -332,13 +322,9 @@ $conn->close();
     </style>
 </head>
 <body>
-
-    <!-- Notification Message -->
-    <div id="successNotification" class="notification">
-        <span class="close-btn" onclick="this.parentElement.style.display='none';">&times;</span>
-        Data berhasil diperbarui!
+<div class="notification <?php echo isset($message) ? (strpos($message, 'Error') !== false ? 'error' : '') : ''; ?> <?php echo isset($message) ? 'show' : ''; ?>">
+        <?php echo $message; ?>
     </div>
-
     <!-- Top Navbar -->
     <nav class="navbar navbar-static-top">
         <span class="navbar-brand">Dashboard Penumpang</span>
@@ -408,14 +394,14 @@ $conn->close();
             content.classList.toggle('sidebar-collapsed');
         });
 
-        <?php if ($conn->query($update_sql) === TRUE): ?>
-            document.getElementById('successNotification').classList.add('show');
-            setTimeout(function() {
-                document.getElementById('successNotification').classList.remove('show');
-            }, 3000);
-        <?php else: ?>
-            alert("Error: <?= $conn->error; ?>");
-        <?php endif; ?>
+        document.addEventListener('DOMContentLoaded', function() {
+            var notification = document.querySelector('.notification');
+            if (notification) {
+                setTimeout(function() {
+                    notification.classList.remove('show');
+                }, 5000); // Hide the notification after 5 seconds
+            }
+        });
     </script>
 
     <!-- Bootstrap JS and dependencies -->
