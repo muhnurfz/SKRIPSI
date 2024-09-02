@@ -26,38 +26,6 @@ $stmt_orders->bind_param("s", $logged_in_email);
 $stmt_orders->execute();
 $result_orders = $stmt_orders->get_result();
 
-// Fetch the data from the orders table
-if ($result_orders->num_rows > 0) {
-    while ($order = $result_orders->fetch_assoc()) {
-        // Assuming you want to handle multiple orders, iterate through them
-        $status_pembayaran = $order['status_pembayaran']; // Get status_pembayaran from the orders table
-        
-        // Status messages
-        $status_messages = [
-            'verified' => 'LUNAS', 
-            'paid' => 'Menunggu verfikasi',
-            'pending' => 'Menunggu Pembayaran',
-            'cancelled' => 'Batal',
-            'unknown' => 'Unknown Status'
-        ];
-
-        // Get the status message
-        $status_message = isset($status_messages[$status_pembayaran]) ? $status_messages[$status_pembayaran] : $status_messages['unknown'];
-
-        // Determine the CSS class for the status
-        $status_class = [
-            'verified' => 'verified', 
-            'paid' => 'pending',
-            'cancelled' => 'unpaid',
-            'unknown' => 'unpaid'
-        ][$status_pembayaran] ?? 'unpaid';
-
-        // Display or use the status message and class
-        echo "<td><span class='status $status_class'>" . ucfirst($status_message) . "</span></td>";
-    }
-} else {
-    echo "No orders found for this user.";
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -175,7 +143,43 @@ if ($result_orders->num_rows > 0) {
                                         <td><?php echo $row['passenger_name']; ?></td>
                                         <td><?php echo $row['destination']; ?></td>
                                         <td><?php echo $row['departure_date']; ?></td>
-                                        <td><div class="status <?php echo htmlspecialchars($status_class); ?>"><?php echo htmlspecialchars($status_message); ?></div></td>
+                                        <td>   <?php
+        // Fetch the data from the orders table
+        if ($result_orders->num_rows > 0) {
+            while ($order = $result_orders->fetch_assoc()) {
+                $status_pembayaran = $order['status_pembayaran']; // Get status_pembayaran from the orders table
+                
+                // Status messages
+                $status_messages = [
+                    'verified' => 'LUNAS', 
+                    'paid' => 'Menunggu verfikasi',
+                    'pending' => 'Menunggu Pembayaran',
+                    'cancelled' => 'Batal',
+                    'unknown' => 'Unknown Status'
+                ];
+
+                // Get the status message
+                $status_message = isset($status_messages[$status_pembayaran]) ? $status_messages[$status_pembayaran] : $status_messages['unknown'];
+
+                // Determine the CSS class for the status
+                $status_class = [
+                    'verified' => 'verified', 
+                    'paid' => 'pending',
+                    'cancelled' => 'unpaid',
+                    'unknown' => 'unpaid'
+                ][$status_pembayaran] ?? 'unpaid';
+
+                // Display or use the status message and class
+                echo "<tr>";
+                echo "<td>" . htmlspecialchars($order['passenger_name']) . "</td>"; // Nama Penumpang
+                echo "<td><span class='status $status_class'>" . ucfirst($status_message) . "</span></td>"; // Status Pembayaran
+                echo "<td>" . htmlspecialchars($order['booking_code']) . "</td>"; // Kode Pemesanan
+                echo "</tr>";
+            }
+        } else {
+            echo "<tr><td colspan='3'>No orders found for this user.</td></tr>";
+        }
+        ?></td>
                                     </tr>
                                 <?php endwhile; ?>
                             <?php else: ?>
