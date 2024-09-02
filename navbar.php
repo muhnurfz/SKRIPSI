@@ -31,128 +31,141 @@ $passenger = $result_pnp->fetch_assoc();
     <!-- Font Awesome for Icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <style>
-       body {
+     body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
     margin: 0;
     font-family: Arial, sans-serif;
-        }
-        .navbar-static-top {
-            display: flex;
-            justify-content: center; /* Menyelaraskan item secara horizontal ke tengah */
-            align-items: center; /* Menyelaraskan item secara vertikal ke tengah */
-            width: 100%;
-            background-color: #f8f9fa; /* Contoh warna background */
-        }
+}
 
-        .navbar-brand {
-            font-weight: bold;
-        }
+.navbar-static-top {
+    display: flex;
+    justify-content: center; /* Center items horizontally */
+    align-items: center; /* Center items vertically */
+    width: 100%;
+    background-color: #f8f9fa; /* Background color */
+}
 
-        .profile-link {
-            position: absolute;
-            right: 20px; /* Sesuaikan dengan margin yang diinginkan */
-            top: 50%;
-            transform: translateY(-50%);
-        }
+.navbar-brand {
+    font-weight: bold;
+}
 
-        .navbar .profile-link i {
-            margin-right: 5px;
-        }
-        .sidebar {
-            width: 250px;
-            background-color: #343a40;
-            padding-top: 20px;
-            height: 100vh;
-            position: fixed;
-            top: 0;
-            left: 0;
-            transition: transform 0.3s ease, width 0.3s ease;
-            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-            border-right: 1px solid #495057;
-            z-index: 1000; /* Ensure the sidebar is above the content */
-        }
-        .sidebar.collapsed {
-            transform: translateX(-250px);
-        }
-        .sidebar a {
-            padding: 15px 20px;
-            display: flex;
-            align-items: center;
-            font-size: 1.1rem;
-            color: #adb5bd;
-            text-decoration: none;
-            border-radius: 4px;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-        .sidebar a i {
-            margin-right: 10px;
-        }
-        .sidebar a:hover {
-            background-color: #495057;
-            color: #ffffff;
-        }
-        .sidebar .profile {
-            text-align: center;
-            margin-bottom: 20px;
-            color: #ffffff;
-        }
-        .sidebar .profile h5 {
-            margin: 0;
-            font-size: 1.2rem;
-        }
-        .sidebar .toggle-btn {
-            position: absolute;
-            top: 20px;
-            right: -40px;
-            background-color: #28a745; /* Green color for toggle button */
-            border: none;
-            color: white;
-            padding: 10px;
-            border-radius: 0 4px 4px 0;
-            cursor: pointer;
-            z-index: 1000; /* Ensure button is above the content */
-            transition: background-color 0.3s ease, transform 0.3s ease;
-        }
-        .sidebar .toggle-btn:hover {
-            background-color: #218838; /* Darker shade for hover effect */
-            transform: scale(1.1); /* Slightly enlarge button on hover */
-        }
-        .content {
-            margin-left: 250px;
-            padding: 20px;
-            flex-grow: 1;
-            transition: margin-left 0.3s ease;
-        }
-        .content.sidebar-collapsed {
-            margin-left: 0;
-        }
-        .card {
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
-            margin-bottom: 20px;
-        }
-        .card-title {
-            margin-bottom: 15px;
-        }
+.profile-link {
+    position: absolute;
+    right: 20px; /* Margin from right */
+    top: 50%;
+    transform: translateY(-50%);
+}
 
+.navbar .profile-link i {
+    margin-right: 5px;
+}
+
+.sidebar {
+    width: 250px;
+    background-color: #343a40;
+    padding-top: 20px;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    transition: transform 0.3s ease, width 0.3s ease;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    border-right: 1px solid #495057;
+    z-index: 1000; /* Ensure sidebar is above content */
+}
+
+.sidebar.collapsed {
+    transform: translateX(-250px);
+}
+
+.sidebar a {
+    padding: 15px 20px;
+    display: flex;
+    align-items: center;
+    font-size: 1.1rem;
+    color: #adb5bd;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.sidebar a i {
+    margin-right: 10px;
+}
+
+.sidebar a:hover {
+    background-color: #495057;
+    color: #ffffff;
+}
+
+.sidebar .profile {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #ffffff;
+}
+
+.sidebar .profile h5 {
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+.sidebar .toggle-btn {
+    position: absolute;
+    top: 20px;
+    right: -40px;
+    background-color: #28a745; /* Green color for toggle button */
+    border: none;
+    color: white;
+    padding: 10px;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+    z-index: 1000; /* Ensure button is above content */
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.sidebar .toggle-btn:hover {
+    background-color: #218838; /* Darker shade for hover effect */
+    transform: scale(1.1); /* Slightly enlarge button on hover */
+}
+
+.content {
+    margin-left: 250px;
+    padding: 20px;
+    flex-grow: 1;
+    transition: margin-left 0.3s ease;
+}
+
+.content.sidebar-collapsed {
+    margin-left: 0;
+}
+
+.card {
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+    margin-bottom: 20px;
+}
+
+.card-title {
+    margin-bottom: 15px;
+}
 
 @media (max-width: 767.98px) {
+    .sidebar {
+        width: 200px; /* Adjust width for smaller screens */
+    }
+
     .content {
         margin-left: 0;
     }
 
-    .sidebar {
-        transform: translateX(-250px);
+    .sidebar.collapsed {
+        transform: translateX(-200px);
     }
 
     .sidebar.collapsed {
         transform: translateX(0);
-    }
-
-    .content.sidebar-collapsed {
-        margin-left: 0;
     }
 
     .toggle-btn {
