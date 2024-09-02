@@ -30,25 +30,30 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $query = "SELECT * FROM data_pnp WHERE kode_penumpang = '$kode_penumpang' AND password = '$password'";
     $result = mysqli_query($conn, $query);
 
-    if (mysqli_num_rows($result) == 1) {
-        $user = mysqli_fetch_assoc($result);
+   // Setelah melakukan query
+if (mysqli_num_rows($result) == 1) {
+    $user = mysqli_fetch_assoc($result);
 
-        // Debugging: Lihat apakah passenger_phone ada di array $user
-        echo "Query berhasil, berikut hasilnya: ";
-        var_dump($user);
-        exit(); // Hentikan eksekusi untuk melihat hasil debug
+    // Debugging: Lihat apakah passenger_phone ada di array $user
+    echo "Query berhasil, berikut hasilnya: <br>";
+    var_dump($user);
+    echo "<br>";
 
-        // Menyimpan data pengguna ke dalam sesi
-        $_SESSION['kode_penumpang'] = $user['kode_penumpang'];
-        $_SESSION['passenger_name'] = $user['passenger_name'];
-        $_SESSION['passenger_phone'] = $user['passenger_phone'];
-        $_SESSION['email'] = $user['email'];
+    // Menyimpan data pengguna ke dalam sesi
+    $_SESSION['kode_penumpang'] = $user['kode_penumpang'];
+    $_SESSION['passenger_name'] = $user['passenger_name'];
+    $_SESSION['passenger_phone'] = $user['passenger_phone'];
+    $_SESSION['email'] = $user['email'];
 
-        header('Location: pesan_tiket_pnp.php'); // Redirect ke halaman form pemesanan
-        exit();
-    } else {
-        echo "Login gagal! Kode penumpang atau password salah.";
-    }
+    // Debugging: Tampilkan session passenger_phone
+    echo "Session Passenger Phone: " . $_SESSION['passenger_phone'] . "<br>";
+
+    header('Location: pesan_tiket_pnp.php'); // Redirect ke halaman form pemesanan
+    exit();
+} else {
+    echo "Login gagal! Kode penumpang atau password salah.";
+}
+
 }
 
 
@@ -580,21 +585,21 @@ routeSelect.addEventListener('change', () => {
         return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     }
    
-    // function formatPhoneNumber(event) {
-    //     var input = event.target;
-    //     var value = input.value.replace(/\D/g, '');
-    //     if (value.length > 13) {
-    //         value = value.substring(0, 13);
-    //     }
-    //     var formattedValue = '';
-    //     for (var i = 0; i < value.length; i++) {
-    //         if (i > 0 && i % 4 === 0) {
-    //             formattedValue += '-';
-    //         }
-    //         formattedValue += value[i];
-    //     }
-    //     input.value = formattedValue;
-    // }
+    function formatPhoneNumber(event) {
+        var input = event.target;
+        var value = input.value.replace(/\D/g, '');
+        if (value.length > 13) {
+            value = value.substring(0, 13);
+        }
+        var formattedValue = '';
+        for (var i = 0; i < value.length; i++) {
+            if (i > 0 && i % 4 === 0) {
+                formattedValue += '-';
+            }
+            formattedValue += value[i];
+        }
+        input.value = formattedValue;
+    }
   
 // Fungsi untuk format tanggal dalam format DD-MM-YYYY
 function formatDate(date) {
