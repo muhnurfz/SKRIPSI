@@ -11,15 +11,14 @@ if (!isset($_SESSION['email'])) {
 // Get the email of the logged-in user
 $logged_in_email = $_SESSION['email'];
 
-// Mendapatkan data penumpang berdasarkan ID
-$id = $_GET['id'];
-$sql = "SELECT * FROM data_pnp WHERE id = $id";
+// Mendapatkan data penumpang berdasarkan email dari sesi login
+$sql = "SELECT * FROM data_pnp WHERE email = '$logged_in_email'";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
 } else {
-    echo "Penumpang tidak ditemukan.";
+    echo "Data penumpang tidak ditemukan.";
     exit();
 }
 
@@ -30,12 +29,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = $_POST['email'];
     $password = md5($_POST['password']); // Pastikan password di-hash dengan MD5
     
+    // Update data penumpang berdasarkan email yang sedang login
     $update_sql = "UPDATE data_pnp SET 
                     passenger_name = '$passenger_name', 
                     passenger_phone = '$passenger_phone', 
                     email = '$email', 
                     password = '$password' 
-                  WHERE id = $id";
+                  WHERE email = '$logged_in_email'";
 
     if ($conn->query($update_sql) === TRUE) {
         echo "Data berhasil diperbarui!";
