@@ -26,26 +26,38 @@ $stmt_orders->bind_param("s", $logged_in_email);
 $stmt_orders->execute();
 $result_orders = $stmt_orders->get_result();
 
-// Status messages
-$status_messages = [
-    'verified' => 'LUNAS', 
-    'paid' => 'Menunggu verfikasi',
-    'pending' => 'Menunggu Pembayaran',
-    'cancelled' => 'Batal',
-    'unknown' => 'Unknown Status'
-];
+// Fetch the data from the orders table
+if ($result_orders->num_rows > 0) {
+    while ($order = $result_orders->fetch_assoc()) {
+        // Assuming you want to handle multiple orders, iterate through them
+        $status_pembayaran = $order['status_pembayaran']; // Get status_pembayaran from the orders table
+        
+        // Status messages
+        $status_messages = [
+            'verified' => 'LUNAS', 
+            'paid' => 'Menunggu verfikasi',
+            'pending' => 'Menunggu Pembayaran',
+            'cancelled' => 'Batal',
+            'unknown' => 'Unknown Status'
+        ];
 
-// Get the status message
-$status_message = isset($status_messages[$status_pembayaran]) ? $status_messages[$status_pembayaran] : $status_messages['unknown'];
+        // Get the status message
+        $status_message = isset($status_messages[$status_pembayaran]) ? $status_messages[$status_pembayaran] : $status_messages['unknown'];
 
-// Determine the CSS class for the status
-$status_class = [
-    'verified' => 'verified', 
-    'paid' => 'pending',
-    'cancelled' => 'unpaid',
-    'unknown' => 'unpaid'
-][$status_pembayaran] ?? 'unpaid';
+        // Determine the CSS class for the status
+        $status_class = [
+            'verified' => 'verified', 
+            'paid' => 'pending',
+            'cancelled' => 'unpaid',
+            'unknown' => 'unpaid'
+        ][$status_pembayaran] ?? 'unpaid';
 
+        // Display or use the status message and class
+        echo "<td><span class='status $status_class'>" . ucfirst($status_message) . "</span></td>";
+    }
+} else {
+    echo "No orders found for this user.";
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
