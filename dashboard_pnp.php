@@ -25,33 +25,28 @@ $stmt_orders = $conn->prepare($sql_orders);
 $stmt_orders->bind_param("s", $logged_in_email);
 $stmt_orders->execute();
 $result_orders = $stmt_orders->get_result();
-// Get the status from the database
-$status_pembayaran = $row['status_pembayaran'];
 
-// Determine the CSS class based on the status
-$status_class = '';
-switch (strtolower($status_pembayaran)) {
-    case 'verified':
-        $status_class = 'verified';
-        $status_message = 'LUNAS';
-        break;
-    case 'paid':
-        $status_class = 'paid';
-        $status_message = 'Menunggu verifikasi';
-        break;
-    case 'pending':
-        $status_class = 'pending';
-        $status_message = 'Menunggu Pembayaran';
-        break;
-    case 'cancelled':
-        $status_class = 'unpaid';
-        $status_message = 'Batal';
-        break;
-    default:
-        $status_class = 'unpaid';
-        $status_message = ucfirst($status_pembayaran); // Tetap menampilkan status asli jika tidak dikenali
-        break;
-}
+
+// Status messages
+$status_messages = [
+    'verified' => 'LUNAS', 
+    'paid' => 'Menunggu verfikasi',
+    'pending' => 'Menunggu Pembayaran',
+    'cancelled' => 'Batal',
+    'unknown' => 'Unknown Status'
+];
+
+// Get the status message
+$status_message = isset($status_messages[$status_pembayaran]) ? $status_messages[$status_pembayaran] : $status_messages['unknown'];
+
+// Determine the CSS class for the status
+$status_class = [
+    'verified' => 'verified', 
+    'paid' => 'pending',
+    'cancelled' => 'unpaid',
+    'unknown' => 'unpaid'
+][$status_pembayaran] ?? 'unpaid';
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -169,7 +164,7 @@ switch (strtolower($status_pembayaran)) {
                                         <td><?php echo $row['passenger_name']; ?></td>
                                         <td><?php echo $row['destination']; ?></td>
                                         <td><?php echo $row['departure_date']; ?></td>
-                                        <td class="status <?php echo $status_class; ?>"><?php echo $status_message; ?></td>
+                                        <td><div class="status <?php echo htmlspecialchars($status_class); ?>"><?php echo htmlspecialchars($status_message); ?></div></td>
                                     </tr>
                                 <?php endwhile; ?>
                             <?php else: ?>
