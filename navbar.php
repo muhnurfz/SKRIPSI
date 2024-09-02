@@ -37,25 +37,25 @@ $passenger = $result_pnp->fetch_assoc();
     min-height: 100vh;
     margin: 0;
     font-family: Arial, sans-serif;
-}
-.navbar-static-top {
-    display: flex;
-    justify-content: center; /* Menyelaraskan item secara horizontal ke tengah */
-    align-items: center; /* Menyelaraskan item secara vertikal ke tengah */
-    width: 100%;
-    background-color: #f8f9fa; /* Contoh warna background */
-}
+        }
+        .navbar-static-top {
+            display: flex;
+            justify-content: center; /* Menyelaraskan item secara horizontal ke tengah */
+            align-items: center; /* Menyelaraskan item secara vertikal ke tengah */
+            width: 100%;
+            background-color: #f8f9fa; /* Contoh warna background */
+        }
 
-.navbar-brand {
-    font-weight: bold;
-}
+        .navbar-brand {
+            font-weight: bold;
+        }
 
-.profile-link {
-    position: absolute;
-    right: 20px; /* Sesuaikan dengan margin yang diinginkan */
-    top: 50%;
-    transform: translateY(-50%);
-}
+        .profile-link {
+            position: absolute;
+            right: 20px; /* Sesuaikan dengan margin yang diinginkan */
+            top: 50%;
+            transform: translateY(-50%);
+        }
 
         .navbar .profile-link i {
             margin-right: 5px;

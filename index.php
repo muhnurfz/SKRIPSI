@@ -287,8 +287,9 @@
         <ul>
             <li>Harap tiba di boarding point setidaknya 30 menit sebelum keberangkatan.</li>
             <li>Pastikan membawa tiket dan identitas diri saat boarding.</li>
-            <li>Untuk anak usia 3 tahun atau dengan tinggi 90cm maka WAJIB DIBELIKAN 1 TIKET.</li>
+            <li>Untuk anak usia 3 tahun keatas atau dengan tinggi 90cm maka WAJIB DIBELIKAN 1 TIKET.</li>
             <li>Apabila bus mengalami masalah dan keberangkatan dibatalkan maka uang akan dikembalikan 100%</li>
+            <li>Pembayaran DownPayment minimal 50% dari tarif tiket.</li>
             <li>Kami tidak bertanggung jawab atas barang hilang atau rusak selama perjalanan.</li>
         </ul>
     </div>
