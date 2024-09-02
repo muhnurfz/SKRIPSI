@@ -11,6 +11,47 @@ if (!isset($_SESSION['email'])) {
 // Get the email of the logged-in user
 $logged_in_email = $_SESSION['email'];
 
+
+if ($inserted_id > 0) {
+    // Retrieve booking details from the database
+    $query = "SELECT * FROM orders WHERE id = ?";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("i", $inserted_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $passenger_name = $row['passenger_name'];
+        $passenger_phone = isset($row['passenger_phone']) ? $row['passenger_phone'] : 'Not Provided';
+        $email = $row['email'];
+        $departure = $row['departure'];
+        $destination = $row['destination'];
+        $departure_date = $row['departure_date'];
+        $selected_seats = $row['selected_seats'];
+        $seatCount = count(explode(',', $selected_seats));
+        $booking_code = $row['booking_code'];
+        $bus_code = isset($row['bus_code']) ? $row['bus_code'] : ''; // Add this line
+        $total_tariff = $row['total_tariff'];
+        $status_pembayaran = $row['status_pembayaran'];
+    } else {
+        $booking_code = "Not Found";
+        $bus_code = ''; // Add this line
+        $status_pembayaran = 'unknown'; // Default value for status if no booking found
+        $seatCount = 0;
+        $tariffPerSeat = 0;
+        $total_tariff = 0;
+    }
+
+    $stmt->close();
+} else {
+    $booking_code = "Invalid ID";
+    $status_pembayaran = 'unknown'; // Default value for status if invalid ID
+    $seatCount = 0;
+    $tariffPerSeat = 0;
+    $total_tariff = 0;
+}
+
 // Fetch passenger data from `data_pnp` based on the logged-in user's email
 $sql_pnp = "SELECT * FROM data_pnp WHERE email = ?";
 $stmt_pnp = $conn->prepare($sql_pnp);
