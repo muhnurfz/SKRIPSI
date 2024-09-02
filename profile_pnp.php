@@ -244,6 +244,21 @@ $conn->close();
             margin-left: 0;
         }
 
+        .password-wrapper {
+            position: relative;
+        }
+        .password-wrapper .form-control {
+            padding-right: 40px; /* Space for the icon */
+        }
+        .password-wrapper #togglePassword {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #007bff;
+            font-size: 1.2em;
+        }
         @media (max-width: 767.98px) {
             .table-responsive-sm {
                 display: block;
@@ -316,6 +331,13 @@ $conn->close();
             <div class="form-group">
                 <label for="email">Email:</label>
                 <input type="email" id="email" name="email" class="form-control" value="<?= htmlspecialchars($row['email']); ?>" required>
+            </div>
+            <div class="form-group" style="position: relative;">
+                <label for="password">Password</label>
+                <div class="password-wrapper">
+                    <input type="password" class="form-control" id="password" name="password" required>
+                    <i id="togglePassword" class="fas fa-eye"></i>
+                </div>
             </div>
             <div class="form-group">
                 <label for="password">Password:</label>
