@@ -243,7 +243,7 @@
           <div class="features" style="padding: 20px;">
     <div style="display: flex; align-items: center; justify-content: flex-end; gap: 10px;">
         <p style="margin: 0; font-size: 1rem; color: #333;">Sudah punya akun? silahkan</p>
-        <a href="login_penumpang.php" class="btn btn-outline-primary">Login</a>
+        <a href="dashboard_pnp.php" class="btn btn-outline-primary">Login</a>
     </div>
 
 
