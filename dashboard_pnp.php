@@ -11,47 +11,6 @@ if (!isset($_SESSION['email'])) {
 // Get the email of the logged-in user
 $logged_in_email = $_SESSION['email'];
 
-
-if ($inserted_id > 0) {
-    // Retrieve booking details from the database
-    $query = "SELECT * FROM orders WHERE id = ?";
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param("i", $inserted_id);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    if ($result->num_rows > 0) {
-        $row = $result->fetch_assoc();
-        $passenger_name = $row['passenger_name'];
-        $passenger_phone = isset($row['passenger_phone']) ? $row['passenger_phone'] : 'Not Provided';
-        $email = $row['email'];
-        $departure = $row['departure'];
-        $destination = $row['destination'];
-        $departure_date = $row['departure_date'];
-        $selected_seats = $row['selected_seats'];
-        $seatCount = count(explode(',', $selected_seats));
-        $booking_code = $row['booking_code'];
-        $bus_code = isset($row['bus_code']) ? $row['bus_code'] : ''; // Add this line
-        $total_tariff = $row['total_tariff'];
-        $status_pembayaran = $row['status_pembayaran'];
-    } else {
-        $booking_code = "Not Found";
-        $bus_code = ''; // Add this line
-        $status_pembayaran = 'unknown'; // Default value for status if no booking found
-        $seatCount = 0;
-        $tariffPerSeat = 0;
-        $total_tariff = 0;
-    }
-
-    $stmt->close();
-} else {
-    $booking_code = "Invalid ID";
-    $status_pembayaran = 'unknown'; // Default value for status if invalid ID
-    $seatCount = 0;
-    $tariffPerSeat = 0;
-    $total_tariff = 0;
-}
-
 // Fetch passenger data from `data_pnp` based on the logged-in user's email
 $sql_pnp = "SELECT * FROM data_pnp WHERE email = ?";
 $stmt_pnp = $conn->prepare($sql_pnp);
@@ -67,27 +26,19 @@ $stmt_orders->bind_param("s", $logged_in_email);
 $stmt_orders->execute();
 $result_orders = $stmt_orders->get_result();
 
-
-// Status messages
-$status_messages = [
-    'verified' => 'LUNAS', 
-    'paid' => 'Menunggu verfikasi',
-    'pending' => 'Menunggu Pembayaran',
-    'cancelled' => 'Batal',
-    'unknown' => 'Unknown Status'
-];
-
-// Get the status message
-$status_message = isset($status_messages[$status_pembayaran]) ? $status_messages[$status_pembayaran] : $status_messages['unknown'];
-
-// Determine the CSS class for the status
-$status_class = [
-    'verified' => 'verified', 
-    'paid' => 'pending',
+// Status messages and corresponding CSS classes
+$status_classes = [
+    'verified' => 'verified',
+    'paid' => 'paid',
+    'pending' => 'pending',
     'cancelled' => 'unpaid',
     'unknown' => 'unpaid'
-][$status_pembayaran] ?? 'unpaid';
+];
 
+// Get the CSS class for the status
+$status_class = isset($status_classes[$row['status_pembayaran']]) ? $status_classes[$row['status_pembayaran']] : $status_classes['unknown'];
+
+// Display the status with CSS styling
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -125,30 +76,30 @@ $status_class = [
             border-radius: 10px;
         }
         .status {
-            display: inline-block;
-            padding: 5px 10px;
-            border-radius: 4px;
-            font-size: 12px;
-            text-align: center;
-            color: #fff;
-        }
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    text-align: center;
+    color: #fff;
+}
 
-        .verified {
-            background-color: #28a745; /* Green */
-        }
+.verified {
+    background-color: #28a745; /* Green */
+}
 
-        .paid {
-            background-color: #4cbccc; /* Light Blue */
-        }
+.paid {
+    background-color: #4cbccc; /* Light Blue */
+}
 
-        .pending {
-            background-color: #ffc107; /* Yellow */
-            color: black;
-        }
+.pending {
+    background-color: #ffc107; /* Yellow */
+    color: black;
+}
 
-        .unpaid {
-            background-color: #dc3545; /* Red */
-        }
+.unpaid {
+    background-color: #dc3545; /* Red */
+}
 
     </style>
 </head>
@@ -205,7 +156,7 @@ $status_class = [
                                         <td><?php echo $row['passenger_name']; ?></td>
                                         <td><?php echo $row['destination']; ?></td>
                                         <td><?php echo $row['departure_date']; ?></td>
-                                        <td><div class="status <?php echo htmlspecialchars($status_class); ?>"><?php echo htmlspecialchars($status_message); ?></div></td>
+                                        <td><?php echo ucfirst($row['status_pembayaran']); ?></td>
                                     </tr>
                                 <?php endwhile; ?>
                             <?php else: ?>
