@@ -33,11 +33,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (mysqli_num_rows($result) == 1) {
         $user = mysqli_fetch_assoc($result);
 
-        // Debugging: Lihat apakah passenger_phone ada di array $user
-        echo "Query berhasil, berikut hasilnya: ";
-        var_dump($user);
-        exit(); // Hentikan eksekusi untuk melihat hasil debug
-
         // Menyimpan data pengguna ke dalam sesi
         $_SESSION['kode_penumpang'] = $user['kode_penumpang'];
         $_SESSION['passenger_name'] = $user['passenger_name'];
@@ -800,7 +795,7 @@ document.getElementById('destination').addEventListener('change', function() {
 
         <label for="passenger_phone">No Telepon Penumpang:</label>
         <input type="tel" id="passenger_phone" name="passenger_phone" value="<?php echo htmlspecialchars($passenger_phone) ; ?>" maxlength="19" required oninput="formatPhoneNumber(event)">
-<?php echo "Nilai passenger_phone: " . $passenger_phone;?>
+
         <label for="email">Email Penumpang:</label>
         <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($email); ?>" placeholder="example@gmail.com" pattern="^[a-zA-Z0-9._%+-]+@gmail\.com$" title="Hanya alamat email dengan domain @gmail.com yang diterima" required>
       
