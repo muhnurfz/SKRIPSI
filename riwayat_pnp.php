@@ -231,7 +231,7 @@ $formatted_date = $day_name . ', ' . date('d', strtotime($departure_date)) . ' '
     <!-- Top Navbar -->
     <nav class="navbar navbar-static-top">
         <span class="navbar-brand">Dashboard Penumpang</span>
-        <a href="profile.php" class="profile-link">
+        <a href="profile_pnp.php" class="profile-link">
             <i class="fas fa-user"></i> Profil
         </a>
     </nav>
