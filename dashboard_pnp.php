@@ -36,10 +36,9 @@ $result_orders = $stmt_orders->get_result();
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
-   body {
-    display: flex;
-    margin: 0;
-    padding: 0;
+      body {
+    background-color: #f8f9fa;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .container {
@@ -61,37 +60,14 @@ $result_orders = $stmt_orders->get_result();
 }
 
 .navbar {
-    width: 250px;
-    height: 100vh;
-    position: fixed;
-    top: 0;
-    left: 0;
-    background-color: #f8f9fa;
-    transition: transform 0.3s ease;
+    margin-bottom: 20px;
 }
 
-.navbar.collapsed {
-    transform: translateX(-100%);
-}
-
-.navbar-nav {
-    width: 100%;
-}
-
-.navbar-toggler {
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.container {
-    margin-left: 250px;
+.table-wrapper {
+    background-color: #fff;
     padding: 20px;
-    width: calc(100% - 250px);
-    transition: margin-left 0.3s ease;
-}
-
-.container.collapsed {
-    margin-left: 0;
+    border-radius: 10px;
+    overflow-x: auto;
 }
 
 .table {
@@ -157,22 +133,21 @@ $result_orders = $stmt_orders->get_result();
 <body>
     <!-- Navigation Bar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="dashboard_pnp.php">Dashboard Penumpang</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="dashboard_pnp.php">Home</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="logout_penumpang.php">Logout</a>
-            </li>
-        </ul>
-    </div>
-</nav>
-
+        <a class="navbar-brand" href="dashboard_pnp.php">Dashboard Penumpang</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="dashboard_pnp.php">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="logout_penumpang.php">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
 
     <div class="container">
         <!-- Card for Booking Tickets -->
@@ -253,17 +228,8 @@ $result_orders = $stmt_orders->get_result();
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
-
-<script>
-  document.getElementById("sidebarToggle").addEventListener("click", function() {
-    var sidebar = document.getElementById("sidebar");
-    var content = document.querySelector(".content");
-    sidebar.classList.toggle("collapsed");
-    content.classList.toggle("collapsed");
-});
-
-</script>
 </html>
+
 <?php
 $conn->close();
 ?>
