@@ -25,7 +25,8 @@ $stmt_orders = $conn->prepare($sql_orders);
 $stmt_orders->bind_param("s", $logged_in_email);
 $stmt_orders->execute();
 $result_orders = $stmt_orders->get_result();
-?><!DOCTYPE html>
+?>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -36,12 +37,10 @@ $result_orders = $stmt_orders->get_result();
     <style>
         body {
             display: flex;
-            flex-wrap: nowrap;
             min-height: 100vh;
             margin: 0;
-            font-family: Arial, sans-serif; /* Ensure consistent font */
+            font-family: Arial, sans-serif;
         }
-
         .sidebar {
             width: 250px;
             background-color: #f8f9fa;
@@ -52,16 +51,14 @@ $result_orders = $stmt_orders->get_result();
             left: 0;
             transition: transform 0.3s ease, width 0.3s ease;
             box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-            transform: translateX(0); /* Show by default */
-            border-right: 1px solid #dee2e6; /* Subtle border for separation */
+            border-right: 1px solid #dee2e6;
+            z-index: 1000; /* Ensure the sidebar is above the content */
         }
-
         .sidebar.collapsed {
-            transform: translateX(-250px); /* Hide sidebar */
+            transform: translateX(-250px);
         }
-
         .sidebar a {
-            padding: 15px 20px; /* Increased padding for better touch targets */
+            padding: 15px 20px;
             display: block;
             font-size: 1.2rem;
             color: #343a40;
@@ -69,60 +66,54 @@ $result_orders = $stmt_orders->get_result();
             border-radius: 4px;
             transition: background-color 0.3s ease, color 0.3s ease;
         }
-
         .sidebar a:hover {
             background-color: #e2e6ea;
             color: #007bff;
         }
-
         .sidebar .profile {
             text-align: center;
             margin-bottom: 20px;
         }
-
         .sidebar .profile h5 {
             margin: 0;
             color: #495057;
             font-size: 1.2rem;
         }
-
+        .sidebar .toggle-btn {
+            position: absolute;
+            top: 20px;
+            right: -40px;
+            background-color: #007bff;
+            border: none;
+            color: white;
+            padding: 10px;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            z-index: 1000; /* Ensure button is above the content */
+        }
         .content {
             margin-left: 250px;
             padding: 20px;
             flex-grow: 1;
             transition: margin-left 0.3s ease;
         }
-
         .content.sidebar-collapsed {
             margin-left: 0;
         }
-
-        .navbar-toggler {
-            margin-left: auto;
-        }
-
-        .container {
-            margin-top: 50px;
-        }
-
         .card {
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
             margin-bottom: 20px;
         }
-
         .card-title {
             margin-bottom: 15px;
         }
-
         .btn-primary, .btn-danger {
             border-radius: 30px;
         }
-
         .navbar {
             margin-bottom: 20px;
         }
-
         .table-wrapper {
             background-color: #fff;
             padding: 20px;
@@ -130,65 +121,53 @@ $result_orders = $stmt_orders->get_result();
             overflow-x: auto;
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
         }
-
         .table {
             margin-bottom: 0;
         }
-
         .table th, .table td {
             vertical-align: middle;
             white-space: nowrap;
         }
-
         .table-hover tbody tr:hover {
             background-color: #f1f1f1;
         }
-
-.status {
-    display: inline-block;
-    padding: 5px 10px;
-    border-radius: 4px;
-    font-size: 12px;
-    text-align: center;
-    color: #fff;
-    font-weight: bold;
-}
-
-.verified {
-    background-color: #28a745; /* Green */
-}
-
-.paid {
-    background-color: #4cbccc; /* Light Blue */
-}
-
-.pending {
-    background-color: #ffc107; /* Yellow */
-    color: black;
-}
-
-.unpaid {
-    background-color: #dc3545; /* Red */
-}
-
-@media (max-width: 767.98px) {
-    .table-responsive-sm {
-        display: block;
-        width: 100%;
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-    }
-
-    .table-wrapper {
-        padding: 10px;
-    }
-
-    .status {
-        font-size: 10px;
-        padding: 3px 6px;
-    }
-}
-
+        .status {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            text-align: center;
+            color: #fff;
+            font-weight: bold;
+        }
+        .verified {
+            background-color: #28a745;
+        }
+        .paid {
+            background-color: #4cbccc;
+        }
+        .pending {
+            background-color: #ffc107;
+            color: black;
+        }
+        .unpaid {
+            background-color: #dc3545;
+        }
+        @media (max-width: 767.98px) {
+            .table-responsive-sm {
+                display: block;
+                width: 100%;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            .table-wrapper {
+                padding: 10px;
+            }
+            .status {
+                font-size: 10px;
+                padding: 3px 6px;
+            }
+        }
     </style>
 </head>
 <body>
