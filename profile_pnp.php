@@ -55,37 +55,113 @@ $conn->close();
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome for Icons -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
-       body {
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            margin: 0;
+        /* Your existing styles */
+        body {
+            background-color: #f8f9fa;
             font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
         }
+
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 100%;
+            transition: margin-left 0.3s ease;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .form-control {
+            padding: 10px;
+            height: auto;
+            width: 100%;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+        }
+
+        .form-control:focus {
+            box-shadow: none;
+            border-color: #4CAF50;
+        }
+
+        .non-editable {
+            pointer-events: none;
+            background-color: #e9ecef;
+        }
+
+        .btn-primary {
+            background-color: #4CAF50;
+            border-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            background-color: #45a049;
+            border-color: #45a049;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            border-color: #6c757d;
+            color: white;
+            padding: 10px 15px;
+            margin-top: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+            border-color: #545b62;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            text-align: center;
+            color: #343a40;
+        }
+
         .navbar-static-top {
-    display: flex;
-    justify-content: center; /* Menyelaraskan item secara horizontal ke tengah */
-    align-items: center; /* Menyelaraskan item secara vertikal ke tengah */
-    width: 100%;
-    background-color: #f8f9fa; /* Contoh warna background */
-}
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            background-color: #f8f9fa;
+            padding: 10px 0;
+        }
 
-.navbar-brand {
-    font-weight: bold;
-}
+        .navbar-brand {
+            font-weight: bold;
+        }
 
-.profile-link {
-    position: absolute;
-    right: 20px; /* Sesuaikan dengan margin yang diinginkan */
-    top: 50%;
-    transform: translateY(-50%);
-}
+        .profile-link {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
 
-        .navbar .profile-link i {
+        .profile-link i {
             margin-right: 5px;
         }
+
         .sidebar {
             width: 250px;
             background-color: #343a40;
@@ -97,11 +173,13 @@ $conn->close();
             transition: transform 0.3s ease, width 0.3s ease;
             box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
             border-right: 1px solid #495057;
-            z-index: 1000; /* Ensure the sidebar is above the content */
+            z-index: 1000;
         }
+
         .sidebar.collapsed {
             transform: translateX(-250px);
         }
+
         .sidebar a {
             padding: 15px 20px;
             display: flex;
@@ -112,98 +190,66 @@ $conn->close();
             border-radius: 4px;
             transition: background-color 0.3s ease, color 0.3s ease;
         }
+
         .sidebar a i {
             margin-right: 10px;
         }
+
         .sidebar a:hover {
             background-color: #495057;
             color: #ffffff;
         }
+
         .sidebar .profile {
             text-align: center;
             margin-bottom: 20px;
             color: #ffffff;
         }
+
         .sidebar .profile h5 {
             margin: 0;
             font-size: 1.2rem;
         }
+
         .sidebar .toggle-btn {
             position: absolute;
             top: 20px;
             right: -40px;
-            background-color: #28a745; /* Green color for toggle button */
+            background-color: #28a745;
             border: none;
             color: white;
             padding: 10px;
             border-radius: 0 4px 4px 0;
             cursor: pointer;
-            z-index: 1000; /* Ensure button is above the content */
+            z-index: 1000;
             transition: background-color 0.3s ease, transform 0.3s ease;
         }
+
         .sidebar .toggle-btn:hover {
-            background-color: #218838; /* Darker shade for hover effect */
-            transform: scale(1.1); /* Slightly enlarge button on hover */
+            background-color: #218838;
+            transform: scale(1.1);
         }
+
         .content {
             margin-left: 250px;
             padding: 20px;
             flex-grow: 1;
             transition: margin-left 0.3s ease;
         }
+
         .content.sidebar-collapsed {
             margin-left: 0;
         }
-        .card {
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
-            margin-bottom: 20px;
+
+        .form-group .toggle-password {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #6c757d;
         }
-        .card-title {
-            margin-bottom: 15px;
-        }
-        .btn-primary, .btn-danger {
-            border-radius: 30px;
-        }
-        .table-wrapper {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            overflow-x: auto;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-        }
-        .table {
-            margin-bottom: 0;
-        }
-        .table th, .table td {
-            vertical-align: middle;
-            white-space: nowrap;
-        }
-        .table-hover tbody tr:hover {
-            background-color: #f1f1f1;
-        }
-        .status {
-            display: inline-block;
-            padding: 5px 10px;
-            border-radius: 4px;
-            font-size: 12px;
-            text-align: center;
-            color: #fff;
-            font-weight: bold;
-        }
-        .verified {
-            background-color: #28a745;
-        }
-        .paid {
-            background-color: #4cbccc;
-        }
-        .pending {
-            background-color: #ffc107;
-            color: black;
-        }
-        .unpaid {
-            background-color: #dc3545;
-        }
+
         @media (max-width: 767.98px) {
             .table-responsive-sm {
                 display: block;
@@ -211,14 +257,29 @@ $conn->close();
                 overflow-x: auto;
                 -webkit-overflow-scrolling: touch;
             }
+
             .table-wrapper {
                 padding: 10px;
             }
+
             .status {
                 font-size: 10px;
                 padding: 3px 6px;
             }
+
+            .sidebar {
+                transform: translateX(-250px);
+            }
+
+            .content {
+                margin-left: 0;
+            }
+
+            .sidebar.collapsed {
+                transform: translateX(0);
+            }
         }
+
     </style>
 </head>
 <body>
@@ -243,8 +304,8 @@ $conn->close();
         <a href="logout_penumpang.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
     </div>
 
-    
-    <div class="container">
+    <!-- Content -->
+    <div class="container content" id="content">
         <h2>Edit Profil Penumpang</h2>
         <form method="POST">
             <div class="form-group">
@@ -266,23 +327,34 @@ $conn->close();
             <div class="form-group">
                 <label for="password">Password:</label>
                 <input type="password" id="password" name="password" class="form-control" required>
+                <i class="fas fa-eye toggle-password" id="togglePassword"></i>
             </div>
-            <button type="submit" class="btn btn-primary btn-block">Simpan Perubahan</button>
-            <a href="dashboard_pnp.php" class="btn btn-secondary btn-block">Kembali ke Dashboard</a>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Simpan</button>
+            </div>
         </form>
     </div>
 
-    <!-- Bootstrap JS and dependencies -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- JavaScript -->
     <script>
-        document.getElementById('toggleSidebar').addEventListener('click', function() {
+        document.getElementById('togglePassword').addEventListener('click', function () {
+            var passwordInput = document.getElementById('password');
+            var type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            this.classList.toggle('fa-eye-slash');
+        });
+
+        document.getElementById('toggleSidebar').addEventListener('click', function () {
             var sidebar = document.getElementById('sidebar');
             var content = document.getElementById('content');
             sidebar.classList.toggle('collapsed');
             content.classList.toggle('sidebar-collapsed');
         });
     </script>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
