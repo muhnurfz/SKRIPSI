@@ -26,19 +26,26 @@ $stmt_orders->bind_param("s", $logged_in_email);
 $stmt_orders->execute();
 $result_orders = $stmt_orders->get_result();
 
-// Status messages and corresponding CSS classes
-$status_classes = [
-    'verified' => 'verified',
-    'paid' => 'paid',
-    'pending' => 'pending',
-    'cancelled' => 'unpaid',
-    'unknown' => 'unpaid'
+// Status messages
+$status_messages = [
+    'verified' => 'LUNAS', 
+    'paid' => 'Menunggu verfikasi',
+    'pending' => 'Menunggu Pembayaran',
+    'cancelled' => 'Batal',
+    'unknown' => 'Unknown Status'
 ];
 
-// Get the CSS class for the status
-$status_class = isset($status_classes[$row['status_pembayaran']]) ? $status_classes[$row['status_pembayaran']] : $status_classes['unknown'];
+// Get the status message
+$status_message = isset($status_messages[$status_pembayaran]) ? $status_messages[$status_pembayaran] : $status_messages['unknown'];
 
-// Display the status with CSS styling
+// Determine the CSS class for the status
+$status_class = [
+    'verified' => 'verified', 
+    'paid' => 'pending',
+    'cancelled' => 'unpaid',
+    'unknown' => 'unpaid'
+][$status_pembayaran] ?? 'unpaid';
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -156,7 +163,7 @@ $status_class = isset($status_classes[$row['status_pembayaran']]) ? $status_clas
                                         <td><?php echo $row['passenger_name']; ?></td>
                                         <td><?php echo $row['destination']; ?></td>
                                         <td><?php echo $row['departure_date']; ?></td>
-                                        <td><?php echo ucfirst($row['status_classes']); ?></td>
+                                        <td><div class="status <?php echo htmlspecialchars($status_class); ?>"><?php echo htmlspecialchars($status_message); ?></div></td>
                                     </tr>
                                 <?php endwhile; ?>
                             <?php else: ?>
