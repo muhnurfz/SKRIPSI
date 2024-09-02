@@ -106,7 +106,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
         <div class="content">
             <p>Terima kasih telah mendaftar di situs kami. Untuk menyelesaikan proses pendaftaran, silakan klik tombol di bawah ini untuk mengkonfirmasi akun Anda.</p>
-            <a href="http://example.com/konfirmasi_pnp.php?email=' . urlencode($email) . '&code=' . urlencode($kode_penumpang) . '" class="button">Konfirmasi Akun</a>
+            <a href="https://tiket.agungindahtrav.com/konfirmasi_pnp.php?email=' . urlencode($email) . '&code=' . urlencode($kode_penumpang) . '" class="button">Konfirmasi Akun</a>
             <p>Jika Anda tidak melakukan pendaftaran, abaikan email ini.</p>
         </div>
         <div class="footer">
