@@ -45,21 +45,20 @@ $result_orders = $stmt_orders->get_result();
         }
         .navbar-static-top {
     display: flex;
-    justify-content: center; /* Menyelaraskan item secara horizontal ke tengah */
-    align-items: center; /* Menyelaraskan item secara vertikal ke tengah */
-    width: 100%;
+    justify-content: center;
+    position: relative;
     background-color: #f8f9fa; /* Contoh warna background */
 }
 
 .navbar-brand {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
     font-weight: bold;
 }
 
 .profile-link {
-    position: absolute;
-    right: 20px; /* Sesuaikan dengan margin yang diinginkan */
-    top: 50%;
-    transform: translateY(-50%);
+    margin-left: auto; /* Menggeser profil ke kanan */
 }
 
         .navbar .profile-link i {
