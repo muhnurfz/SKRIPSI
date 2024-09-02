@@ -11,43 +11,43 @@ if (!isset($_SESSION['email'])) {
 // Get the email of the logged-in user
 $logged_in_email = $_SESSION['email'];
 
-// Fetch passenger data from `data_pnp` based on the logged-in user's email
-$sql_pnp = "SELECT * FROM data_pnp WHERE email = ?";
-$stmt_pnp = $conn->prepare($sql_pnp);
-$stmt_pnp->bind_param("s", $logged_in_email);
-$stmt_pnp->execute();
-$result_pnp = $stmt_pnp->get_result();
-$passenger = $result_pnp->fetch_assoc();
+// // Fetch passenger data from `data_pnp` based on the logged-in user's email
+// $sql_pnp = "SELECT * FROM data_pnp WHERE email = ?";
+// $stmt_pnp = $conn->prepare($sql_pnp);
+// $stmt_pnp->bind_param("s", $logged_in_email);
+// $stmt_pnp->execute();
+// $result_pnp = $stmt_pnp->get_result();
+// $passenger = $result_pnp->fetch_assoc();
 
-// Fetch transaction history from `orders` based on the logged-in user's email
-$sql_orders = "SELECT * FROM orders WHERE email = ?";
-$stmt_orders = $conn->prepare($sql_orders);
-$stmt_orders->bind_param("s", $logged_in_email);
-$stmt_orders->execute();
-$result_orders = $stmt_orders->get_result();
+// // Fetch transaction history from `orders` based on the logged-in user's email
+// $sql_orders = "SELECT * FROM orders WHERE email = ?";
+// $stmt_orders = $conn->prepare($sql_orders);
+// $stmt_orders->bind_param("s", $logged_in_email);
+// $stmt_orders->execute();
+// $result_orders = $stmt_orders->get_result();
 
 
-// Array of Indonesian day names
-$days_in_indonesian = [
-    'Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'
-];
+// // Array of Indonesian day names
+// $days_in_indonesian = [
+//     'Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'
+// ];
 
-// Array of Indonesian month names
-$months_in_indonesian = [
-    'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
-    'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
-];
+// // Array of Indonesian month names
+// $months_in_indonesian = [
+//     'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
+//     'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
+// ];
 
-// Get Indonesian day name
-$day_index = date('w', strtotime($departure_date));
-$day_name = $days_in_indonesian[$day_index];
+// // Get Indonesian day name
+// $day_index = date('w', strtotime($departure_date));
+// $day_name = $days_in_indonesian[$day_index];
 
-// Get Indonesian month name
-$month_index = date('n', strtotime($departure_date)) - 1;
-$month_name = $months_in_indonesian[$month_index];
+// // Get Indonesian month name
+// $month_index = date('n', strtotime($departure_date)) - 1;
+// $month_name = $months_in_indonesian[$month_index];
 
-// Format date in Indonesian
-$formatted_date = $day_name . ', ' . date('d', strtotime($departure_date)) . ' ' . $month_name . ' ' . date('Y', strtotime($departure_date));
+// // Format date in Indonesian
+// $formatted_date = $day_name . ', ' . date('d', strtotime($departure_date)) . ' ' . $month_name . ' ' . date('Y', strtotime($departure_date));
 
 
 ?>
@@ -258,81 +258,6 @@ $formatted_date = $day_name . ', ' . date('d', strtotime($departure_date)) . ' '
                     <a href="pesan_tiket_pnp.php" class="btn btn-primary">Pesan Tiket</a>
                 </div>
             </div> -->
-
-            <!-- Card for Transaction History -->
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Riwayat Transaksi</h5>
-                    <div class="table-wrapper">
-                        <table class="table table-bordered table-striped table-responsive-sm">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Kode Booking</th>
-                                    <th>Nama Penumpang</th>
-                                    <th>Tujuan</th>
-                                    <th>Tanggal Berangkat</th>
-                                    <th>Status Pembayaran</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php if ($result_orders->num_rows > 0): ?>
-                                    <?php while($row = $result_orders->fetch_assoc()): ?>
-                                        <?php
-                                            // Status messages and CSS classes
-                                            $status_messages = [
-                                                'verified' => 'LUNAS', 
-                                                'paid' => 'Menunggu Verifikasi',
-                                                'pending' => 'Menunggu Pembayaran',
-                                                'cancelled' => 'Batal',
-                                                'unknown' => 'Unknown Status'
-                                            ];
-                                            $status_class = [
-                                                'verified' => 'verified', 
-                                                'paid' => 'paid',
-                                                'pending' => 'pending',
-                                                'cancelled' => 'unpaid',
-                                                'unknown' => 'unpaid'
-                                            ][$row['status_pembayaran']] ?? 'unpaid';
-                                            $status_message = $status_messages[$row['status_pembayaran']] ?? 'Unknown Status';
-                                        ?>
-                                        <tr>
-                                            <td><?php echo htmlspecialchars($row['id']); ?></td>
-                                            <td><?php echo htmlspecialchars($row['booking_code']); ?></td>
-                                            <td><?php echo htmlspecialchars($row['passenger_name']); ?></td>
-                                            <td><?php echo htmlspecialchars($row['destination']); ?></td>
-                                            <td>
-    <?php 
-        // Get the departure date from the row
-        $departure_date = $row['departure_date'];
-        
-        // Get Indonesian month name
-        $month_index = date('n', strtotime($departure_date)) - 1;
-        $month_name = $months_in_indonesian[$month_index];
-        
-        // Format date in DD/MMMM/YYYY format
-        $formatted_date = date('d', strtotime($departure_date)) . ' ' . $month_name . ' ' . date('Y', strtotime($departure_date));
-        
-        // Output the formatted date
-        echo htmlspecialchars($formatted_date); 
-    ?>
-</td>
-
-                                            <td><span class="status <?php echo $status_class; ?>"><?php echo ucfirst($status_message); ?></span></td>
-                                        </tr>
-                                    <?php endwhile; ?>
-                                <?php else: ?>
-                                    <tr>
-                                        <td colspan="6" class="text-center">Tidak ada riwayat transaksi</td>
-                                    </tr>
-                                <?php endif; ?>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!-- Bootstrap JS and dependencies -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

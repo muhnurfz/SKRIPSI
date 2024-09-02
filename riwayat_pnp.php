@@ -230,6 +230,27 @@ $formatted_date = $day_name . ', ' . date('d', strtotime($departure_date)) . ' '
     </style>
 </head>
 <body>
+    
+    <!-- Top Navbar -->
+    <nav class="navbar navbar-static-top">
+        <span class="navbar-brand">Dashboard Penumpang</span>
+        <a href="profile.php" class="profile-link">
+            <i class="fas fa-user"></i> Profil
+        </a>
+    </nav>
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <button class="btn btn-primary toggle-btn" id="toggleSidebar">☰</button>
+        <div class="profile">
+            <h5>Hallo, <?php echo htmlspecialchars($passenger['passenger_name']); ?>!</h5>
+        </div>
+        <a href="dashboard_pnp.php"><i class="fas fa-home"></i> Home</a>
+        <a href="pesan_tiket_pnp.php"><i class="fas fa-ticket-alt"></i> Pesan Tiket</a>
+        <a href="riwayat_pnp.php"><i class="fas fa-history"></i> Riwayat Transaksi</a>
+        <a href="logout_penumpang.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    </div>
+
 <!-- Card for Transaction History -->
    <div class="card">
                 <div class="card-body">
