@@ -43,7 +43,7 @@ $passenger = $result_pnp->fetch_assoc();
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 100%;
+    width: 50%;
     background-color: #f8f9fa;
     padding: 10px;
     z-index: 1000;
@@ -196,12 +196,13 @@ $passenger = $result_pnp->fetch_assoc();
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
-        document.getElementById('toggleSidebar').addEventListener('click', function() {
-            var sidebar = document.getElementById('sidebar');
-            var content = document.querySelector('.content');
-            sidebar.classList.toggle('collapsed');
-            content.classList.toggle('sidebar-collapsed');
-        });
+      document.getElementById('toggleSidebar').addEventListener('click', function() {
+    var sidebar = document.getElementById('sidebar');
+    var content = document.querySelector('.content');
+    sidebar.classList.toggle('collapsed');
+    content.classList.toggle('sidebar-collapsed');
+});
+
     </script>
 </body>
 </html>
