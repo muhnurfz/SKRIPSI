@@ -799,8 +799,8 @@ document.getElementById('destination').addEventListener('change', function() {
         <input type="text" id="passenger_name" name="passenger_name" value="<?php echo htmlspecialchars($passenger_name); ?>" required>
 
         <label for="passenger_phone">No Telepon Penumpang:</label>
-        <input type="tel" id="passenger_phone" name="passenger_phone" value="<?php echo htmlspecialchars($passenger_phone) ; echo "Nilai passenger_phone: " . $passenger_phone;?>" maxlength="19" required oninput="formatPhoneNumber(event)">
-
+        <input type="tel" id="passenger_phone" name="passenger_phone" value="<?php echo htmlspecialchars($passenger_phone) ; ?>" maxlength="19" required oninput="formatPhoneNumber(event)">
+<?php echo "Nilai passenger_phone: " . $passenger_phone;?>
         <label for="email">Email Penumpang:</label>
         <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($email); ?>" placeholder="example@gmail.com" pattern="^[a-zA-Z0-9._%+-]+@gmail\.com$" title="Hanya alamat email dengan domain @gmail.com yang diterima" required>
       
