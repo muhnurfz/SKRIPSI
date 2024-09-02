@@ -88,7 +88,7 @@ $result_orders = $stmt_orders->get_result();
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title">Pesan Tiket</h5>
-                <a href="pesan_tiket_process_pnp.php" class="btn btn-primary">Pesan Tiket</a>
+                <a href="pesan_tiket_pnp.php" class="btn btn-primary">Pesan Tiket</a>
             </div>
         </div>
 
