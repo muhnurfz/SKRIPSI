@@ -43,7 +43,7 @@ $passenger = $result_pnp->fetch_assoc();
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 50%;
+    width: 100%;
     background-color: #f8f9fa;
     padding: 10px;
     z-index: 1000;
@@ -114,7 +114,7 @@ $passenger = $result_pnp->fetch_assoc();
 
 .sidebar .toggle-btn {
     position: absolute;
-    top: 10px;
+    top: 60px; /* Adjust this value to position it below the navbar */
     right: -40px;
     background-color: #28a745;
     border: none;
@@ -126,6 +126,7 @@ $passenger = $result_pnp->fetch_assoc();
     transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
+
 .sidebar .toggle-btn:hover {
     background-color: #218838;
     transform: scale(1.1);
@@ -136,11 +137,13 @@ $passenger = $result_pnp->fetch_assoc();
     padding: 20px;
     flex-grow: 1;
     transition: margin-left 0.3s ease;
+    padding-top: 70px; /* Ensure content is below the navbar */
 }
 
 .content.sidebar-collapsed {
     margin-left: 0;
 }
+
 
 @media (max-width: 767.98px) {
     .content {
