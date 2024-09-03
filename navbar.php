@@ -196,7 +196,7 @@ $passenger = $result_pnp->fetch_assoc();
 <body>
     <!-- Top Navbar -->
     <nav class="navbar navbar-static-top">
-        <span class="navbar-brand"></span>
+        <span class="navbar-brand">Dashboard Penumpang</span>
         <a href="profile_pnp.php" class="profile-link">
             <i class="fas fa-user"></i> Profil
         </a>

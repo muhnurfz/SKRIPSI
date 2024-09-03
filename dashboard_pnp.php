@@ -87,22 +87,6 @@ $passenger = $result_pnp->fetch_assoc();
     display: block;
 }
 
-@media (max-width: 768px) {
-    .sidebar {
-        width: 100%;
-        height: auto;
-        transform: translateY(-100%);
-    }
-
-    .sidebar.open {
-        transform: translateY(0);
-    }
-
-    .content {
-        margin-left: 0;
-    }
-}
-
     </style>
 </head>
 <body>
