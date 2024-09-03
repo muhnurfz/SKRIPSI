@@ -757,8 +757,7 @@ $conn->close();
                 </table>
                 <strong><p style="color:#d1191c;">UNTUK MENDAPAT NO BODY BUS HARAP CHECK-IN TIKET DI AGEN</p></strong>
                 <table class="ticket-table">
-                 
-                        <th>Kode booking</th>
+                    <th>Kode booking</th>
                         <td><span class="php-output"><?php echo htmlspecialchars($booking_code); ?></span></td>
                     </tr>
                     <tr>
@@ -768,6 +767,14 @@ $conn->close();
                     <tr>
                         <th>Total tiket dibeli</th>
                         <td><span class="php-output"><?php echo htmlspecialchars($seatCount); ?></span></td>
+                    </tr>
+                    <tr>
+                        <th>Penumpang Dewasa</th>
+                        <td><span class="php-output"><?php echo htmlspecialchars($pnp_dewasa); ?></span></td>
+                    </tr>
+                    <tr>
+                        <th>Penumpang Balita/Anak-anak</th>
+                        <td><span class="php-output"><?php echo htmlspecialchars($pnp_balita); ?></span></td>
                     </tr>
                     <tr>
                         <th>Total pembayaran</th>

@@ -191,7 +191,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION['status_message'] = $status_message;
         $_SESSION['purchase_date'] = $purchase_date;
         $_SESSION['pnp_dewasa'] = $pnp_dewasa;
-        $_SESSION['pnp_balita '] = $pnp_balita;
+        $_SESSION['pnp_balita'] = $pnp_balita;
         
 
         // Send confirmation email if email is provided
