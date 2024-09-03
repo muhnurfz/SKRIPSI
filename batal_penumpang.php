@@ -224,7 +224,7 @@ if ($result === FALSE) {
             <div class="modal-body">
                 <div class="form-group">
                     <label for="inputNumber">Nomor Rekening</label>
-                    <div class="form-text">Masukkan dengan format : kode bank - bank - no rek</div>
+                    <div class="form-text">Masukkan dengan format : bank - no rek</div>
                     <input type="text" class="form-control" id="inputNumber" placeholder="Masukkan nomor rekening">
                 </div>
             </div>

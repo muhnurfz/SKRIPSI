@@ -267,7 +267,6 @@ $formatted_date = $day_name . ', ' . date('d', strtotime($departure_date)) . ' '
                         <table class="table table-bordered table-striped table-responsive-sm">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
                                     <th>Kode Booking</th>
                                     <th>Nama Penumpang</th>
                                     <th>Tujuan</th>
@@ -300,7 +299,7 @@ $formatted_date = $day_name . ', ' . date('d', strtotime($departure_date)) . ' '
                                             $status_message = $status_messages[$row['status_pembayaran']] ?? 'Unknown Status';
                                         ?>
                                         <tr>
-                                            <td><?php echo htmlspecialchars($row['id']); ?></td>
+                                            
                                             <td><?php echo htmlspecialchars($row['booking_code']); ?></td>
                                             <td><?php echo htmlspecialchars($row['passenger_name']); ?></td>
                                             <td><?php echo htmlspecialchars($row['destination']); ?></td>
