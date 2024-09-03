@@ -42,7 +42,7 @@ $passenger = $result_pnp->fetch_assoc();
     display: flex;
     justify-content: center; /* Center items horizontally */
     align-items: center; /* Center items vertically */
-    width: calc(100% - 250px); /* Adjust width based on sidebar width */
+    width: calc(100%); /* Adjust width based on sidebar width */
     background-color: #f8f9fa; /* Background color */
     position: fixed;
     top: 0;
@@ -53,7 +53,7 @@ $passenger = $result_pnp->fetch_assoc();
 }
 
 .navbar-static-top.collapsed {
-    width: calc(100% - 50px); /* Adjust width when sidebar is collapsed */
+    width: calc(100%); /* Adjust width when sidebar is collapsed */
     left: 50px; /* Align with the collapsed sidebar */
 }
 
