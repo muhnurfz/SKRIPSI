@@ -210,6 +210,8 @@ $passenger = $result_pnp->fetch_assoc();
         </div>
         <a href="dashboard_pnp.php"><i class="fas fa-home"></i> Home</a>
         <a href="pesan_tiket_pnp.php"><i class="fas fa-ticket-alt"></i> Pesan Tiket</a>
+        <a href="edit_penumpang.php"><i class="fas fa-pencil-alt"></i> Ubah keberangkatan</a>
+        <a href="batal_penumpang.php"><i class="fas fa-times-circle"></i> Ajukan pembatalan</a>
         <a href="riwayat_pnp.php"><i class="fas fa-history"></i> Riwayat Transaksi</a>
         <a href="logout_penumpang.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
     </div>
