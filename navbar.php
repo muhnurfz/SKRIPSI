@@ -54,7 +54,7 @@ $passenger = $result_pnp->fetch_assoc();
 
 .navbar-static-top.collapsed {
     width: calc(100% - 50px); /* Adjust width when sidebar is collapsed */
-    left: 50px; /* Align with the collapsed sidebar */
+    /* left: 50px; Align with the collapsed sidebar */
 }
 
 .navbar-brand {
