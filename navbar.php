@@ -66,7 +66,7 @@ $passenger = $result_pnp->fetch_assoc();
         .profile-link {
             position: absolute;
             margin-left: auto; /* Push to the far right */
-            right: 250px; /* Margin from right */
+            right: 270px; /* Margin from right */
             top: 50%;
             transform: translateY(-50%);
         }
