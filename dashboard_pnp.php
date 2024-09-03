@@ -71,19 +71,6 @@ $passenger = $result_pnp->fetch_assoc();
     transition: all 0.3s ease;
 }
 
-@media (max-width: 768px) {
-    .sidebar {
-        width: 100%;
-        height: auto;
-        position: relative;
-    }
-
-    .terms, .container-details {
-        margin-left: 0;
-        padding: 15px;
-    }
-}
-
 /* Overlay Effect */
 .overlay {
     position: fixed;
@@ -99,6 +86,23 @@ $passenger = $result_pnp->fetch_assoc();
 .sidebar.open + .overlay {
     display: block;
 }
+
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        transform: translateY(-100%);
+    }
+
+    .sidebar.open {
+        transform: translateY(0);
+    }
+
+    .content {
+        margin-left: 0;
+    }
+}
+
     </style>
 </head>
 <body>
