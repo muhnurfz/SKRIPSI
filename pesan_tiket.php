@@ -878,19 +878,17 @@ document.getElementById('destination').addEventListener('change', function() {
             <input type="email" id="email" name="email" placeholder="example@gmail.com"  pattern="^[a-zA-Z0-9._%+-]+@gmail\.com$" title="Hanya alamat email dengan domain @gmail.com yang diterima" required>
 
 
-            <div style="text-align: center;">
-    <!-- Input Penumpang Dewasa -->
-    <div style="display: inline-block; margin-right: 20px;">
-        <label for="pnp_dewasa">Penumpang Dewasa:</label>
-        <input type="number" id="pnp_dewasa" name="pnp_dewasa" min="0" max="10" class="form-control" required>
-    </div>
+            <div class="form-group" style="display: inline-block; width: 48%; margin-right: 2%;">
+            <label for="pnp_dewasa">Penumpang Dewasa:</label>
+            <input type="number" id="pnp_dewasa" name="pnp_dewasa" min="0" max="10" class="form-control" required>
+            </div>
 
-    <!-- Input Penumpang Balita/Anak-anak -->
-    <div style="display: inline-block;">
-        <label for="pnp_balita">Penumpang Balita/Anak 0-2 tahun:</label>
-        <input type="number" id="pnp_balita" name="pnp_balita" min="0" max="10" class="form-control" required>
-    </div>
-</div>
+        <!-- Input Penumpang Balita/Anak-anak -->
+            <div class="form-group" style="display: inline-block; width: 48%;">
+            <label for="pnp_balita">Penumpang Balita/Anak 0-2 tahun:</label>
+            <input type="number" id="pnp_balita" name="pnp_balita" min="0" max="10" class="form-control" required>
+            </div>
+
 
             <div>
             <label for="departure_date"><strong>Tanggal Keberangkatan:</strong></label>
