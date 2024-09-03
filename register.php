@@ -139,7 +139,7 @@
 
         <div class="form-group row">
         <div class="col-12 col-md-6 mb-2 mb-md-0">
-        <a class="btn btn-secondary btn-block" href="index.php">Back</a>
+        <a class="btn btn-secondary btn-block" href="index.php">Kembali</a>
     </div>
     <div class="col-12 col-md-6">
         <button type="submit" class="btn btn-primary btn-block" id="registerButton">Registrasi</button>
