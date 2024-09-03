@@ -249,7 +249,7 @@ $mail->AltBody = 'Kami menerima permintaan untuk mereset password akun Anda. Jik
         </div>
         <div class="form-group row">
         <div class="col-12 col-md-6 mb-2 mb-md-0">
-        <a class="btn btn-secondary btn-block" href="login_pnp.php">Kembali</a>
+        <a class="btn btn-secondary btn-block" href="login_penumpang.php">Kembali</a>
     </div>
     <div class="col-12 col-md-6">
         <button type="submit" class="btn btn-primary btn-block">Kirim Link Reset</button>
