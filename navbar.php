@@ -43,8 +43,18 @@ $passenger = $result_pnp->fetch_assoc();
     display: flex;
     justify-content: center; /* Center items horizontally */
     align-items: center; /* Center items vertically */
-    width: 100%;
+    width: calc(100% - 250px); /* Adjust width based on sidebar width */
     background-color: #f8f9fa; /* Background color */
+    position: fixed;
+    top: 0;
+    left: 250px; /* Start position */
+    transition: left 0.3s ease, width 0.3s ease;
+    z-index: 1000; /* Ensure navbar is above other elements */
+}
+
+.navbar-static-top.collapsed {
+    width: calc(100% - 50px); /* Adjust width when sidebar is collapsed */
+    left: 50px; /* Adjust position when sidebar is collapsed */
 }
 
 .navbar-brand {
@@ -61,7 +71,6 @@ $passenger = $result_pnp->fetch_assoc();
 .navbar .profile-link i {
     margin-right: 5px;
 }
-
 .sidebar {
     width: 250px;
     background-color: #343a40;
@@ -75,7 +84,6 @@ $passenger = $result_pnp->fetch_assoc();
     border-right: 1px solid #495057;
     z-index: 1000; /* Ensure sidebar is above content */
 }
-
 .sidebar.collapsed {
     transform: translateX(-250px);
 }
@@ -129,7 +137,6 @@ $passenger = $result_pnp->fetch_assoc();
     background-color: #218838; /* Darker shade for hover effect */
     transform: scale(1.1); /* Slightly enlarge button on hover */
 }
-
 .content {
     margin-left: 250px;
     padding: 20px;
@@ -156,6 +163,16 @@ $passenger = $result_pnp->fetch_assoc();
         width: 200px; /* Adjust width for smaller screens */
     }
 
+    .navbar-static-top {
+        width: calc(100% - 200px); /* Adjust width based on smaller sidebar width */
+        left: 200px; /* Adjust position based on smaller sidebar width */
+    }
+
+    .navbar-static-top.collapsed {
+        width: calc(100% - 50px); /* Adjust width when sidebar is collapsed */
+        left: 50px; /* Adjust position when sidebar is collapsed */
+    }
+
     .content {
         margin-left: 0;
     }
@@ -164,22 +181,17 @@ $passenger = $result_pnp->fetch_assoc();
         transform: translateX(-200px);
     }
 
-    .sidebar.collapsed {
-        transform: translateX(0);
-    }
-
     .toggle-btn {
         right: 10px;
     }
 }
-
     </style>
 </head>
 <body>
  
     <!-- Top Navbar -->
     <nav class="navbar navbar-static-top">
-        <!-- <span class="navbar-brand">Dashboard Penumpang</span> -->
+        <span class="navbar-brand">Dashboard Penumpang</span>
         <a href="profile_pnp.php" class="profile-link">
             <i class="fas fa-user"></i> Profil
         </a>
