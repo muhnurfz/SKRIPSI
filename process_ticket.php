@@ -91,6 +91,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $destination = htmlspecialchars($_POST['destination']);
     $departure_date = htmlspecialchars($_POST['departure_date']);
     $selected_seats = htmlspecialchars($_POST['selected_seats']);
+    $pnp_dewasa = (int)$_POST['pnp_dewasa'];
+    $pnp_balita = (int)$_POST['pnp_balita'];
 
     // Generate a new unique booking code with route prefix
     $booking_code = generateUniqueBookingCode($conn, $route);
@@ -141,16 +143,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             throw new Exception("Maaf ada yang lebih dahulu memesan kursi.");
         }
 
-        // Proceed with the insertion
-        $stmt = $conn->prepare("INSERT INTO orders (
-            departure, route, destination, departure_date, passenger_name, passenger_phone, booking_code, selected_seats, total_tariff, purchase_date, status_pembayaran, email
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'pending', ?)");
-        $stmt->bind_param("ssssssssiss", $departure, $route, $destination, $departure_date, $passenger_name, $passenger_phone, $booking_code, $selected_seats, $total_tariff, $purchase_date, $email);
+          // Proceed with the insertion
+          $stmt = $conn->prepare("INSERT INTO orders (
+            departure, route, destination, departure_date, passenger_name, passenger_phone, booking_code, selected_seats, total_tariff, purchase_date, status_pembayaran, email, pnp_dewasa, pnp_balita
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'pending', ?, ?, ?)");
+        $stmt->bind_param("ssssssssissii", $departure, $route, $destination, $departure_date, $passenger_name, $passenger_phone, $booking_code, $selected_seats, $total_tariff, $purchase_date, $email, $pnp_dewasa, $pnp_balita);
         $stmt->execute();
         $stmt->close();
 
         // Commit transaction
         $conn->commit();
+
 
         // Calculate payment deadline (2 hours from purchase date)
         $deadline_datetime = new DateTime($purchase_date, new DateTimeZone('Asia/Jakarta'));
@@ -187,6 +190,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION['deadline'] = $deadline;
         $_SESSION['status_message'] = $status_message;
         $_SESSION['purchase_date'] = $purchase_date;
+        $_SESSION['pnp_dewasa'] = $pnp_dewasa;
+        $_SESSION['pnp_balita '] = $pnp_balita;
+        
 
         // Send confirmation email if email is provided
         if (!empty($email)) {

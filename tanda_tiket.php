@@ -47,6 +47,8 @@ $route = $_SESSION['route'];
 $destination = $_SESSION['destination'];
 $departure_date = $_SESSION['departure_date'];
 $selected_seats = $_SESSION['selected_seats'];
+$pnp_dewasa = $_SESSION['pnp_dewasa'];   
+$pnp_balita = $_SESSION['pnp_balita'];
 $tariff_per_seat = $_SESSION['tariff_per_seat'];
 $seat_count = $_SESSION['seat_count'];
 $total_tariff = $_SESSION['total_tariff'];
@@ -431,7 +433,16 @@ function showSuccessMessage(message) {
                   <span id="phone-number"><?php echo htmlspecialchars($email); ?></span>
                 </div>
 
+                <div class="booking-details">
+                <label for="pnp-dewasa">Jumlah Penumpang Dewasa:</label>
+                <span id="pnp-dewasa"><?php echo htmlspecialchars($pnp_dewasa); ?></span>
+                </div>
 
+                <div class="booking-details">
+                <label for="pnp-balita">Jumlah Penumpang Balita:</label>
+                <span id="pnp-balita"><?php echo htmlspecialchars($pnp_balita); ?></span>
+                </div>
+                
                 <div class="booking-details">
                   <label for="phone-number">Tanggal keberangkatan :</label>
                   <span id="departure"><?php echo $formatted_date; ?></span>
