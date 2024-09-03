@@ -1,7 +1,7 @@
 <?php
 session_start();
 include('conn.php');
-
+include('navbar.php');
 // Check if the user is logged in
 if (!isset($_SESSION['email'])) {
     header("Location: login_penumpang.php");
