@@ -36,6 +36,8 @@ if ($inserted_id > 0) {
         $bus_code = isset($row['bus_code']) ? $row['bus_code'] : ''; // Add this line
         $total_tariff = $row['total_tariff'];
         $status_pembayaran = $row['status_pembayaran'];
+        $pnp_dewasa = isset($row['pnp_dewasa']) ? intval($row['pnp_dewasa']) : 0;
+        $pnp_balita = isset($row['pnp_balita']) ? intval($row['pnp_balita']) : 0;
     } else {
         $booking_code = "Not Found";
         $bus_code = ''; // Add this line
@@ -43,6 +45,8 @@ if ($inserted_id > 0) {
         $seatCount = 0;
         $tariffPerSeat = 0;
         $total_tariff = 0;
+        $pnp_dewasa = 0; // Default value for pnp_dewasa if no booking found
+        $pnp_balita = 0; // Default value for pnp_balita if no booking found
     }
 
     $stmt->close();
@@ -320,11 +324,12 @@ try {
                   <strong><p style="color:#00008B;">PO LAJU PRIMA</p></strong>
               </div>
               <div class="ticket-content">
-                  <div><strong>Nama penumpang:</strong> ' . htmlspecialchars($passenger_name) . '</div>
-                  <div><strong>Tanggal keberangkatan:</strong> ' . date('d/m/Y', strtotime($departure_date)) . '</div>
-                  <div><strong>NO telepon:</strong> ' . htmlspecialchars($formatted_phone) . '</div>
-                    <div><strong>Email penumpang :</strong> ' . htmlspecialchars($email) . '</div>
-                 
+                <div><strong>Nama penumpang:</strong> ' . htmlspecialchars($passenger_name) . '</div>
+                <div><strong>Tanggal keberangkatan:</strong> ' . date('d/m/Y', strtotime($departure_date)) . '</div>
+                <div><strong>NO telepon:</strong> ' . htmlspecialchars($formatted_phone) . '</div>
+                <div><strong>Email penumpang :</strong> ' . htmlspecialchars($email) . '</div>
+                <div><strong>Penumpang Dewasa:</strong> <?php echo intval($pnp_dewasa); ?></div>
+                <div><strong>Penumpang Balita/Anak 0-2 tahun:</strong> <?php echo intval($pnp_balita); ?></div>
                   <table class="ticket-table">
                       <tr>
                           <th>Asal keberangkatan</th>
