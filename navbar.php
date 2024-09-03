@@ -41,7 +41,7 @@ $passenger = $result_pnp->fetch_assoc();
         .navbar-static-top {
     display: flex;
     justify-content: center; /* Center items horizontally */
-    align-items: center; /* Center items vertically */
+    align-items: justify; /* Center items vertically */
     width: calc(100%); /* Adjust width based on sidebar width */
     background-color: #f8f9fa; /* Background color */
     position: fixed;
