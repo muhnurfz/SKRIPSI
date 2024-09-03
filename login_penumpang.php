@@ -45,88 +45,130 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        body {
-            background-image: url('your-background-image.jpg'); /* Specify your background image URL here */
-            background-size: cover;
-            background-position: center;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        .login-container {
-            background-color: rgba(255, 255, 255, 0.85);
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.25);
-            width: 100%;
-            max-width: 400px;
-            backdrop-filter: blur(10px);
-        }
-        .error-message {
-            color: #dc3545;
-            font-size: 0.9em;
-            margin-bottom: 15px;
-            text-align: center;
-        }
-        .btn-primary, .btn-secondary {
-            transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
-            border-radius: 30px;
-        }
-        .password-wrapper {
-            position: relative;
-        }
-        .password-wrapper .form-control {
-            padding-right: 40px; /* Space for the icon */
-        }
-        .password-wrapper #togglePassword {
-            position: absolute;
-            right: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            cursor: pointer;
-            color: #007bff;
-            font-size: 1.2em;
-        }
-        .btn-primary:hover, .btn-primary:focus {
-            background-color: #004494; /* Darker shade */
-            border-color: #003a75;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-        }
-        .btn-secondary:hover, .btn-secondary:focus {
-            background-color: #5a6268; /* Darker shade */
-            border-color: #4e555b;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-        }
-        .loading {
-            display: none;
-            text-align: center;
-            margin-top: 10px;
-        }
-        .loading.active {
-            display: block;
-        }
-        .form-control {
-            border-radius: 0.5rem;
-        }
-        h2 {
-            font-size: 1.8rem;
-            margin-bottom: 20px;
-            color: #333;
-        }
-        .form-footer {
-            margin-top: 20px;
-            text-align: center;
-        }
-        .form-footer a {
-            color: #007bff;
-            text-decoration: none;
-        }
-        .form-footer a:hover {
-            text-decoration: underline;
-        }
+       body {
+    background-image: url('your-background-image.jpg'); /* Specify your background image URL here */
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow: hidden; /* Prevent scrollbars */
+}
+
+.login-container {
+    background-color: rgba(255, 255, 255, 0.85);
+    padding: 20px; /* Reduced padding for mobile */
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.25);
+    width: 100%;
+    max-width: 400px;
+    backdrop-filter: blur(10px);
+    box-sizing: border-box; /* Ensure padding and border are included in width */
+}
+
+.error-message {
+    color: #dc3545;
+    font-size: 0.9em;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.btn-primary, .btn-secondary {
+    transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
+    border-radius: 30px;
+}
+
+.password-wrapper {
+    position: relative;
+}
+
+.password-wrapper .form-control {
+    padding-right: 40px; /* Space for the icon */
+}
+
+.password-wrapper #togglePassword {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #007bff;
+    font-size: 1.2em;
+}
+
+.btn-primary:hover, .btn-primary:focus {
+    background-color: #004494; /* Darker shade */
+    border-color: #003a75;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+}
+
+.btn-secondary:hover, .btn-secondary:focus {
+    background-color: #5a6268; /* Darker shade */
+    border-color: #4e555b;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+}
+
+.loading {
+    display: none;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.loading.active {
+    display: block;
+}
+
+.form-control {
+    border-radius: 0.5rem;
+}
+
+h2 {
+    font-size: 1.5rem; /* Reduced size for mobile */
+    margin-bottom: 15px; /* Reduced margin for mobile */
+    color: #333;
+}
+
+.form-footer {
+    margin-top: 15px; /* Reduced margin for mobile */
+    text-align: center;
+}
+
+.form-footer a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.form-footer a:hover {
+    text-decoration: underline;
+}
+
+/* Media queries for mobile responsiveness */
+@media (max-width: 768px) {
+    .login-container {
+        padding: 15px;
+        max-width: 90%; /* Allow more flexibility on smaller screens */
+    }
+    
+    .password-wrapper .form-control {
+        padding-right: 35px; /* Adjust space for icon */
+    }
+    
+    .password-wrapper #togglePassword {
+        font-size: 1em; /* Adjust icon size for mobile */
+    }
+    
+    h2 {
+        font-size: 1.4rem; /* Further reduce size for very small screens */
+    }
+    
+    .form-footer {
+        margin-top: 10px; /* Adjust margin for very small screens */
+    }
+}
+
     </style>
 </head>
 <body>
