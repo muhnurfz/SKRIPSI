@@ -42,7 +42,7 @@ $passenger = $result_pnp->fetch_assoc();
             display: flex;
             justify-content: space-between; /* Distribute space between items */
             align-items: center; /* Center items vertically */
-            width: calc(100% - 250px); /* Adjust width based on sidebar width */
+            width: calc(100%); /* Adjust width based on sidebar width */
             background-color: #f8f9fa; /* Background color */
             position: fixed;
             top: 0;
