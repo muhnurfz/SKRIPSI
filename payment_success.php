@@ -778,7 +778,7 @@ $conn->close();
                         <td><span class="php-output"><?php echo htmlspecialchars($pnp_dewasa); ?></span></td>
                     </tr>
                     <tr>
-                        <th>Penumpang Balita/Anak-anak</th>
+                        <th>Penumpang Balita/Anak 0-2 tahun</th>
                         <td><span class="php-output"><?php echo htmlspecialchars($pnp_balita); ?></span></td>
                     </tr>
                     <tr>

@@ -439,10 +439,10 @@ function showSuccessMessage(message) {
                 </div>
 
                 <div class="booking-details">
-                <label for="pnp-balita">Jumlah Penumpang Balita:</label>
+                <label for="pnp-balita">Jumlah Penumpang Anak 0-2 tahun:</label>
                 <span id="pnp-balita"><?php echo htmlspecialchars($pnp_balita); ?></span>
                 </div>
-                
+
                 <div class="booking-details">
                   <label for="phone-number">Tanggal keberangkatan :</label>
                   <span id="departure"><?php echo $formatted_date; ?></span>
