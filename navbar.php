@@ -39,35 +39,37 @@ $passenger = $result_pnp->fetch_assoc();
             font-family: Arial, sans-serif;
         }
         .navbar-static-top {
-    display: flex;
-    justify-content: justify; /* Center items horizontally */
-    align-items: justify; /* Center items vertically */
-    width: calc(100%); /* Adjust width based on sidebar width */
-    background-color: #f8f9fa; /* Background color */
-    position: fixed;
-    top: 0;
-    left: 250px; /* Start position to the right of the sidebar */
-    transition: left 0.3s ease, width 0.3s ease;
-    z-index: 1000; /* Ensure navbar is above other elements */
-    padding: 0 20px; /* Optional: Add padding for better spacing */
-}
+            display: flex;
+            justify-content: space-between; /* Distribute space between items */
+            align-items: center; /* Center items vertically */
+            width: calc(100% - 250px); /* Adjust width based on sidebar width */
+            background-color: #f8f9fa; /* Background color */
+            position: fixed;
+            top: 0;
+            left: 250px; /* Start position to the right of the sidebar */
+            transition: left 0.3s ease, width 0.3s ease;
+            z-index: 1000; /* Ensure navbar is above other elements */
+            padding: 0 20px; /* Optional: Add padding for better spacing */
+        }
 
-.navbar-static-top.collapsed {
-    width: calc(100% - 250px); /* Adjust width when sidebar is collapsed */
-    left: 50px; Align with the collapsed sidebar
-}
+        .navbar-static-top.collapsed {
+            width: calc(100% - 250px); /* Adjust width when sidebar is collapsed */
+            left: 50px; Align with the collapsed sidebar
+        }
 
-.navbar-brand {
-    font-weight: bold;
-}
+        .navbar-brand {
+            flex: 1; /* Take up remaining space */
+            text-align: center; /* Center text horizontally */
+            font-weight: bold;
+        }
 
-.profile-link {
-    position: absolute;
-    right: 20px; /* Margin from right */
-    top: 50%;
-    transform: translateY(-50%);
-}
-
+        .profile-link {
+            position: absolute;
+            margin-left: auto; /* Push to the far right */
+            right: 20px; /* Margin from right */
+            top: 50%;
+            transform: translateY(-50%);
+        }
 
         .navbar .profile-link i {
             margin-right: 5px;
