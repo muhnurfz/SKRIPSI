@@ -74,9 +74,7 @@ $passenger = $result_pnp->fetch_assoc();
     </style>
 </head>
 <body>
-    <div class="navbar">
-        <?php include('navbar.php'); ?>
-    </div>
+  
     <div class="terms">
         <h2>Ketentuan Perjalanan</h2>
         <p>Berikut adalah ketentuan yang berlaku untuk perjalanan Anda:</p>
