@@ -34,7 +34,7 @@ $passenger = $result_pnp->fetch_assoc();
         body {
             display: flex;
             flex-direction: column;
-            min-height: 100vh;
+       
             margin: 0;
             font-family: Arial, sans-serif;
         }
@@ -66,7 +66,7 @@ $passenger = $result_pnp->fetch_assoc();
         .profile-link {
             position: absolute;
             margin-left: auto; /* Push to the far right */
-            right: 100px; /* Margin from right */
+            margin-right: 250px; /* Margin from right */
             top: 50%;
             transform: translateY(-50%);
         }
