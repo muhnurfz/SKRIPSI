@@ -19,38 +19,6 @@ $stmt_pnp->bind_param("s", $logged_in_email);
 $stmt_pnp->execute();
 $result_pnp = $stmt_pnp->get_result();
 $passenger = $result_pnp->fetch_assoc();
-
-// // Fetch transaction history from `orders` based on the logged-in user's email
-// $sql_orders = "SELECT * FROM orders WHERE email = ?";
-// $stmt_orders = $conn->prepare($sql_orders);
-// $stmt_orders->bind_param("s", $logged_in_email);
-// $stmt_orders->execute();
-// $result_orders = $stmt_orders->get_result();
-
-
-// // Array of Indonesian day names
-// $days_in_indonesian = [
-//     'Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'
-// ];
-
-// // Array of Indonesian month names
-// $months_in_indonesian = [
-//     'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
-//     'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
-// ];
-
-// // Get Indonesian day name
-// $day_index = date('w', strtotime($departure_date));
-// $day_name = $days_in_indonesian[$day_index];
-
-// // Get Indonesian month name
-// $month_index = date('n', strtotime($departure_date)) - 1;
-// $month_name = $months_in_indonesian[$month_index];
-
-// // Format date in Indonesian
-// $formatted_date = $day_name . ', ' . date('d', strtotime($departure_date)) . ' ' . $month_name . ' ' . date('Y', strtotime($departure_date));
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -58,39 +26,58 @@ $passenger = $result_pnp->fetch_assoc();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Penumpang</title>
-    <!-- Bootstrap CSS -->
     <style>
-  
-/* Content CSS */
-.terms, .container-details {
-    margin-left: 260px;
-    padding: 20px;
-    background-color: #f7f7f7;
-    border-radius: 8px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
-}
-
-/* Overlay Effect */
-.overlay {
-    position: fixed;
-    display: none;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    background-color: rgba(0, 0, 0, 0.7);
-    z-index: 900;
-}
-
-.sidebar.open + .overlay {
-    display: block;
-}
-
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .navbar {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+        .terms, .container-details {
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #f7f7f7;
+            border-radius: 8px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            max-width: 800px;
+        }
+        .terms h2, .container-details h3 {
+            margin-top: 0;
+        }
+        .container-details {
+            margin-top: 30px;
+        }
+        .detail-item {
+            margin-bottom: 20px;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        @media (max-width: 768px) {
+            .terms, .container-details {
+                margin: 10px;
+                padding: 15px;
+            }
+            ul {
+                padding-left: 15px;
+            }
+        }
     </style>
 </head>
 <body>
-<div class="terms">
+    <div class="navbar">
+        <?php include('navbar.php'); ?>
+    </div>
+    <div class="terms">
         <h2>Ketentuan Perjalanan</h2>
         <p>Berikut adalah ketentuan yang berlaku untuk perjalanan Anda:</p>
         <ul>
@@ -103,34 +90,17 @@ $passenger = $result_pnp->fetch_assoc();
         </ul>
     </div>
     <div class="container-details">
-        <!-- <div class="row">
-            <div class="col-md-6"> -->
-                <div class="detail-item">
-                    <h3>Perubahan dan Pembatalan Tiket</h3>
-                    <p>Informasi mengenai perubahan atau pembatalan tiket Anda:</p>
-                    <ul>
-                        <li>Perubahan jadwal tiket dapat dilakukan jika dilakukan paling lambat 24 jam sebelum keberangkatan.</li>
-                        <li>Perubahan jadwal tiket dapat dilakukan maksimal 2x.</li>
-                        <li>Pembatalan tiket dikenakan biaya administrasi sebesar Rp 30.000 dari tarif tiket dan dilakukan paling lambat 24 jam sebelum keberangkatan.</li>
-                        <li>Pembatalan tiket yang di setujui, maka dana akan dilakukan maksimal 2x24 jam.</li>
-                        <li>Tiket tidak dapat diubah atau dibatalkan setelah melewati batas waktu yang ditentukan.</li>
-                    </ul>
-                </div>
-            </div>
-            <!-- <div class="col-md-6">
-                <div class="detail-item">
-                    <h3>Kelas dan Jadwal Bus</h3>
-                    <p>Berikut adalah informasi tentang kelas dan jadwal bus:</p>
-                    <ul>
-                        <li><strong>Kelas Ekonomi:</strong> Fasilitas standar, kursi yang nyaman, dan layanan dasar.</li>
-                        <li><strong>Kelas Bisnis:</strong> Fasilitas lebih lengkap, kursi lebih nyaman, dan layanan prioritas.</li>
-                        <li><strong>Kelas VIP:</strong> Fasilitas premium, kursi recliner, dan layanan khusus.</li>
-                    </ul>
-                    <a href="jadwal_bus.php" class="btn btn-primary">Lihat Jadwal Bus</a>
-                </div>
-            </div> -->
+        <div class="detail-item">
+            <h3>Perubahan dan Pembatalan Tiket</h3>
+            <p>Informasi mengenai perubahan atau pembatalan tiket Anda:</p>
+            <ul>
+                <li>Perubahan jadwal tiket dapat dilakukan jika dilakukan paling lambat 24 jam sebelum keberangkatan.</li>
+                <li>Perubahan jadwal tiket dapat dilakukan maksimal 2x.</li>
+                <li>Pembatalan tiket dikenakan biaya administrasi sebesar Rp 30.000 dari tarif tiket dan dilakukan paling lambat 24 jam sebelum keberangkatan.</li>
+                <li>Pembatalan tiket yang di setujui, maka dana akan dilakukan maksimal 2x24 jam.</li>
+                <li>Tiket tidak dapat diubah atau dibatalkan setelah melewati batas waktu yang ditentukan.</li>
+            </ul>
         </div>
     </div>
-</div>
 </body>
 </html>
