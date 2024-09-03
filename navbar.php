@@ -53,7 +53,7 @@ $passenger = $result_pnp->fetch_assoc();
 }
 
 .navbar-static-top.collapsed {
-    width: calc(100% - 100px); /* Adjust width when sidebar is collapsed */
+    width: calc(100% - 250px); /* Adjust width when sidebar is collapsed */
     left: 50px; Align with the collapsed sidebar
 }
 
