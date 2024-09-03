@@ -127,6 +127,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         .form-footer a:hover {
             text-decoration: underline;
         }
+
+/* Adjust button font size for mobile */
+@media (max-width: 576px) {
+    .btn {
+        font-size: 0.875rem; /* Slightly smaller font size on mobile */
+    }
+}
     </style>
 </head>
 <body>

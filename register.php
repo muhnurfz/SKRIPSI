@@ -96,6 +96,13 @@
         .form-footer a:hover {
             text-decoration: underline;
         }
+
+/* Adjust button font size for mobile */
+@media (max-width: 576px) {
+    .btn {
+        font-size: 0.875rem; /* Slightly smaller font size on mobile */
+    }
+}
     </style>
 </head>
 <body>
@@ -131,12 +138,12 @@
         </div>
 
         <div class="form-group row">
-            <div class="col-md-6">
-                <a class="btn btn-secondary btn-block" href="index.php">Back</a>
-            </div>
-            <div class="col-md-6">
-                <button type="submit" class="btn btn-primary btn-block" id="registerButton">Registrasi</button>
-            </div>
+        <div class="col-12 col-md-6 mb-2 mb-md-0">
+        <a class="btn btn-secondary btn-block" href="index.php">Back</a>
+    </div>
+    <div class="col-12 col-md-6">
+        <button type="submit" class="btn btn-primary btn-block" id="registerButton">Registrasi</button>
+    </div>
         </div>
     </form>
 

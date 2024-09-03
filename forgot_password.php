@@ -225,6 +225,13 @@ $mail->AltBody = 'Kami menerima permintaan untuk mereset password akun Anda. Jik
         .alert {
             text-align: center;
         }
+
+/* Adjust button font size for mobile */
+@media (max-width: 576px) {
+    .btn {
+        font-size: 0.875rem; /* Slightly smaller font size on mobile */
+    }
+}
     </style>
 </head>
 <body>
@@ -241,12 +248,12 @@ $mail->AltBody = 'Kami menerima permintaan untuk mereset password akun Anda. Jik
             <input type="email" name="email" class="form-control" id="email" placeholder="contoh@gmail.com" required>
         </div>
         <div class="form-group row">
-            <div class="col-md-6">
-                <a class="btn btn-secondary btn-block" href="login_penumpang.php">Kembali</a>
-            </div>
-            <div class="col-md-6">
-                <button type="submit" class="btn btn-primary btn-block">Kirim Link Reset</button>
-            </div>
+        <div class="col-12 col-md-6 mb-2 mb-md-0">
+        <a class="btn btn-secondary btn-block" href="login_penumpang.php">Kembali</a>
+    </div>
+    <div class="col-12 col-md-6">
+        <button type="submit" class="btn btn-primary btn-block">Kirim Link Reset</button>
+    </div>
         </div>
     </form>
     <div id="loading" class="loading">

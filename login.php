@@ -111,6 +111,13 @@ $conn->close();
         .form-control {
             border-radius: 0.25rem;
         }
+
+/* Adjust button font size for mobile */
+@media (max-width: 576px) {
+    .btn {
+        font-size: 0.875rem; /* Slightly smaller font size on mobile */
+    }
+}
     </style>
 </head>
 <body>
