@@ -880,13 +880,13 @@ document.getElementById('destination').addEventListener('change', function() {
 
             <div class="form-group" style="display: inline-block; width: 48%; margin-right: 2%;">
             <label for="pnp_dewasa">Penumpang Dewasa:</label>
-            <input type="number" id="pnp_dewasa" name="pnp_dewasa" min="0" max="10" class="form-control" required>
+            <input type="number" id="pnp_dewasa" name="pnp_dewasa" min="0" max="4" class="form-control" required>
             </div>
 
         <!-- Input Penumpang Balita/Anak-anak -->
             <div class="form-group" style="display: inline-block; width: 48%;">
             <label for="pnp_balita">Penumpang Balita/Anak 0-2 tahun:</label>
-            <input type="number" id="pnp_balita" name="pnp_balita" min="0" max="10" class="form-control" required>
+            <input type="number" id="pnp_balita" name="pnp_balita" min="0" max="4" class="form-control" required>
             </div>
 
 
