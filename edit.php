@@ -706,11 +706,11 @@ seats.forEach(function(seat) {
         return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     }
 
-   
-    // Check reserved seats and total seats from the server
-function checkReservedSeats() {
+    // Check reserved seats from the server
+    function checkReservedSeats() {
     var route = document.getElementById("route").value;
     var departureDate = document.getElementById("departure_date").value;
+
     if (route !== "0" && departureDate) {
         fetch(`get_reserved_seats.php?route=${route}&departure_date=${departureDate}`)
             .then(response => {
@@ -722,39 +722,47 @@ function checkReservedSeats() {
             .then(data => {
                 var reservedSeats = data.reserved_seats || [];
                 var totalSeats = data.total_seats || 0; // Nilai total_seats dari server
-                
+
                 console.log("Reserved seats data:", reservedSeats); // Debugging line
                 console.log("Total seats:", totalSeats); // Debugging line
 
                 // Update seat reservation status in UI
-                if (Array.isArray(reservedSeats)) {
-                    seats.forEach(function(seat) {
-                        var seatNumber = seat.getAttribute('data-seat');
-                        if (reservedSeats.includes(seatNumber)) {
-                            seat.classList.add('reserved');
-                        } else {
-                            seat.classList.remove('reserved');
-                        }
-                    });
-                } else {
-                    console.error('Data received is not an array:', reservedSeats);
-                }
+                seats.forEach(function(seat) {
+                    var seatNumber = seat.getAttribute('data-seat');
+                    if (reservedSeats.includes(seatNumber)) {
+                        seat.classList.add('reserved');
+                        seat.classList.remove('selected'); // Reserved seats can't be selected
+                    } else {
+                        seat.classList.remove('reserved');
+                    }
+                });
 
-                // Update seat selection logic to check against totalSeats
+                // Updated seat selection logic
                 seats.forEach(function(seat) {
                     seat.addEventListener('click', function() {
-                        var selectedSeats = document.querySelectorAll('.seat.selected');
+                        var selectedSeats = document.querySelectorAll('.seat.selected').length;
                         var seatNumber = seat.getAttribute('data-seat');
-                        if (!seat.classList.contains('reserved')) {
-                            if (seat.classList.contains('selected')) {
-                                seat.classList.remove('selected');
-                            } else if (selectedSeats.length < totalSeats) { // Periksa jumlah kursi yang dipilih
+
+                        // Check if the seat is already reserved
+                        if (seat.classList.contains('reserved')) {
+                            showNotification('This seat is reserved!', 'error');
+                            return;
+                        }
+
+                        // Toggle selection if the seat is not reserved
+                        if (seat.classList.contains('selected')) {
+                            // Deselect the seat
+                            seat.classList.remove('selected');
+                        } else {
+                            // Select the seat if within the limit
+                            if (selectedSeats < totalSeats) {
                                 seat.classList.add('selected');
                             } else {
-                                showNotification(`Anda hanya dapat memilih ${totalSeats} kursi.`, 'error');
+                                showNotification(`You can only select up to ${totalSeats} seats.`, 'error');
                             }
-                            updateTotalTariff();
                         }
+
+                        updateTotalTariff();
                     });
                 });
             })
@@ -762,11 +770,10 @@ function checkReservedSeats() {
     } else {
         console.log("Route or Departure Date is not selected, clearing reserved seats.");
         seats.forEach(function(seat) {
-            seat.classList.remove('reserved');
+            seat.classList.remove('reserved', 'selected');
         });
     }
 }
-
 
     // Handle form submission to set selected seats in hidden field
     document.querySelector('form').addEventListener('submit', function(event) {
