@@ -136,41 +136,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['fileUpload'])) {
     echo json_encode($response);
     exit;
 }
-
-
-// Handle seat removal
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['seats_to_remove'])) {
-    $orderId = $_POST['order_id'];
-    $seatsToRemove = $_POST['seats_to_remove'];
-
-    // Dapatkan kursi yang ada dari database
-    $query = "SELECT selected_seats FROM orders WHERE id = ?";
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param('i', $orderId);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $row = $result->fetch_assoc();
-
-    // Memecah kursi yang ada menjadi array
-    $selectedSeatsArray = explode(', ', $row['selected_seats']);
-
-    // Hapus kursi yang dipilih dari array
-    $updatedSeatsArray = array_diff($selectedSeatsArray, $seatsToRemove);
-
-    // Gabungkan kembali array menjadi string
-    $updatedSeatsString = implode(', ', $updatedSeatsArray);
-
-    // Update database dengan kursi yang telah diperbarui
-    $updateQuery = "UPDATE orders SET selected_seats = ? WHERE id = ?";
-    $updateStmt = $conn->prepare($updateQuery);
-    $updateStmt->bind_param('si', $updatedSeatsString, $orderId);
-    $updateStmt->execute();
-
-    // Redirect atau beri pesan berhasil
-    header('Location: refund_payment.php');
-    exit();
-}
-
 $conn->close();
 ?>
 
@@ -525,27 +490,7 @@ body {
                     <td><?= htmlspecialchars($row['booking_code']) ?></td>
                     <td><?= htmlspecialchars($row['passenger_name']) ?></td>
                     <td><?= (new DateTime($row['departure_date']))->format('d/m/Y') ?></td>
-                    <td>
-    <?php 
-    // Memecah string kursi yang dipilih dari database menjadi array
-    $selectedSeatsArray = explode(', ', $row['selected_seats']);
-    ?>
-    <form action="" method="post">
-        <?php foreach ($selectedSeatsArray as $seat): ?>
-            <div>
-                <label>
-                    <input type="checkbox" name="seats_to_keep[]" value="<?= htmlspecialchars($seat) ?>" checked>
-                    <?= htmlspecialchars($seat) ?>
-                </label>
-            </div>
-        <?php endforeach; ?>
-        
-        <input type="hidden" name="order_id" value="<?= htmlspecialchars($row['id']) ?>">
-        <button type="submit" class="btn btn-success">Simpan Kursi</button>
-    </form>
-</td>
-
-
+                    <td><?= htmlspecialchars($row['selected_seats']) ?></td>
                     <td><?= htmlspecialchars($row['departure']) ?></td>
                     <td><?= htmlspecialchars($row['destination']) ?></td>
                     <td><?= htmlspecialchars($row['comments']) ?></td>
