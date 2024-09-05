@@ -103,7 +103,7 @@ if (isset($_GET['cancel'])) {
                         </head>
                         <body>
                             <div class="container">
-                                <h1>Ticket Cancellation Confirmation</h1>
+                                <h1>Konfirmasi pembatalan tiket</h1>
                                 <p>
                                     Pada tanggal <span class="highlight">' . $tanggal_pembatalan . '</span>, Anda telah mengajukan pembatalan tiket dengan kode booking <span class="highlight">' . $booking_code . '</span>.
                                 </p>
