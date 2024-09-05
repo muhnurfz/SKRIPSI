@@ -135,9 +135,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['bukti_pembayaran']))
             // Get the file contents
             $file_contents = file_get_contents($_FILES['bukti_pembayaran']['tmp_name']);
 
-            // Prepare the SQL query
-            $query = "UPDATE orders SET bukti_pembayaran = ?, status_pembayaran = 'paid' WHERE booking_code = ?";
-            $stmt = $conn->prepare($query);
+              // Prepare the SQL query
+              $query = "UPDATE orders SET bukti_pembayaran = ?, status_pembayaran = 'paid', tanggal_pembayaran = NOW() WHERE booking_code = ?";
+              $stmt = $conn->prepare($query);
 
             if ($stmt) {
                 // Bind the parameters and execute the statement
