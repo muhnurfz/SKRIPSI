@@ -507,8 +507,6 @@ body {
         <span class="badge badge-danger">BELUM</span>
     <?php endif; ?>
 </td>
-
-
                 </tr>
             <?php endwhile; ?>
             </tbody>
