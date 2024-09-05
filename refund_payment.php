@@ -530,7 +530,7 @@ body {
     // Memecah string kursi yang dipilih dari database menjadi array
     $selectedSeatsArray = explode(', ', $row['selected_seats']);
     ?>
-    <form action="update_seats.php" method="post">
+    <form action="" method="post">
         <?php foreach ($selectedSeatsArray as $seat): ?>
             <div>
                 <label>
