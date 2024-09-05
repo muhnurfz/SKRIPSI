@@ -57,6 +57,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 
+    // Handle account deletion
+    $delete_sql = "DELETE FROM data_pnp WHERE email = ?";
+    $stmt_delete = $conn->prepare($delete_sql);
+    $stmt_delete->bind_param("s", $logged_in_email);
+    if ($stmt_delete->execute()) {
+        // Log out user and redirect to login page
+        session_destroy();
+        header("Location: login_penumpang.php");
+        exit();
+    } else {
+        $message = 'Error: ' . $stmt_delete->error;
+        $message_type = 'error';
+    }
+
 $conn->close();
 ?>
 
@@ -287,6 +301,10 @@ $conn->close();
         <div class="form-group">
             <button type="submit" class="btn btn-primary">Simpan</button>
         </div>
+    </form>
+    <form method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus akun ini?');">
+        <input type="hidden" name="action" value="delete">
+        <button type="submit" class="btn btn-danger">Hapus Akun</button>
     </form>
 </div>
 
