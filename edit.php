@@ -700,7 +700,7 @@ document.addEventListener('DOMContentLoaded', function() {
         var route = document.getElementById("route").value;
         var departureDate = document.getElementById("departure_date").value;
         if (route !== "0" && departureDate) {
-            fetch(`get_update_seats.php?route=${route}&departure_date=${departureDate}`)
+            fetch(`get_reserved_seats.php?route=${route}&departure_date=${departureDate}`)
                 .then(response => response.json())
                 .then(data => {
                     var reservedSeats = data.seats;
