@@ -566,7 +566,7 @@ $conn->close();
 
         .notification.fade-out {
             opacity: 0;
-            transform: translateY(-20px);
+            transform: translateY(- q20px);
         }
     </style>
     <script>
