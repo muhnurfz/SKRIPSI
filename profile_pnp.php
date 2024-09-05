@@ -13,10 +13,6 @@ if (!isset($_SESSION['email'])) {
 $logged_in_email = $_SESSION['email'];
 
 // Mendapatkan data penumpang berdasarkan email dari sesi login
-$sql = "SELECT * FROM data_pnp WHERE email = '$logged_in_email'";
-$result = $conn->query($sql);
-
-// Fetch passenger data from `data_pnp` based on the logged-in user's email
 $sql_pnp = "SELECT * FROM data_pnp WHERE email = ?";
 $stmt_pnp = $conn->prepare($sql_pnp);
 $stmt_pnp->bind_param("s", $logged_in_email);
@@ -24,36 +20,56 @@ $stmt_pnp->execute();
 $result_pnp = $stmt_pnp->get_result();
 $passenger = $result_pnp->fetch_assoc();
 
-
-if ($result->num_rows > 0) {
-    $row = $result->fetch_assoc();
+if ($result_pnp->num_rows > 0) {
+    $row = $result_pnp->fetch_assoc();
 } else {
     echo "<script>alert('Data penumpang tidak ditemukan.'); window.location.href = 'login_penumpang.php';</script>";
     exit();
 }
 
 $message = '';
+
 // Memproses form saat di-submit
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $passenger_name = $_POST['passenger_name'];
-    $passenger_phone = $_POST['passenger_phone'];
-    $email = $_POST['email'];
-    $password = md5($_POST['password']); // Pastikan password di-hash dengan MD5
-    
-    // Update data penumpang berdasarkan email yang sedang login
-    $update_sql = "UPDATE data_pnp SET 
-                    passenger_name = '$passenger_name', 
-                    passenger_phone = '$passenger_phone', 
-                    email = '$email', 
-                    password = '$password' 
-                  WHERE email = '$logged_in_email'";
+    if (isset($_POST['update'])) {
+        // Update data penumpang
+        $passenger_name = $_POST['passenger_name'];
+        $passenger_phone = $_POST['passenger_phone'];
+        $email = $_POST['email'];
+        $password = md5($_POST['password']); // Pastikan password di-hash dengan MD5
+        
+        $update_sql = "UPDATE data_pnp SET 
+                        passenger_name = ?, 
+                        passenger_phone = ?, 
+                        email = ?, 
+                        password = ? 
+                      WHERE email = ?";
+        $stmt_update = $conn->prepare($update_sql);
+        $stmt_update->bind_param("sssss", $passenger_name, $passenger_phone, $email, $password, $logged_in_email);
 
-    if ($conn->query($update_sql) === TRUE) {
-        $message = 'Data berhasil diperbarui!';
-        $message_type = 'success';
-    } else {
-        $message = 'Error: ' . $conn->error;
-        $message_type = 'error';
+        if ($stmt_update->execute()) {
+            $message = 'Data berhasil diperbarui!';
+            $message_type = 'success';
+        } else {
+            $message = 'Error: ' . $conn->error;
+            $message_type = 'error';
+        }
+    } elseif (isset($_POST['delete'])) {
+        // Hapus akun penumpang
+        $delete_sql = "DELETE FROM data_pnp WHERE email = ?";
+        $stmt_delete = $conn->prepare($delete_sql);
+        $stmt_delete->bind_param("s", $logged_in_email);
+
+        if ($stmt_delete->execute()) {
+            // Hapus sesi dan arahkan ke halaman login
+            session_unset();
+            session_destroy();
+            header("Location: login_penumpang.php");
+            exit();
+        } else {
+            $message = 'Error: ' . $conn->error;
+            $message_type = 'error';
+        }
     }
 }
 
@@ -287,6 +303,9 @@ $conn->close();
         <div class="form-group">
             <button type="submit" class="btn btn-primary">Simpan</button>
         </div>
+    </form>
+    <form method="post" onsubmit="return confirm('Apakah Anda yakin ingin menghapus akun?');">
+        <button type="submit" name="delete">Hapus Akun</button>
     </form>
 </div>
 
