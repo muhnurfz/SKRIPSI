@@ -577,7 +577,6 @@ $conn->close();
     var maxDate = new Date();
     maxDate.setDate(maxDate.getDate() + 45);
     var maxDateString = maxDate.toISOString().split('T')[0];
-
     var departureDateInput = document.getElementById("departure_date");
     var seatContainer = document.querySelector('.seat-selector');
     var selectedSeatsInput = document.getElementById('selected_seats');

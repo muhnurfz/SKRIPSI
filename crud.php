@@ -743,7 +743,7 @@ if ($stmt_count = $conn->prepare($sql_count_recent_edits)) {
                         <th><?php echo sortLink('comment', 'Keterangan'); ?></th>
                         <th><?php echo sortLink('passenger_phone', 'No Telepon Penumpang'); ?></th>
                         <th><?php echo sortLink('selected_seats', 'Kursi yang Dipilih'); ?></th>
-                        <th><?php echo sortLink('total_tariff', 'Uang muka'); ?></th>
+                        <th><?php echo sortLink('total_tariff', 'Uang diterima'); ?></th>
                         <th><?php echo sortLink('total_tariff', 'Tarif tiket'); ?></th>
                         <th><?php echo sortLink('check_in_status', 'Status Check-In'); ?></th>
                         <th><?php echo sortLink('status_pembayaran', 'Status Pembayaran'); ?></th>
