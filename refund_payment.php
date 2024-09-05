@@ -490,7 +490,26 @@ body {
                     <td><?= htmlspecialchars($row['booking_code']) ?></td>
                     <td><?= htmlspecialchars($row['passenger_name']) ?></td>
                     <td><?= (new DateTime($row['departure_date']))->format('d/m/Y') ?></td>
-                    <td><?= htmlspecialchars($row['selected_seats']) ?></td>
+                    <td>
+    <?php 
+    // Memecah string selected_seats menjadi array
+    $selectedSeatsArray = explode(', ', $row['selected_seats']);
+    ?>
+    <form action="update_seats.php" method="post">
+        <?php foreach ($selectedSeatsArray as $seat): ?>
+            <div>
+                <label>
+                    <input type="checkbox" name="seats_to_remove[]" value="<?= htmlspecialchars($seat) ?>">
+                    <?= htmlspecialchars($seat) ?>
+                </label>
+            </div>
+        <?php endforeach; ?>
+        
+        <input type="hidden" name="order_id" value="<?= htmlspecialchars($row['id']) ?>">
+        <button type="submit" class="btn btn-danger">Hapus Kursi Terpilih</button>
+    </form>
+</td>
+
                     <td><?= htmlspecialchars($row['departure']) ?></td>
                     <td><?= htmlspecialchars($row['destination']) ?></td>
                     <td><?= htmlspecialchars($row['comments']) ?></td>
