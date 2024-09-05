@@ -165,10 +165,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $updateStmt->bind_param('si', $updatedSeatsString, $orderId);
     $updateStmt->execute();
 
-
-    // Redirect atau beri pesan berhasil
-    header('Location: refund_payment.php');
-    exit();
 }
 
 $conn->close();
