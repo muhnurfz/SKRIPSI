@@ -569,8 +569,8 @@ $conn->close();
             transform: translateY(-20px);
         }
     </style>
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
+   <script>
+document.addEventListener('DOMContentLoaded', function() {
     // Set minimum and maximum date for the departure date input
     var today = new Date();
     var minDate = today.toISOString().split('T')[0];
@@ -581,6 +581,7 @@ $conn->close();
     var seatContainer = document.querySelector('.seat-selector');
     var selectedSeatsInput = document.getElementById('selected_seats');
     document.getElementById("passenger_phone").addEventListener("input", formatPhoneNumber);
+    
     if (departureDateInput) {
         departureDateInput.setAttribute("min", minDate);
         departureDateInput.setAttribute("max", maxDateString);
@@ -596,15 +597,6 @@ $conn->close();
     } else {
         console.error('Element with ID "departure_date" not found.');
     }
-    
-    document.addEventListener('DOMContentLoaded', function() {
-    // Ambil elemen yang menyimpan nilai route
-    const routeInput = document.getElementById('selected-route');
-    if (!routeInput) {
-        console.error('Element with ID "selected-route" not found.');
-        return;
-    }
-});
 
     // Initialize the destinations dropdown based on the existing route
     updateDestinations();
@@ -620,42 +612,40 @@ $conn->close();
         console.error('Element with ID "route" not found.');
     }
 
- // Function to show notification
- function showNotification(message, type) {
-    var container = document.getElementById('notification-container');
-    var notification = document.createElement('div');
-    notification.className = 'notification ' + type;
-    notification.textContent = message;
-    
-    container.appendChild(notification);
-    
-    setTimeout(function() {
-        notification.classList.add('fade-out');
-        setTimeout(function() {
-            container.removeChild(notification);
-        }, 500); // Match this with CSS transition duration
-    }, 3000); // Notification will disappear after 3 seconds
-}
+    // Function to show notification
+    function showNotification(message, type) {
+        var container = document.getElementById('notification-container');
+        var notification = document.createElement('div');
+        notification.className = 'notification ' + type;
+        notification.textContent = message;
 
+        container.appendChild(notification);
+
+        setTimeout(function() {
+            notification.classList.add('fade-out');
+            setTimeout(function() {
+                container.removeChild(notification);
+            }, 500); // Match this with CSS transition duration
+        }, 3000); // Notification will disappear after 3 seconds
+    }
 
     var seats = document.querySelectorAll('.seat');
-seats.forEach(function(seat) {
-    seat.addEventListener('click', function() {
-        var selectedSeats = document.querySelectorAll('.seat.selected');
-        var seatNumber = seat.getAttribute('data-seat');
-        if (!seat.classList.contains('reserved')) {
-            if (seat.classList.contains('selected')) {
-                seat.classList.remove('selected');
-            } else if (selectedSeats.length < 4) {
-                seat.classList.add('selected');
-            } else {
-                showNotification('Maksimal 4 kursi yang dapat dipilih.', 'error');
+    seats.forEach(function(seat) {
+        seat.addEventListener('click', function() {
+            var selectedSeats = document.querySelectorAll('.seat.selected');
+            var seatNumber = seat.getAttribute('data-seat');
+            if (!seat.classList.contains('reserved')) {
+                if (seat.classList.contains('selected')) {
+                    seat.classList.remove('selected');
+                } else if (selectedSeats.length < 4) {
+                    seat.classList.add('selected');
+                } else {
+                    showNotification('Maksimal 4 kursi yang dapat dipilih.', 'error');
+                }
+                updateTotalTariff();
             }
-            updateTotalTariff();
-        }
+        });
     });
-});
-
 
     // Format phone number on input
     function formatPhoneNumber(event) {
@@ -684,7 +674,6 @@ seats.forEach(function(seat) {
             bojonegoro: ["Wirosari", "Blora", "Cepu", "Bojonegoro"],
             gemolong: ["Gubug", "Godong", "Purwodadi", "Sumberlawang", "Gemolong"]
         };
-        
 
         destination.innerHTML = "";
 
@@ -707,53 +696,59 @@ seats.forEach(function(seat) {
     }
 
     // Update checkReservedSeats function
-function checkReservedSeats() {
-    var route = document.getElementById("route").value;
-    var departureDate = document.getElementById("departure_date").value;
-    if (route !== "0" && departureDate) {
-        fetch(`get_reserved_seats.php?route=${route}&departure_date=${departureDate}`)
-            .then(response => response.json())
-            .then(data => {
-                var reservedSeats = data.seats;
-                var seatCount = data.seat_count;
+    function checkReservedSeats() {
+        var route = document.getElementById("route").value;
+        var departureDate = document.getElementById("departure_date").value;
+        if (route !== "0" && departureDate) {
+            fetch(`get_reserved_seats.php?route=${route}&departure_date=${departureDate}`)
+                .then(response => response.json())
+                .then(data => {
+                    var reservedSeats = data.seats;
+                    var seatCount = data.seat_count;
 
-                console.log("Reserved seats data:", reservedSeats); // Debugging line
+                    console.log("Reserved seats data:", reservedSeats); // Debugging line
 
-                seats.forEach(function(seat) {
-                    var seatNumber = seat.getAttribute('data-seat');
-                    if (reservedSeats.includes(seatNumber)) {
-                        seat.classList.add('reserved');
-                    } else {
-                        seat.classList.remove('reserved');
+                    seats.forEach(function(seat) {
+                        var seatNumber = seat.getAttribute('data-seat');
+                        if (reservedSeats.includes(seatNumber)) {
+                            seat.classList.add('reserved');
+                        } else {
+                            seat.classList.remove('reserved');
+                        }
+                    });
+
+                    // Handle seat count validation
+                    var selectedSeatsCount = document.querySelectorAll('.seat.selected').length;
+                    if (selectedSeatsCount > seatCount) {
+                        showNotification('Jumlah kursi yang dipilih melebihi jumlah yang tersedia.', 'error');
                     }
-                });
-
-                // Handle seat count validation
-                var selectedSeatsCount = document.querySelectorAll('.seat.selected').length;
-                if (selectedSeatsCount > seatCount) {
-                    showNotification('Jumlah kursi yang dipilih melebihi jumlah yang tersedia.', 'error');
-                }
-            })
-            .catch(error => console.error('Error fetching reserved seats:', error));
-    } else {
-        console.log("Route or Departure Date is not selected, clearing reserved seats.");
-        seats.forEach(function(seat) {
-            seat.classList.remove('reserved');
-        });
+                })
+                .catch(error => console.error('Error fetching reserved seats:', error));
+        } else {
+            console.log("Route or Departure Date is not selected, clearing reserved seats.");
+            seats.forEach(function(seat) {
+                seat.classList.remove('reserved');
+            });
+        }
     }
-}
 
-
-    // Handle form submission to set selected seats in hidden field
     document.querySelector('form').addEventListener('submit', function(event) {
         var selectedSeats = [];
         document.querySelectorAll('.seat.selected').forEach(function(seat) {
             selectedSeats.push(seat.getAttribute('data-seat'));
         });
         selectedSeatsInput.value = selectedSeats.join(',');
+
+        // Check if selected seats match the reserved seats count
+        var reservedSeatsCount = <?php echo json_encode($seat_count); ?>;
+        if (selectedSeats.length !== reservedSeatsCount) {
+            event.preventDefault();
+            showNotification('Jumlah kursi yang dipilih tidak sesuai dengan jumlah yang diizinkan.', 'error');
+        }
     });
 });
-    </script>
+</script>
+
 </head>
 <body>
 <div id="notification-container"></div>
