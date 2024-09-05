@@ -50,6 +50,29 @@ if (isset($_POST['search'])) {
         $result = $stmt->get_result();
     }
 }
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['selected_seats'])) {
+    $orderId = $_POST['order_id'];
+    $selectedSeats = $_POST['selected_seats'];
+
+    // Validate the selected seats input (optional)
+    if (!empty($selectedSeats)) {
+        $sqlUpdateSeats = "UPDATE orders SET selected_seats = ? WHERE id = ?";
+        $stmtUpdateSeats = $conn->prepare($sqlUpdateSeats);
+        $stmtUpdateSeats->bind_param("si", $selectedSeats, $orderId);
+
+        if ($stmtUpdateSeats->execute()) {
+            echo "<div class='alert alert-success'>Seats updated successfully for order ID: $orderId.</div>";
+        } else {
+            echo "<div class='alert alert-danger'>Failed to update seats: " . $stmtUpdateSeats->error . "</div>";
+        }
+
+        $stmtUpdateSeats->close();
+    } else {
+        echo "<div class='alert alert-warning'>Please enter valid seats.</div>";
+    }
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['fileUpload'])) {
     $orderId = $_POST['id']; // ID dari tabel orders
 
@@ -490,7 +513,13 @@ body {
                     <td><?= htmlspecialchars($row['booking_code']) ?></td>
                     <td><?= htmlspecialchars($row['passenger_name']) ?></td>
                     <td><?= (new DateTime($row['departure_date']))->format('d/m/Y') ?></td>
-                    <td><?= htmlspecialchars($row['selected_seats']) ?></td>
+                    <td>
+            <form method="post" action="">
+                <input type="hidden" name="order_id" value="<?= $row['id'] ?>">
+                <input type="text" name="selected_seats" value="<?= htmlspecialchars($row['selected_seats']) ?>">
+                <button type="submit" class="btn btn-sm btn-success">Update</button>
+            </form>
+        </td>
                     <td><?= htmlspecialchars($row['departure']) ?></td>
                     <td><?= htmlspecialchars($row['destination']) ?></td>
                     <td><?= htmlspecialchars($row['comments']) ?></td>
