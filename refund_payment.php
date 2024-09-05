@@ -517,7 +517,7 @@ body {
     <form method="post" action="">
         <input type="hidden" name="order_id" value="<?= $row['id'] ?>">
         <input type="text" name="selected_seats" value="<?= htmlspecialchars($row['selected_seats']) ?>" oninput="this.value = this.value.toUpperCase()">
-        <button type="submit" class="btn btn-sm btn-success">Update</button>
+        <button type="submit" class="btn btn-sm btn-success">Ubah kursi</button>
     </form>
 </td>
 
