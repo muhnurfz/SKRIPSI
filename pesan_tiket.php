@@ -877,11 +877,16 @@ document.getElementById('destination').addEventListener('change', function() {
             <label for="email">Email Penumpang:</label>
             <input type="email" id="email" name="email" placeholder="example@gmail.com"  pattern="^[a-zA-Z0-9._%+-]+@gmail\.com$" title="Hanya alamat email dengan domain @gmail.com yang diterima" required>
 
-
             <div class="form-group" style="display: inline-block; width: 48%; margin-right: 2%;">
             <label for="pnp_dewasa">Penumpang Dewasa:</label>
-            <input type="number" id="pnp_dewasa" name="pnp_dewasa" min="0" max="4" class="form-control" value="0" required>
-             </div>
+            <select id="pnp_dewasa" name="pnp_dewasa" class="form-control" required>
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+            </select>
+        </div>
 
         <!-- Input Penumpang Balita/Anak-anak -->
             <div class="form-group" style="display: inline-block; width: 48%;">
