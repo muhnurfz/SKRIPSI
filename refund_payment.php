@@ -53,7 +53,7 @@ if (isset($_POST['search'])) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['selected_seats'])) {
     $orderId = $_POST['order_id'];
-    $selectedSeats = $_POST['selected_seats'];
+    $selectedSeats = strtoupper($_POST['selected_seats']); // Convert input to uppercase
 
     // Validate the selected seats input (optional)
     if (!empty($selectedSeats)) {
@@ -514,12 +514,13 @@ body {
                     <td><?= htmlspecialchars($row['passenger_name']) ?></td>
                     <td><?= (new DateTime($row['departure_date']))->format('d/m/Y') ?></td>
                     <td>
-            <form method="post" action="">
-                <input type="hidden" name="order_id" value="<?= $row['id'] ?>">
-                <input type="text" name="selected_seats" value="<?= htmlspecialchars($row['selected_seats']) ?>">
-                <button type="submit" class="btn btn-sm btn-success">Update</button>
-            </form>
-        </td>
+    <form method="post" action="">
+        <input type="hidden" name="order_id" value="<?= $row['id'] ?>">
+        <input type="text" name="selected_seats" value="<?= htmlspecialchars($row['selected_seats']) ?>" oninput="this.value = this.value.toUpperCase()">
+        <button type="submit" class="btn btn-sm btn-success">Update</button>
+    </form>
+</td>
+
                     <td><?= htmlspecialchars($row['departure']) ?></td>
                     <td><?= htmlspecialchars($row['destination']) ?></td>
                     <td><?= htmlspecialchars($row['comments']) ?></td>
