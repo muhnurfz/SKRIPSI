@@ -786,14 +786,8 @@ document.getElementById('destination').addEventListener('change', function() {
       
         <div class="form-group" style="display: inline-block; width: 48%; margin-right: 2%;">
             <label for="pnp_dewasa">Penumpang Dewasa:</label>
-            <select id="pnp_dewasa" name="pnp_dewasa" class="form-control" required>
-                <option value="" disabled selected>Pilih jumlah penumpang dewasa</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-            </select>
-        </div>
+            <input type="number" id="pnp_dewasa" name="pnp_dewasa" min="0" max="4" class="form-control" value="0" required>
+             </div>
 
         <!-- Input Penumpang Balita/Anak-anak -->
             <div class="form-group" style="display: inline-block; width: 48%;">
