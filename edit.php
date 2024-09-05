@@ -577,119 +577,12 @@ $conn->close();
     var maxDate = new Date();
     maxDate.setDate(maxDate.getDate() + 45);
     var maxDateString = maxDate.toISOString().split('T')[0];
-    var totalSeatsRequired = parseInt(document.getElementById('total_seats_required').value, 10);
     var departureDateInput = document.getElementById("departure_date");
     var seatContainer = document.querySelector('.seat-selector');
     var selectedSeatsInput = document.getElementById('selected_seats');
-    document.getElementById("passenger_phone").addEventListener("input", formatPhoneNumber);
-    if (departureDateInput) {
-        departureDateInput.setAttribute("min", minDate);
-        departureDateInput.setAttribute("max", maxDateString);
+    var totalSeatsRequiredInput = document.getElementById('total_seats_required');
+    var totalSeatsRequired = parseInt(totalSeatsRequiredInput.value, 10);
 
-        departureDateInput.addEventListener('change', () => {
-            if (departureDateInput.value !== '') {
-                seatContainer.classList.add('show');
-                checkReservedSeats(); // Trigger seat check when date changes
-            } else {
-                seatContainer.classList.remove('show');
-            }
-        });
-    } else {
-        console.error('Element with ID "departure_date" not found.');
-    }
-    
-    document.addEventListener('DOMContentLoaded', function() {
-    // Ambil elemen yang menyimpan nilai route
-    const routeInput = document.getElementById('selected-route');
-    if (!routeInput) {
-        console.error('Element with ID "selected-route" not found.');
-        return;
-    }
-});
-
-    // Initialize the destinations dropdown based on the existing route
-    updateDestinations();
-
-    // Add event listeners
-    var routeElement = document.getElementById("route");
-    if (routeElement) {
-        routeElement.addEventListener("change", function() {
-            updateDestinations();
-            checkReservedSeats(); // Check reserved seats when the route changes
-        });
-    } else {
-        console.error('Element with ID "route" not found.');
-    }
-
- // Function to show notification
- function showNotification(message, type) {
-    var container = document.getElementById('notification-container');
-    var notification = document.createElement('div');
-    notification.className = 'notification ' + type;
-    notification.textContent = message;
-    
-    container.appendChild(notification);
-    
-    setTimeout(function() {
-        notification.classList.add('fade-out');
-        setTimeout(function() {
-            container.removeChild(notification);
-        }, 500); // Match this with CSS transition duration
-    }, 3000); // Notification will disappear after 3 seconds
-}
-
-
-    var seats = document.querySelectorAll('.seat');
-seats.forEach(function(seat) {
-    seat.addEventListener('click', function() {
-        var selectedSeats = document.querySelectorAll('.seat.selected');
-        var seatNumber = seat.getAttribute('data-seat');
-        if (!seat.classList.contains('reserved')) {
-            if (seat.classList.contains('selected')) {
-                seat.classList.remove('selected');
-            } else if (selectedSeats.length < 4) {
-                seat.classList.add('selected');
-            } else {
-                showNotification('Maksimal 4 kursi yang dapat dipilih.', 'error');
-            }
-            updateTotalTariff();
-        }
-    });
-});
- 
-document.querySelector('form').addEventListener('submit', function(event) {
-        var selectedSeats = document.querySelectorAll('.seat.selected').length;
-        
-        if (selectedSeats !== totalSeatsRequired) {
-            event.preventDefault(); // Mencegah form dari dikirim
-            showNotification('Harap pilih jumlah kursi yang sesuai dengan yang dipesan.', 'error');
-        } else {
-            var selectedSeatsArray = [];
-            document.querySelectorAll('.seat.selected').forEach(function(seat) {
-                selectedSeatsArray.push(seat.getAttribute('data-seat'));
-            });
-            selectedSeatsInput.value = selectedSeatsArray.join(',');
-        }
-    });
-    function updateTotalSeatsRequired() {
-        // Ambil total_seats dari database atau dari elemen yang sudah ada
-        var route = document.getElementById("route").value;
-        var departureDate = document.getElementById("departure_date").value;
-        if (route !== "0" && departureDate) {
-            fetch(`get_total_seats.php?route=${route}&departure_date=${departureDate}`)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.total_seats) {
-                        totalSeatsRequired = parseInt(data.total_seats, 10);
-                        document.getElementById('total_seats_required').value = totalSeatsRequired;
-                    }
-                })
-                .catch(error => console.error('Error fetching total seats:', error));
-        }
-    }
-
-
-    // Format phone number on input
     function formatPhoneNumber(event) {
         var input = event.target;
         var value = input.value.replace(/\D/g, '');
@@ -706,7 +599,21 @@ document.querySelector('form').addEventListener('submit', function(event) {
         input.value = formattedValue;
     }
 
-    // Update destinations based on the selected route
+    function showNotification(message, type) {
+        var container = document.getElementById('notification-container');
+        var notification = document.createElement('div');
+        notification.className = 'notification ' + type;
+        notification.textContent = message;
+        container.appendChild(notification);
+
+        setTimeout(function() {
+            notification.classList.add('fade-out');
+            setTimeout(function() {
+                container.removeChild(notification);
+            }, 500); // Match this with CSS transition duration
+        }, 3000); // Notification will disappear after 3 seconds
+    }
+
     function updateDestinations() {
         var route = document.getElementById("route").value;
         var destination = document.getElementById("destination");
@@ -716,7 +623,6 @@ document.querySelector('form').addEventListener('submit', function(event) {
             bojonegoro: ["Wirosari", "Blora", "Cepu", "Bojonegoro"],
             gemolong: ["Gubug", "Godong", "Purwodadi", "Sumberlawang", "Gemolong"]
         };
-        
 
         destination.innerHTML = "";
 
@@ -733,12 +639,26 @@ document.querySelector('form').addEventListener('submit', function(event) {
         }
     }
 
-    // Format currency with thousands separator
-    function formatCurrency(value) {
-        return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    function updateTotalSeatsRequired() {
+        var route = document.getElementById("route").value;
+        var departureDate = document.getElementById("departure_date").value;
+        if (route !== "0" && departureDate) {
+            fetch(`get_total_seats.php?route=${route}&departure_date=${departureDate}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.total_seats) {
+                        totalSeatsRequired = parseInt(data.total_seats, 10);
+                        totalSeatsRequiredInput.value = totalSeatsRequired;
+                    }
+                })
+                .catch(error => console.error('Error fetching total seats:', error));
+        }
     }
 
-    // Check reserved seats from the server
+    function updateTotalTariff() {
+        // Implement your logic to update the total tariff
+    }
+
     function checkReservedSeats() {
         var route = document.getElementById("route").value;
         var departureDate = document.getElementById("departure_date").value;
@@ -752,6 +672,7 @@ document.querySelector('form').addEventListener('submit', function(event) {
                 })
                 .then(data => {
                     console.log("Reserved seats data:", data); // Debugging line
+                    var seats = document.querySelectorAll('.seat');
                     if (Array.isArray(data)) {
                         seats.forEach(function(seat) {
                             var seatNumber = seat.getAttribute('data-seat');
@@ -768,21 +689,74 @@ document.querySelector('form').addEventListener('submit', function(event) {
                 .catch(error => console.error('Error fetching reserved seats:', error));
         } else {
             console.log("Route or Departure Date is not selected, clearing reserved seats.");
+            var seats = document.querySelectorAll('.seat');
             seats.forEach(function(seat) {
                 seat.classList.remove('reserved');
             });
         }
     }
 
-    // Handle form submission to set selected seats in hidden field
-    document.querySelector('form').addEventListener('submit', function(event) {
-        var selectedSeats = [];
-        document.querySelectorAll('.seat.selected').forEach(function(seat) {
-            selectedSeats.push(seat.getAttribute('data-seat'));
+    function handleSeatSelection() {
+        var seats = document.querySelectorAll('.seat');
+        seats.forEach(function(seat) {
+            seat.addEventListener('click', function() {
+                var selectedSeats = document.querySelectorAll('.seat.selected');
+                var seatNumber = seat.getAttribute('data-seat');
+                if (!seat.classList.contains('reserved')) {
+                    if (seat.classList.contains('selected')) {
+                        seat.classList.remove('selected');
+                    } else if (selectedSeats.length < 4) {
+                        seat.classList.add('selected');
+                    } else {
+                        showNotification('Maksimal 4 kursi yang dapat dipilih.', 'error');
+                    }
+                    updateTotalTariff();
+                }
+            });
         });
-        selectedSeatsInput.value = selectedSeats.join(',');
+    }
+
+    function handleFormSubmission() {
+        document.querySelector('form').addEventListener('submit', function(event) {
+            var selectedSeatsCount = document.querySelectorAll('.seat.selected').length;
+            if (selectedSeatsCount !== totalSeatsRequired) {
+                event.preventDefault(); // Prevent form submission
+                showNotification('Harap pilih jumlah kursi yang sesuai dengan yang dipesan.', 'error');
+            } else {
+                var selectedSeatsArray = [];
+                document.querySelectorAll('.seat.selected').forEach(function(seat) {
+                    selectedSeatsArray.push(seat.getAttribute('data-seat'));
+                });
+                selectedSeatsInput.value = selectedSeatsArray.join(',');
+            }
+        });
+    }
+
+    // Initialize event listeners
+    departureDateInput.addEventListener('change', function() {
+        if (departureDateInput.value !== '') {
+            seatContainer.classList.add('show');
+            checkReservedSeats(); // Trigger seat check when date changes
+        } else {
+            seatContainer.classList.remove('show');
+        }
     });
+
+    document.getElementById("route").addEventListener('change', function() {
+        updateDestinations();
+        checkReservedSeats(); // Check reserved seats when the route changes
+        updateTotalSeatsRequired(); // Update required seats when route changes
+    });
+
+    departureDateInput.addEventListener('change', updateTotalSeatsRequired); // Update required seats when date changes
+
+    handleSeatSelection();
+    handleFormSubmission();
+
+    // Initialize the destinations dropdown based on the existing route
+    updateDestinations();
 });
+
     </script>
 </head>
 <body>
