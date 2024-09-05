@@ -1,12 +1,5 @@
 <?php
-// Koneksi ke database
-$conn = new mysqli('hostname', 'username', 'password', 'database');
-
-// Cek koneksi
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
+include('conn.php');
 // Mengambil ID order dari form
 $order_id = isset($_POST['order_id']) ? intval($_POST['order_id']) : 0;
 
