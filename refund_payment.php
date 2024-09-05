@@ -490,7 +490,25 @@ body {
                     <td><?= htmlspecialchars($row['booking_code']) ?></td>
                     <td><?= htmlspecialchars($row['passenger_name']) ?></td>
                     <td><?= (new DateTime($row['departure_date']))->format('d/m/Y') ?></td>
-                    <td><?= htmlspecialchars($row['selected_seats']) ?></td>
+                    <?php
+// Daftar kursi yang tersedia, ini hanya contoh
+$seats = ['A1', 'A2', 'A3', 'B1', 'B2', 'B3'];
+
+// Mengambil kursi yang sudah dipilih dari database
+$selectedSeats = isset($row['selected_seats']) ? explode(',', $row['selected_seats']) : [];
+?>
+
+<form method="POST" action="update_seats_refund.php">
+    <?php foreach ($seats as $seat): ?>
+        <label>
+            <input type="checkbox" name="seats[]" value="<?= htmlspecialchars($seat) ?>" 
+                <?= in_array($seat, $selectedSeats) ? 'checked' : '' ?>>
+            <?= htmlspecialchars($seat) ?>
+        </label><br>
+    <?php endforeach; ?>
+    <input type="hidden" name="order_id" value="<?= htmlspecialchars($row['id']) ?>">
+    <input type="submit" value="Update Seats">
+</form>
                     <td><?= htmlspecialchars($row['departure']) ?></td>
                     <td><?= htmlspecialchars($row['destination']) ?></td>
                     <td><?= htmlspecialchars($row['comments']) ?></td>
