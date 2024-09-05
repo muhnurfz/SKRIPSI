@@ -706,51 +706,58 @@ seats.forEach(function(seat) {
         return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     }
 
-    // Check reserved seats from the server
-    function checkReservedSeats() {
-        var route = document.getElementById("route").value;
-        var departureDate = document.getElementById("departure_date").value;
-        if (route !== "0" && departureDate) {
-            fetch(`get_reserved_seats.php?route=${route}&departure_date=${departureDate}`)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    console.log("Reserved seats data:", data); // Debugging line
-                    if (Array.isArray(data)) {
-                        seats.forEach(function(seat) {
-                            var seatNumber = seat.getAttribute('data-seat');
-                            if (data.includes(seatNumber)) {
-                                seat.classList.add('reserved');
-                            } else {
-                                seat.classList.remove('reserved');
-                            }
-                        });
-                    } else {
-                        console.error('Data received is not an array:', data);
-                    }
-                })
-                .catch(error => console.error('Error fetching reserved seats:', error));
-        } else {
-            console.log("Route or Departure Date is not selected, clearing reserved seats.");
-            seats.forEach(function(seat) {
-                seat.classList.remove('reserved');
-            });
-        }
-    }
+    // Update checkReservedSeats function
+function checkReservedSeats() {
+    var route = document.getElementById("route").value;
+    var departureDate = document.getElementById("departure_date").value;
+    if (route !== "0" && departureDate) {
+        fetch(`get_reserved_seats.php?route=${route}&departure_date=${departureDate}`)
+            .then(response => response.json())
+            .then(data => {
+                var reservedSeats = data.seats;
+                var seatCount = data.seat_count;
 
-    // Handle form submission to set selected seats in hidden field
-    document.querySelector('form').addEventListener('submit', function(event) {
-        var selectedSeats = [];
-        document.querySelectorAll('.seat.selected').forEach(function(seat) {
-            selectedSeats.push(seat.getAttribute('data-seat'));
+                console.log("Reserved seats data:", reservedSeats); // Debugging line
+
+                seats.forEach(function(seat) {
+                    var seatNumber = seat.getAttribute('data-seat');
+                    if (reservedSeats.includes(seatNumber)) {
+                        seat.classList.add('reserved');
+                    } else {
+                        seat.classList.remove('reserved');
+                    }
+                });
+
+                // Handle seat count validation
+                var selectedSeatsCount = document.querySelectorAll('.seat.selected').length;
+                if (selectedSeatsCount > seatCount) {
+                    showNotification('Jumlah kursi yang dipilih melebihi jumlah yang tersedia.', 'error');
+                }
+            })
+            .catch(error => console.error('Error fetching reserved seats:', error));
+    } else {
+        console.log("Route or Departure Date is not selected, clearing reserved seats.");
+        seats.forEach(function(seat) {
+            seat.classList.remove('reserved');
         });
-        selectedSeatsInput.value = selectedSeats.join(',');
+    }
+}
+
+document.querySelector('form').addEventListener('submit', function(event) {
+    var selectedSeats = [];
+    document.querySelectorAll('.seat.selected').forEach(function(seat) {
+        selectedSeats.push(seat.getAttribute('data-seat'));
     });
+    selectedSeatsInput.value = selectedSeats.join(',');
+
+    // Check if selected seats match the reserved seats count
+    var reservedSeatsCount = <?php echo json_encode($seat_count); ?>;
+    if (selectedSeats.length !== reservedSeatsCount) {
+        event.preventDefault();
+        showNotification('Jumlah kursi yang dipilih tidak sesuai dengan jumlah yang diizinkan.', 'error');
+    }
 });
+
     </script>
 </head>
 <body>
