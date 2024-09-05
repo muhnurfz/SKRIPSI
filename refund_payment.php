@@ -53,39 +53,25 @@ if (isset($_POST['search'])) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['selected_seats'])) {
     $orderId = $_POST['order_id'];
-    $selectedSeats = isset($_POST['selected_seats']) ? $_POST['selected_seats'] : [];
+    $selectedSeats = $_POST['selected_seats'];
 
-    // Convert the array of selected seats back to a comma-separated string
-    $selectedSeatsStr = implode(',', $selectedSeats);
+    // Validate the selected seats input (optional)
+    if (!empty($selectedSeats)) {
+        $sqlUpdateSeats = "UPDATE orders SET selected_seats = ? WHERE id = ?";
+        $stmtUpdateSeats = $conn->prepare($sqlUpdateSeats);
+        $stmtUpdateSeats->bind_param("si", $selectedSeats, $orderId);
 
-    // Update the selected_seats in the orders table
-    $sqlUpdateSeats = "UPDATE orders SET selected_seats = ? WHERE id = ?";
-    $stmtUpdateSeats = $conn->prepare($sqlUpdateSeats);
-    $stmtUpdateSeats->bind_param("si", $selectedSeatsStr, $orderId);
+        if ($stmtUpdateSeats->execute()) {
+            echo "<div class='alert alert-success'>Seats updated successfully for order ID: $orderId.</div>";
+        } else {
+            echo "<div class='alert alert-danger'>Failed to update seats: " . $stmtUpdateSeats->error . "</div>";
+        }
 
-    if ($stmtUpdateSeats->execute()) {
-        echo "<div class='alert alert-success'>Seats updated successfully for order ID: $orderId.</div>";
+        $stmtUpdateSeats->close();
     } else {
-        echo "<div class='alert alert-danger'>Failed to update seats: " . $stmtUpdateSeats->error . "</div>";
+        echo "<div class='alert alert-warning'>Please enter valid seats.</div>";
     }
-
-    $stmtUpdateSeats->close();
-} elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // If no seats were selected, handle that scenario
-    $orderId = $_POST['order_id'];
-    $sqlUpdateSeats = "UPDATE orders SET selected_seats = '' WHERE id = ?";
-    $stmtUpdateSeats = $conn->prepare($sqlUpdateSeats);
-    $stmtUpdateSeats->bind_param("i", $orderId);
-
-    if ($stmtUpdateSeats->execute()) {
-        echo "<div class='alert alert-warning'>All seats have been removed for order ID: $orderId.</div>";
-    } else {
-        echo "<div class='alert alert-danger'>Failed to update seats: " . $stmtUpdateSeats->error . "</div>";
-    }
-
-    $stmtUpdateSeats->close();
 }
-
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['fileUpload'])) {
     $orderId = $_POST['id']; // ID dari tabel orders
@@ -530,19 +516,7 @@ body {
                     <td>
             <form method="post" action="">
                 <input type="hidden" name="order_id" value="<?= $row['id'] ?>">
-
-                <?php
-                // Assuming seat names are stored as comma-separated values, e.g., '3A,3B,3C'
-                $selectedSeats = explode(',', $row['selected_seats']);
-                $allSeats = ['3A', '3B', '3C']; // Define all available seats
-
-                // Display each seat as a checkbox
-                foreach ($allSeats as $seat) {
-                    $isChecked = in_array($seat, $selectedSeats) ? 'checked' : '';
-                    echo "<label><input type='checkbox' name='selected_seats[]' value='$seat' $isChecked> $seat</label> ";
-                }
-                ?>
-
+                <input type="text" name="selected_seats" value="<?= htmlspecialchars($row['selected_seats']) ?>">
                 <button type="submit" class="btn btn-sm btn-success">Update</button>
             </form>
         </td>
