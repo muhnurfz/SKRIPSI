@@ -570,7 +570,7 @@ $conn->close();
         }
     </style>
     <script>
-document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function() {
     // Set minimum and maximum date for the departure date input
     var today = new Date();
     var minDate = today.toISOString().split('T')[0];
@@ -581,7 +581,6 @@ document.addEventListener('DOMContentLoaded', function() {
     var seatContainer = document.querySelector('.seat-selector');
     var selectedSeatsInput = document.getElementById('selected_seats');
     document.getElementById("passenger_phone").addEventListener("input", formatPhoneNumber);
-
     if (departureDateInput) {
         departureDateInput.setAttribute("min", minDate);
         departureDateInput.setAttribute("max", maxDateString);
@@ -598,6 +597,15 @@ document.addEventListener('DOMContentLoaded', function() {
         console.error('Element with ID "departure_date" not found.');
     }
     
+    document.addEventListener('DOMContentLoaded', function() {
+    // Ambil elemen yang menyimpan nilai route
+    const routeInput = document.getElementById('selected-route');
+    if (!routeInput) {
+        console.error('Element with ID "selected-route" not found.');
+        return;
+    }
+});
+
     // Initialize the destinations dropdown based on the existing route
     updateDestinations();
 
@@ -612,40 +620,42 @@ document.addEventListener('DOMContentLoaded', function() {
         console.error('Element with ID "route" not found.');
     }
 
-    // Function to show notification
-    function showNotification(message, type) {
-        var container = document.getElementById('notification-container');
-        var notification = document.createElement('div');
-        notification.className = 'notification ' + type;
-        notification.textContent = message;
-        
-        container.appendChild(notification);
-        
+ // Function to show notification
+ function showNotification(message, type) {
+    var container = document.getElementById('notification-container');
+    var notification = document.createElement('div');
+    notification.className = 'notification ' + type;
+    notification.textContent = message;
+    
+    container.appendChild(notification);
+    
+    setTimeout(function() {
+        notification.classList.add('fade-out');
         setTimeout(function() {
-            notification.classList.add('fade-out');
-            setTimeout(function() {
-                container.removeChild(notification);
-            }, 500); // Match this with CSS transition duration
-        }, 3000); // Notification will disappear after 3 seconds
-    }
+            container.removeChild(notification);
+        }, 500); // Match this with CSS transition duration
+    }, 3000); // Notification will disappear after 3 seconds
+}
+
 
     var seats = document.querySelectorAll('.seat');
-    seats.forEach(function(seat) {
-        seat.addEventListener('click', function() {
-            var selectedSeats = document.querySelectorAll('.seat.selected');
-            var seatNumber = seat.getAttribute('data-seat');
-            if (!seat.classList.contains('reserved')) {
-                if (seat.classList.contains('selected')) {
-                    seat.classList.remove('selected');
-                } else if (selectedSeats.length < 4) {
-                    seat.classList.add('selected');
-                } else {
-                    showNotification('Maksimal 4 kursi yang dapat dipilih.', 'error');
-                }
-                updateTotalTariff();
+seats.forEach(function(seat) {
+    seat.addEventListener('click', function() {
+        var selectedSeats = document.querySelectorAll('.seat.selected');
+        var seatNumber = seat.getAttribute('data-seat');
+        if (!seat.classList.contains('reserved')) {
+            if (seat.classList.contains('selected')) {
+                seat.classList.remove('selected');
+            } else if (selectedSeats.length < 4) {
+                seat.classList.add('selected');
+            } else {
+                showNotification('Maksimal 4 kursi yang dapat dipilih.', 'error');
             }
-        });
+            updateTotalTariff();
+        }
     });
+});
+
 
     // Format phone number on input
     function formatPhoneNumber(event) {
@@ -674,6 +684,7 @@ document.addEventListener('DOMContentLoaded', function() {
             bojonegoro: ["Wirosari", "Blora", "Cepu", "Bojonegoro"],
             gemolong: ["Gubug", "Godong", "Purwodadi", "Sumberlawang", "Gemolong"]
         };
+        
 
         destination.innerHTML = "";
 
@@ -737,38 +748,10 @@ document.addEventListener('DOMContentLoaded', function() {
         document.querySelectorAll('.seat.selected').forEach(function(seat) {
             selectedSeats.push(seat.getAttribute('data-seat'));
         });
-
-        var selectedSeatsCount = selectedSeats.length;
-
-        // Kirim permintaan Ajax untuk memvalidasi jumlah kursi
-        fetch('validate_seats.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: new URLSearchParams({
-                route: document.getElementById('route').value,
-                departure_date: document.getElementById('departure_date').value,
-                selected_seats_count: selectedSeatsCount
-            })
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.valid) {
-                document.getElementById('selected_seats').value = selectedSeats.join(',');
-            } else {
-                event.preventDefault(); // Mencegah form disubmit
-                showNotification('Jumlah kursi yang dipilih tidak sesuai.', 'error');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            showNotification('Terjadi kesalahan dalam validasi kursi.', 'error');
-        });
+        selectedSeatsInput.value = selectedSeats.join(',');
     });
 });
-</script>
-
+    </script>
 </head>
 <body>
 <div id="notification-container"></div>
