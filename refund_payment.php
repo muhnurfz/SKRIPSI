@@ -527,23 +527,24 @@ body {
                     <td><?= (new DateTime($row['departure_date']))->format('d/m/Y') ?></td>
                     <td>
     <?php 
-    // Memecah string selected_seats menjadi array
+    // Memecah string kursi yang dipilih dari database menjadi array
     $selectedSeatsArray = explode(', ', $row['selected_seats']);
     ?>
     <form action="update_seats.php" method="post">
         <?php foreach ($selectedSeatsArray as $seat): ?>
             <div>
                 <label>
-                    <input type="checkbox" name="seats_to_remove[]" value="<?= htmlspecialchars($seat) ?>">
+                    <input type="checkbox" name="seats_to_keep[]" value="<?= htmlspecialchars($seat) ?>" checked>
                     <?= htmlspecialchars($seat) ?>
                 </label>
             </div>
         <?php endforeach; ?>
         
         <input type="hidden" name="order_id" value="<?= htmlspecialchars($row['id']) ?>">
-        <button type="submit" class="btn btn-danger">Hapus Kursi Terpilih</button>
+        <button type="submit" class="btn btn-success">Simpan Kursi</button>
     </form>
 </td>
+
 
                     <td><?= htmlspecialchars($row['departure']) ?></td>
                     <td><?= htmlspecialchars($row['destination']) ?></td>
