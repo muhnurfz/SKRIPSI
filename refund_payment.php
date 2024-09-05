@@ -502,12 +502,11 @@ body {
 </td>
 <td>
     <?php if (!empty($row['img_batal'])): ?>
-        SUDAH
+        <span class="badge badge-success">SUDAH</span>
     <?php else: ?>
-        BELUM
+        <span class="badge badge-danger">BELUM</span>
     <?php endif; ?>
 </td>
-
                 </tr>
             <?php endwhile; ?>
             </tbody>
