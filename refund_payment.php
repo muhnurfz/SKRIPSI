@@ -50,6 +50,34 @@ if (isset($_POST['search'])) {
         $result = $stmt->get_result();
     }
 }
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $orderId = $_POST['order_id'];
+    $seatsToRemove = $_POST['seats_to_remove'];
+
+    // Dapatkan kursi yang ada dari database
+    $query = "SELECT selected_seats FROM orders WHERE id = ?";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param('i', $orderId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
+
+    // Memecah kursi yang ada menjadi array
+    $selectedSeatsArray = explode(', ', $row['selected_seats']);
+
+    // Hapus kursi yang dipilih dari array
+    $updatedSeatsArray = array_diff($selectedSeatsArray, $seatsToRemove);
+
+    // Gabungkan kembali array menjadi string
+    $updatedSeatsString = implode(', ', $updatedSeatsArray);
+
+    // Update database dengan kursi yang telah diperbarui
+    $updateQuery = "UPDATE orders SET selected_seats = ? WHERE id = ?";
+    $updateStmt = $conn->prepare($updateQuery);
+    $updateStmt->bind_param('si', $updatedSeatsString, $orderId);
+    $updateStmt->execute();
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['fileUpload'])) {
     $orderId = $_POST['id']; // ID dari tabel orders
 
