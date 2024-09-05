@@ -53,25 +53,39 @@ if (isset($_POST['search'])) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['selected_seats'])) {
     $orderId = $_POST['order_id'];
-    $selectedSeats = $_POST['selected_seats'];
+    $selectedSeats = isset($_POST['selected_seats']) ? $_POST['selected_seats'] : [];
 
-    // Validate the selected seats input (optional)
-    if (!empty($selectedSeats)) {
-        $sqlUpdateSeats = "UPDATE orders SET selected_seats = ? WHERE id = ?";
-        $stmtUpdateSeats = $conn->prepare($sqlUpdateSeats);
-        $stmtUpdateSeats->bind_param("si", $selectedSeats, $orderId);
+    // Convert the array of selected seats back to a comma-separated string
+    $selectedSeatsStr = implode(',', $selectedSeats);
 
-        if ($stmtUpdateSeats->execute()) {
-            echo "<div class='alert alert-success'>Seats updated successfully for order ID: $orderId.</div>";
-        } else {
-            echo "<div class='alert alert-danger'>Failed to update seats: " . $stmtUpdateSeats->error . "</div>";
-        }
+    // Update the selected_seats in the orders table
+    $sqlUpdateSeats = "UPDATE orders SET selected_seats = ? WHERE id = ?";
+    $stmtUpdateSeats = $conn->prepare($sqlUpdateSeats);
+    $stmtUpdateSeats->bind_param("si", $selectedSeatsStr, $orderId);
 
-        $stmtUpdateSeats->close();
+    if ($stmtUpdateSeats->execute()) {
+        echo "<div class='alert alert-success'>Seats updated successfully for order ID: $orderId.</div>";
     } else {
-        echo "<div class='alert alert-warning'>Please enter valid seats.</div>";
+        echo "<div class='alert alert-danger'>Failed to update seats: " . $stmtUpdateSeats->error . "</div>";
     }
+
+    $stmtUpdateSeats->close();
+} elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // If no seats were selected, handle that scenario
+    $orderId = $_POST['order_id'];
+    $sqlUpdateSeats = "UPDATE orders SET selected_seats = '' WHERE id = ?";
+    $stmtUpdateSeats = $conn->prepare($sqlUpdateSeats);
+    $stmtUpdateSeats->bind_param("i", $orderId);
+
+    if ($stmtUpdateSeats->execute()) {
+        echo "<div class='alert alert-warning'>All seats have been removed for order ID: $orderId.</div>";
+    } else {
+        echo "<div class='alert alert-danger'>Failed to update seats: " . $stmtUpdateSeats->error . "</div>";
+    }
+
+    $stmtUpdateSeats->close();
 }
+
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['fileUpload'])) {
     $orderId = $_POST['id']; // ID dari tabel orders
