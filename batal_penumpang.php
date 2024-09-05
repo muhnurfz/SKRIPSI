@@ -269,15 +269,29 @@ if ($result === FALSE) {
                 </button>
             </div>
             <div class="modal-body">
-                Pengajuan pembatalan Anda telah berhasil dikirim.
-                <br><small>Pengembalian dana akan ditransfer dalam 2x24 jam melalui nomor rekening yang telah Anda kirim</small>
-            </div>
+    Pengajuan pembatalan Anda telah berhasil dikirim.
+    <br><small>
+        <?php
+            // Menghitung tanggal 2 hari ke depan
+            $today = new DateTime();
+            $today->modify('+2 days');
+            
+            // Format tanggal menjadi format tertulis
+            $formatter = new IntlDateFormatter('id_ID', IntlDateFormatter::LONG, IntlDateFormatter::NONE);
+            $formattedDate = $formatter->format($today);
+            
+            echo "Pengembalian dana akan ditransfer pada " . $formattedDate . " melalui nomor rekening yang telah Anda kirim";
+        ?>
+    </small>
+</div>
+
             <div class="modal-footer">
                 <button type="button" class="btn btn-success" data-dismiss="modal">OK</button>
             </div>
         </div>
     </div>
 </div>
+
 
 <div class="container">
     <h2 class="mb-4">Ajukan pembatalan</h2>
