@@ -280,7 +280,7 @@ if ($result === FALSE) {
             $formatter = new IntlDateFormatter('id_ID', IntlDateFormatter::LONG, IntlDateFormatter::NONE);
             $formattedDate = $formatter->format($today);
             
-            echo "Data anda sedang diverfikasi apabila disetujui pengembalian dana paling lambar dikembalikan pada " . $formattedDate . " melalui nomor rekening yang telah Anda kirim";
+            echo "Data anda sedang diverfikasi apabila disetujui pengembalian dana paling lambat dikirim pada " . $formattedDate . " melalui nomor rekening yang telah Anda kirim";
         ?>
     </small>
 </div>
