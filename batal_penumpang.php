@@ -25,7 +25,11 @@ if (isset($_GET['cancel'])) {
             $email = $order['email'];
             $booking_code = $order['booking_code'];
             $tanggal_pembatalan = date('d/m/Y'); // Format tanggal sesuai kebutuhan
-
+              // Menghitung tanggal 2 hari ke depan
+            $today = new DateTime();
+            $today->modify('+2 days');
+            $formatter = new IntlDateFormatter('id_ID', IntlDateFormatter::LONG, IntlDateFormatter::NONE);
+            $formattedDate = $formatter->format($today);
             // Send confirmation email
             if (!empty($email)) {
                 $mail = new PHPMailer(true);
@@ -108,7 +112,7 @@ if (isset($_GET['cancel'])) {
                                     Pada tanggal <span class="highlight">' . $tanggal_pembatalan . '</span>, Anda telah mengajukan pembatalan tiket dengan kode booking <span class="highlight">' . $booking_code . '</span>.
                                 </p>
                                 <p>
-                                  Pengembalian dana akan ditransfer dalam 2x24 jam melalui nomor rekening yang telah Anda kirim.
+                                    Pengembalian dana akan ditransfer dalam 2 hari setelah hari ini, yaitu pada <span class="highlight">' . $formattedDate . '</span>, melalui nomor rekening yang telah Anda kirim.
                                 </p>
                               <p>Untuk informasi lebih lanjut silahkan akses halaman cetak tiket di <a href="https://tiket.agungindahtrav.com/cari_tiket.php" target="https://tiket.agungindahtrav.com/cari_tiket.php" style="color: #007bff; text-decoration: none;">tiket.agungindahtrav.com</a></p>
                             </div>
