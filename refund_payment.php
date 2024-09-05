@@ -477,9 +477,10 @@ body {
                     <th>Kursi</th>
                     <th>Asal Keberangkatan</th>
                     <th>Kota Tujuan</th>
-                    <th>Komentar</th>
+                    <th>Keterangan</th>
                     <th>Upload</th>
-                    <th>View Image</th>
+                    <th>Lihat gambar</th>
+                    <th>Status pengembalian</th>
                 </tr>
             </thead>
             <tbody>
@@ -498,8 +499,8 @@ body {
                     </td>
                     <td>
                     <button class="btn btn-info btn-sm" onclick="viewBukti(<?php echo $row['id']; ?>)">View</button>
-
 </td>
+<?= ($row['img_batal'] !== null) ? 'SUDAH' : 'BELUM'; ?>
 
                 </tr>
             <?php endwhile; ?>
