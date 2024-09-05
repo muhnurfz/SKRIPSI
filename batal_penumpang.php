@@ -114,7 +114,7 @@ if (isset($_GET['cancel'])) {
                                 <p>
                                     Data anda sedang diverfikasi apabila disetujui pengembalian dana paling lambat dikirim pada <span class="highlight">' . $formattedDate . '</span>, melalui nomor rekening yang telah Anda kirim.
                                 </p>
-                              <p>Untuk informasi lebih lanjut silahkan akses halaman cetak tiket di <a href="https://tiket.agungindahtrav.com/cari_tiket.php" target="https://tiket.agungindahtrav.com/cari_tiket.php" style="color: #007bff; text-decoration: none;">tiket.agungindahtrav.com</a></p>
+                              <p>Untuk informasi lebih lanjut silahkan akses halaman <a href="https://tiket.agungindahtrav.com/cari_tiket.php" target="https://tiket.agungindahtrav.com/cari_tiket.php" style="color: #007bff; text-decoration: none;">tiket.agungindahtrav.com</a></p>
                             </div>
                         </body>
                         </html>';
