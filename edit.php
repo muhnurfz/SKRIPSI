@@ -687,10 +687,6 @@ document.querySelector('form').addEventListener('submit', function(event) {
                 .catch(error => console.error('Error fetching total seats:', error));
         }
     }
-    
-    // Update total seats required whenever route or departure date changes
-    document.getElementById("route").addEventListener('change', updateTotalSeatsRequired);
-    document.getElementById("departure_date").addEventListener('change', updateTotalSeatsRequired);
 
 
     // Format phone number on input
