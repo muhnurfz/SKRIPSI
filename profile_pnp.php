@@ -302,12 +302,12 @@ $conn->close();
             <button type="submit" class="btn btn-primary">Simpan</button>
         </div>
     </form>
+    
+    <form method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus akun ini?');">
+            <input type="hidden" name="action" value="delete">
+            <button type="submit" class="btn btn-danger">Hapus Akun</button>
+        </form>
 </div>
-
-<form method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus akun ini?');">
-        <input type="hidden" name="action" value="delete">
-        <button type="submit" class="btn btn-danger">Hapus Akun</button>
-    </form>
 
     <!-- JavaScript -->
     <script>
