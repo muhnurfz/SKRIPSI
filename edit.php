@@ -708,72 +708,39 @@ seats.forEach(function(seat) {
 
     // Check reserved seats from the server
     function checkReservedSeats() {
-    var route = document.getElementById("route").value;
-    var departureDate = document.getElementById("departure_date").value;
-
-    if (route !== "0" && departureDate) {
-        fetch(`get_reserved_seats.php?route=${route}&departure_date=${departureDate}`)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                var reservedSeats = data.reserved_seats || [];
-                var totalSeats = data.total_seats || 0; // Nilai total_seats dari server
-
-                console.log("Reserved seats data:", reservedSeats); // Debugging line
-                console.log("Total seats:", totalSeats); // Debugging line
-
-                // Update seat reservation status in UI
-                seats.forEach(function(seat) {
-                    var seatNumber = seat.getAttribute('data-seat');
-                    if (reservedSeats.includes(seatNumber)) {
-                        seat.classList.add('reserved');
-                        seat.classList.remove('selected'); // Reserved seats can't be selected
-                    } else {
-                        seat.classList.remove('reserved');
+        var route = document.getElementById("route").value;
+        var departureDate = document.getElementById("departure_date").value;
+        if (route !== "0" && departureDate) {
+            fetch(`get_reserved_seats.php?route=${route}&departure_date=${departureDate}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
                     }
-                });
-
-                // Updated seat selection logic
-                seats.forEach(function(seat) {
-                    seat.addEventListener('click', function() {
-                        var selectedSeats = document.querySelectorAll('.seat.selected').length;
-                        var seatNumber = seat.getAttribute('data-seat');
-
-                        // Check if the seat is already reserved
-                        if (seat.classList.contains('reserved')) {
-                            showNotification('This seat is reserved!', 'error');
-                            return;
-                        }
-
-                        // Toggle selection if the seat is not reserved
-                        if (seat.classList.contains('selected')) {
-                            // Deselect the seat
-                            seat.classList.remove('selected');
-                        } else {
-                            // Select the seat if within the limit
-                            if (selectedSeats < totalSeats) {
-                                seat.classList.add('selected');
+                    return response.json();
+                })
+                .then(data => {
+                    console.log("Reserved seats data:", data); // Debugging line
+                    if (Array.isArray(data)) {
+                        seats.forEach(function(seat) {
+                            var seatNumber = seat.getAttribute('data-seat');
+                            if (data.includes(seatNumber)) {
+                                seat.classList.add('reserved');
                             } else {
-                                showNotification(`You can only select up to ${totalSeats} seats.`, 'error');
+                                seat.classList.remove('reserved');
                             }
-                        }
-
-                        updateTotalTariff();
-                    });
-                });
-            })
-            .catch(error => console.error('Error fetching reserved seats:', error));
-    } else {
-        console.log("Route or Departure Date is not selected, clearing reserved seats.");
-        seats.forEach(function(seat) {
-            seat.classList.remove('reserved', 'selected');
-        });
+                        });
+                    } else {
+                        console.error('Data received is not an array:', data);
+                    }
+                })
+                .catch(error => console.error('Error fetching reserved seats:', error));
+        } else {
+            console.log("Route or Departure Date is not selected, clearing reserved seats.");
+            seats.forEach(function(seat) {
+                seat.classList.remove('reserved');
+            });
+        }
     }
-}
 
     // Handle form submission to set selected seats in hidden field
     document.querySelector('form').addEventListener('submit', function(event) {
