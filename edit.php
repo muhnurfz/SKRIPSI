@@ -35,31 +35,6 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['id'])) {
     }
 }
 
-// Assuming you have the seat selection as a comma-separated string in $_POST['selected_seats']
-$updated_seats = $_POST['selected_seats']; // Example: '1A, 1B, 1C'
-$updated_seats_array = explode(',', $updated_seats);
-$updated_seat_count = count($updated_seats_array); // Get the updated seat count
-
-// Retrieve the previous total_seats from the database
-$order_id = $_POST['order_id']; // Assuming you are passing the order ID
-$query = "SELECT total_seats FROM orders WHERE id = '$order_id'";
-$result = mysqli_query($conn, $query);
-$row = mysqli_fetch_assoc($result);
-$original_seat_count = $row['total_seats']; // Get the original seat count
-
-// Validate the seat count
-if ($updated_seat_count != $original_seat_count) {
-    // Error: Number of seats must match
-    echo "Error: You must select exactly $original_seat_count seats.";
-    exit; // Prevent further execution if validation fails
-} else {
-    // Proceed with the update
-    $query = "UPDATE orders SET selected_seats = '$updated_seats' WHERE id = '$order_id'";
-    mysqli_query($conn, $query);
-    echo "Seats updated successfully!";
-}
-
-
 // Process form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update'])) {
     $id = $_POST['id'];
@@ -621,19 +596,6 @@ $conn->close();
     } else {
         console.error('Element with ID "departure_date" not found.');
     }
-
-    document.getElementById("seat-form").addEventListener("submit", function(event) {
-    var selectedSeats = document.getElementById("selected_seats").value;
-    var seatCount = selectedSeats.split(',').length; // Count the number of selected seats
-    
-    // Assuming you have stored the required seat count in a hidden input field
-    var requiredSeatCount = document.getElementById("required_seat_count").value;
-    
-    if (seatCount != requiredSeatCount) {
-        event.preventDefault(); // Prevent form submission
-        alert("Please select exactly " + requiredSeatCount + " seats.");
-    }
-});
     
     document.addEventListener('DOMContentLoaded', function() {
     // Ambil elemen yang menyimpan nilai route
