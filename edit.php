@@ -743,21 +743,16 @@ function checkReservedSeats() {
     }
 }
 
-document.querySelector('form').addEventListener('submit', function(event) {
-    var selectedSeats = [];
-    document.querySelectorAll('.seat.selected').forEach(function(seat) {
-        selectedSeats.push(seat.getAttribute('data-seat'));
+
+    // Handle form submission to set selected seats in hidden field
+    document.querySelector('form').addEventListener('submit', function(event) {
+        var selectedSeats = [];
+        document.querySelectorAll('.seat.selected').forEach(function(seat) {
+            selectedSeats.push(seat.getAttribute('data-seat'));
+        });
+        selectedSeatsInput.value = selectedSeats.join(',');
     });
-    selectedSeatsInput.value = selectedSeats.join(',');
-
-    // Check if selected seats match the reserved seats count
-    var reservedSeatsCount = <?php echo json_encode($seat_count); ?>;
-    if (selectedSeats.length !== reservedSeatsCount) {
-        event.preventDefault();
-        showNotification('Jumlah kursi yang dipilih tidak sesuai dengan jumlah yang diizinkan.', 'error');
-    }
 });
-
     </script>
 </head>
 <body>
