@@ -63,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $hashed_password = md5($password); // Consider using a more secure hashing method
 
                 // Insert the data into the database including the hashed password
-                $sql = "INSERT INTO data_pnp (kode_penumpang, passenger_name, passenger_phone, email, password, status_konfirmasi) VALUES (?, ?, ?, ?, ?, 0)";
+                $sql = "INSERT INTO data_pnp (kode_penumpang, passenger_name, passenger_phone, email, password) VALUES (?, ?, ?, ?, ?)";
                 $stmt = $conn->prepare($sql);
                 $stmt->bind_param("sssss", $kode_penumpang, $passenger_name, $passenger_phone, $email, $hashed_password);
 
