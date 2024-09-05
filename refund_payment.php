@@ -516,7 +516,19 @@ body {
                     <td>
             <form method="post" action="">
                 <input type="hidden" name="order_id" value="<?= $row['id'] ?>">
-                <input type="text" name="selected_seats" value="<?= htmlspecialchars($row['selected_seats']) ?>">
+
+                <?php
+                // Assuming seat names are stored as comma-separated values, e.g., '3A,3B,3C'
+                $selectedSeats = explode(',', $row['selected_seats']);
+                $allSeats = ['3A', '3B', '3C']; // Define all available seats
+
+                // Display each seat as a checkbox
+                foreach ($allSeats as $seat) {
+                    $isChecked = in_array($seat, $selectedSeats) ? 'checked' : '';
+                    echo "<label><input type='checkbox' name='selected_seats[]' value='$seat' $isChecked> $seat</label> ";
+                }
+                ?>
+
                 <button type="submit" class="btn btn-sm btn-success">Update</button>
             </form>
         </td>
