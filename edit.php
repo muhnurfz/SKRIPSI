@@ -577,7 +577,7 @@ $conn->close();
     var maxDate = new Date();
     maxDate.setDate(maxDate.getDate() + 45);
     var maxDateString = maxDate.toISOString().split('T')[0];
-
+    var totalSeatsRequired = parseInt(document.getElementById('total_seats_required').value, 10);
     var departureDateInput = document.getElementById("departure_date");
     var seatContainer = document.querySelector('.seat-selector');
     var selectedSeatsInput = document.getElementById('selected_seats');
@@ -656,6 +656,41 @@ seats.forEach(function(seat) {
         }
     });
 });
+ 
+document.querySelector('form').addEventListener('submit', function(event) {
+        var selectedSeats = document.querySelectorAll('.seat.selected').length;
+        
+        if (selectedSeats !== totalSeatsRequired) {
+            event.preventDefault(); // Mencegah form dari dikirim
+            showNotification('Harap pilih jumlah kursi yang sesuai dengan yang dipesan.', 'error');
+        } else {
+            var selectedSeatsArray = [];
+            document.querySelectorAll('.seat.selected').forEach(function(seat) {
+                selectedSeatsArray.push(seat.getAttribute('data-seat'));
+            });
+            selectedSeatsInput.value = selectedSeatsArray.join(',');
+        }
+    });
+    function updateTotalSeatsRequired() {
+        // Ambil total_seats dari database atau dari elemen yang sudah ada
+        var route = document.getElementById("route").value;
+        var departureDate = document.getElementById("departure_date").value;
+        if (route !== "0" && departureDate) {
+            fetch(`get_total_seats.php?route=${route}&departure_date=${departureDate}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.total_seats) {
+                        totalSeatsRequired = parseInt(data.total_seats, 10);
+                        document.getElementById('total_seats_required').value = totalSeatsRequired;
+                    }
+                })
+                .catch(error => console.error('Error fetching total seats:', error));
+        }
+    }
+    
+    // Update total seats required whenever route or departure date changes
+    document.getElementById("route").addEventListener('change', updateTotalSeatsRequired);
+    document.getElementById("departure_date").addEventListener('change', updateTotalSeatsRequired);
 
 
     // Format phone number on input
