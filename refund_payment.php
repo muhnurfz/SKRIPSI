@@ -500,7 +500,13 @@ body {
                     <td>
                     <button class="btn btn-info btn-sm" onclick="viewBukti(<?php echo $row['id']; ?>)">View</button>
 </td>
-<?= ($row['img_batal'] !== null) ? 'SUDAH' : 'BELUM'; ?>
+<td>
+    <?php if (!empty($row['img_batal'])): ?>
+        SUDAH
+    <?php else: ?>
+        BELUM
+    <?php endif; ?>
+</td>
 
                 </tr>
             <?php endwhile; ?>
