@@ -137,10 +137,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['fileUpload'])) {
     exit;
 }
 
+
 // Handle seat removal
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['seats_to_remove'])) {
     $orderId = $_POST['order_id'];
-    $seatsToRemove = isset($_POST['seats_to_remove']) ? $_POST['seats_to_remove'] : [];
+    $seatsToRemove = $_POST['seats_to_remove'];
 
     // Dapatkan kursi yang ada dari database
     $query = "SELECT selected_seats FROM orders WHERE id = ?";
@@ -165,6 +166,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $updateStmt->bind_param('si', $updatedSeatsString, $orderId);
     $updateStmt->execute();
 
+    // Redirect atau beri pesan berhasil
+    header('Location: refund_payment.php');
+    exit();
 }
 
 $conn->close();
