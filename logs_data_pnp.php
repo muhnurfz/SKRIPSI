@@ -134,6 +134,9 @@ $result = $conn->query($sql);
         ?>
     </tbody>
 </table>
+    <!-- Back Button -->
+    <a href="crud.php" class="btn btn-secondary">Kembali</a>
+
 
     </div>
 </body>
