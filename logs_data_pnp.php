@@ -45,7 +45,22 @@ $sql .= " ORDER BY changed_at DESC";
 
 // Execute query
 $result = $conn->query($sql);
-?><!DOCTYPE html>
+
+// Log this query activity into `order_logs` table
+if ($conn->error) {
+    $log_query = "INSERT INTO order_logs (order_id, booking_code, column_changed, old_value, new_value, changed_at) VALUES (0, '', 'Query Error', '', '".$conn->error."', NOW())";
+    $conn->query($log_query);
+}
+
+// Assuming there's more logic here to handle the results, and you want to log successful queries
+if ($result) {
+    $log_query = "INSERT INTO order_logs (order_id, booking_code, column_changed, old_value, new_value, changed_at) VALUES (0, '', 'Search Query', '', 'Executed', NOW())";
+    $conn->query($log_query);
+}
+?>
+
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -137,7 +152,7 @@ $result = $conn->query($sql);
                                             <td>" . $row["old_value"] . "</td>
                                             <td>" . $row["new_value"] . "</td>
                                             <td>" . $formattedDateTime . "</td>
-                                            <td>" . htmlspecialchars($_SESSION['username']) . "</td>
+                                            <td>"  . $row["username"] . "</td>
                                         </tr>";
                                 }
                             } else {
