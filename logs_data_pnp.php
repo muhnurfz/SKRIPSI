@@ -91,40 +91,50 @@ $result = $conn->query($sql);
         </form>
 
         <table class="table table-striped mt-4">
-            <thead>
-                <tr>
-                    <th>Log ID</th>
-                    <th>Order ID</th>
-                    <th>Booking Code</th>
-                    <th>Column Changed</th>
-                    <th>Old Value</th>
-                    <th>New Value</th>
-                    <th>Changed At</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                if ($result->num_rows > 0) {
-                    // Output data of each row
-                    while ($row = $result->fetch_assoc()) {
-                        echo "<tr>
-                                <td>" . $row["log_id"] . "</td>
-                                <td>" . $row["order_id"] . "</td>
-                                <td>" . $row["booking_code"] . "</td>
-                                <td>" . $row["column_changed"] . "</td>
-                                <td>" . $row["old_value"] . "</td>
-                                <td>" . $row["new_value"] . "</td>
-                                <td>" . $row["changed_at"] . "</td>
-                            </tr>";
-                    }
-                } else {
-                    echo "<tr><td colspan='7'>No logs found</td></tr>";
-                }
+    <thead>
+        <tr>
+            <th>Log ID</th>
+            <th>Order ID</th>
+            <th>Booking Code</th>
+            <th>Column Changed</th>
+            <th>Old Value</th>
+            <th>New Value</th>
+            <th>Changed At</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php
+        if ($result->num_rows > 0) {
+            // Output data of each row
+            while ($row = $result->fetch_assoc()) {
+                // Create a DateTime object from the UTC timestamp
+                $utcDateTime = new DateTime($row["changed_at"], new DateTimeZone('UTC'));
+                
+                // Convert to GMT+7 timezone
+                $utcDateTime->setTimezone(new DateTimeZone('Asia/Jakarta')); // GMT+7 timezone
+                
+                // Format the datetime as DD/MM/YYYY HH:MM:SS
+                $formattedDateTime = $utcDateTime->format('d/m/Y H:i:s');
 
-                $conn->close();
-                ?>
-            </tbody>
-        </table>
+                echo "<tr>
+                        <td>" . $row["log_id"] . "</td>
+                        <td>" . $row["order_id"] . "</td>
+                        <td>" . $row["booking_code"] . "</td>
+                        <td>" . $row["column_changed"] . "</td>
+                        <td>" . $row["old_value"] . "</td>
+                        <td>" . $row["new_value"] . "</td>
+                        <td>" . $formattedDateTime . "</td>
+                    </tr>";
+            }
+        } else {
+            echo "<tr><td colspan='7'>No logs found</td></tr>";
+        }
+
+        $conn->close();
+        ?>
+    </tbody>
+</table>
+
     </div>
 </body>
 </html>
