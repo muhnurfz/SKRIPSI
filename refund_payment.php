@@ -388,11 +388,11 @@ body {
         <div class="image-container" id="buktiPembayaranContent">
           <!-- Gambar akan dimuat di sini melalui AJAX -->
         </div>
-        <?= !empty($row['upload_date']) ? (new DateTime($row['upload_date']))->format('d/m/Y H:i') : 'Belum diupload' ?>
       </div>
     </div>
   </div>
 </div>
+
 
 
 <div id="notification-container"></div>
