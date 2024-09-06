@@ -269,7 +269,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <a class="nav-link" href="crud.php"><i class="bi bi-gear-fill"></i> Lihat daftar penumpang</a>
                 </li>
                 <li class="nav-item">
-                <a class="nav-link" href="crud.php"><i class="fas fa-clock"></i> Riwayat data penumpang</a>
+                <a class="nav-link" href="logs_data_pnp.php"><i class="fas fa-clock"></i> Riwayat data penumpang</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="bus_code.php"><i class="bi bi-bus-front"></i> Alokasi No Body</a>
