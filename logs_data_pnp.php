@@ -1,5 +1,4 @@
 <?php
-// Assuming you have included database connection and started the session
 include('conn.php');
 session_start();
 
@@ -47,7 +46,6 @@ $sql .= " ORDER BY changed_at DESC";
 // Execute query
 $result = $conn->query($sql);
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -141,7 +139,7 @@ $result = $conn->query($sql);
                                             <td>" . $row["old_value"] . "</td>
                                             <td>" . $row["new_value"] . "</td>
                                             <td>" . $formattedDateTime . "</td>
-                                            <td>"  . $row["username"] . "</td>
+                                            <td>" . htmlspecialchars($_SESSION['username']) . "</td>
                                         </tr>";
                                 }
                             } else {
