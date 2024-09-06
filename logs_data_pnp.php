@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Change Logs</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>Order Change Logs</h2>
+
+        <!-- Search Form -->
+        <form method="post" class="mb-4">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group mb-3">
+                        <label for="departure_date">Tanggal Keberangkatan :</label>
+                        <input type="date" class="form-control" id="departure_date" name="departure_date">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group mb-3">
+                        <label for="route">BUS:</label>
+                        <select class="form-control" id="route" name="route">
+                            <option value="">Pilih Rute BUS</option>
+                            <option value="ponorogo">Ponorogo</option>
+                            <option value="solo">Solo</option>
+                            <option value="bojonegoro">Bojonegoro</option>
+                            <option value="gemolong">Gemolong</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group mb-3">
+                        <label for="booking_code">Kode Booking:</label>
+                        <input type="text" class="form-control" id="booking_code" name="booking_code" placeholder="Masukkan kode booking">
+                    </div>
+                </div>
+            </div>
+            <button type="submit" name="search" class="btn btn-primary">Cari</button>
+        </form>
+
+        <table class="table table-striped mt-4">
+            <thead>
+                <tr>
+                    <th>Log ID</th>
+                    <th>Order ID</th>
+                    <th>Booking Code</th>
+                    <th>Column Changed</th>
+                    <th>Old Value</th>
+                    <th>New Value</th>
+                    <th>Changed At</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                // Database connection
+                $conn = new mysqli("localhost", "root", "", "ticket_booking");
+
+                // Check connection
+                if ($conn->connect_error) {
+                    die("Connection failed: " . $conn->connect_error);
+                }
+
+                // Initialize search variables
+                $booking_code = isset($_POST['booking_code']) ? $conn->real_escape_string($_POST['booking_code']) : '';
+                $departure_date = isset($_POST['departure_date']) ? $conn->real_escape_string($_POST['departure_date']) : '';
+                $route = isset($_POST['route']) ? $conn->real_escape_string($_POST['route']) : '';
+
+                // Build query with optional filters
+                $sql = "SELECT * FROM order_logs WHERE 1=1";
+                if ($booking_code) {
+                    $sql .= " AND booking_code LIKE '%$booking_code%'";
+                }
+                if ($departure_date) {
+                    $sql .= " AND order_id IN (SELECT id FROM orders WHERE departure_date = '$departure_date')";
+                }
+                if ($route) {
+                    $sql .= " AND order_id IN (SELECT id FROM orders WHERE route LIKE '%$route%')";
+                }
+                $sql .= " ORDER BY changed_at DESC";
+
+                // Execute query
+                $result = $conn->query($sql);
+
+                if ($result->num_rows > 0) {
+                    // Output data of each row
+                    while ($row = $result->fetch_assoc()) {
+                        echo "<tr>
+                                <td>" . $row["log_id"] . "</td>
+                                <td>" . $row["order_id"] . "</td>
+                                <td>" . $row["booking_code"] . "</td>
+                                <td>" . $row["column_changed"] . "</td>
+                                <td>" . $row["old_value"] . "</td>
+                                <td>" . $row["new_value"] . "</td>
+                                <td>" . $row["changed_at"] . "</td>
+                            </tr>";
+                    }
+                } else {
+                    echo "<tr><td colspan='7'>No logs found</td></tr>";
+                }
+
+                $conn->close();
+                ?>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
