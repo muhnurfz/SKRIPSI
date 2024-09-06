@@ -278,7 +278,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <div class="container mt-5">
         <h2>Proses pembayaran tunai</h2>
-        <nav id="sidebar" class="bg-light">
+       
+<nav id="sidebar" class="bg-light">
     <button id="sidebar-toggler" class="btn btn-primary">☰</button>
     <div class="sidebar-sticky">
         <div class="user-info text-center p-3 bg-dark text-white">
@@ -297,9 +298,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <a class="nav-link" href="pesan_tiket.php"><i class="bi bi-ticket"></i> Pesan Tiket</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="edit_penumpang.php"><i class="bi bi-pencil-square"></i> Edit Penumpang</a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link" href="cari_tiket.php"><i class="bi bi-printer"></i> Cetak Tiket</a>
                 </li>
                 <li class="nav-item">
@@ -307,10 +305,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </li>
                 <!-- Alokasi Kepegawaian -->
                 <li class="nav-item">
-                    <div class="nav-section-header bg-dark text-white p-2">ALOKASI PENUMPANG</div>
+                    <div class="nav-section-header bg-dark text-white p-2">ALOKASI KEAGENAN</div>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="crud.php"><i class="bi bi-gear-fill"></i> Lihat daftar penumpang</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="logs_data_pnp.php"><i class="fas fa-clock"></i> Riwayat data penumpang</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="bus_code.php"><i class="bi bi-bus-front"></i> Alokasi No Body</a>
@@ -333,6 +334,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </div>
 </nav>
+
 
 <div class="container">
   <!-- Form untuk mencari data penumpang berdasarkan booking_code -->
