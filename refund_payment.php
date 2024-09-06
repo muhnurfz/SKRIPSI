@@ -360,14 +360,14 @@ body {
                 </button>
             </div>
             <div class="modal-body">
-            <form id="uploadForm" enctype="multipart/form-data">
-    <input type="file" id="fileUpload" name="file">
-    <label for="fileUpload">Choose file</label>
-    <input type="hidden" id="modalId" name="modalId">
-    <button type="submit">Upload</button>
-</form>
-<div id="notification-container"></div>
-
+                <form id="uploadForm" method="post" enctype="multipart/form-data">
+                    <input type="hidden" id="modalId" name="id">
+                    <div class="form-group">
+                        <label for="fileUpload" class="font-weight-bold">Pilih file <small class="text-muted"> (Hanya PNG or JPEG)</small>:</label>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="fileUpload" name="fileUpload" accept=".png, .jpeg, .jpg" required>
+                            <label class="custom-file-label" for="fileUpload">Pilih file...</label>
+                        </div>
 
                     </div>
                     <div class="d-flex justify-content-between align-items-center mt-4">
