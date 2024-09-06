@@ -398,6 +398,7 @@ body {
 <div id="notification-container"></div>
 
 
+
 <nav id="sidebar" class="bg-light">
     <button id="sidebar-toggler" class="btn btn-primary">☰</button>
     <div class="sidebar-sticky">
@@ -430,6 +431,9 @@ body {
                     <a class="nav-link" href="crud.php"><i class="bi bi-gear-fill"></i> Lihat daftar penumpang</a>
                 </li>
                 <li class="nav-item">
+                <a class="nav-link" href="crud.php"><i class="fas fa-clock"></i> Riwayat data penumpang</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="bus_code.php"><i class="bi bi-bus-front"></i> Alokasi No Body</a>
                 </li>
                 <li class="nav-item">
@@ -450,7 +454,6 @@ body {
         </div>
     </div>
 </nav>
-
 
 <div class="container mt-5">
     <h2 class="mb-4">Cari Penumpang yang Mengajukan Pembatalan</h2>
