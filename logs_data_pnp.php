@@ -52,12 +52,12 @@ $result = $conn->query($sql);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Order Change Logs</title>
+    <title>Riwayat data penumpang</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
     <div class="container mt-5">
-        <h2>Order Change Logs</h2>
+        <h2>Riwayat data penumpang</h2>
 
         <!-- Search Form -->
         <form method="post" class="mb-4">
@@ -93,13 +93,13 @@ $result = $conn->query($sql);
         <table class="table table-striped mt-4">
     <thead>
         <tr>
-            <th>Log ID</th>
-            <th>Order ID</th>
-            <th>Booking Code</th>
-            <th>Column Changed</th>
-            <th>Old Value</th>
-            <th>New Value</th>
-            <th>Changed At</th>
+            <th>ID log</th>
+            <th>ID orders</th>
+            <th>Kode booking</th>
+            <th>Data yang diganti</th>
+            <th>Data sebelum</th>
+            <th>Status/data sesudah</th>
+            <th>Diganti pada</th>
         </tr>
     </thead>
     <tbody>
