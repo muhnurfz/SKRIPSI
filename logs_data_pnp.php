@@ -45,14 +45,24 @@ $sql .= " ORDER BY changed_at DESC";
 
 // Execute query
 $result = $conn->query($sql);
-?>
-<!DOCTYPE html>
+?><!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Riwayat data penumpang</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Custom styles for mobile responsiveness */
+        @media (max-width: 768px) {
+            .card-body {
+                padding: 1.5rem;
+            }
+            .table-responsive {
+                overflow-x: auto;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="container mt-5">
@@ -63,14 +73,14 @@ $result = $conn->query($sql);
                 <!-- Search Form -->
                 <form method="post" class="mb-4">
                     <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group mb-3">
+                        <div class="col-md-4 col-sm-12 mb-3">
+                            <div class="form-group">
                                 <label for="departure_date">Tanggal Keberangkatan :</label>
                                 <input type="date" class="form-control" id="departure_date" name="departure_date">
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            <div class="form-group mb-3">
+                        <div class="col-md-4 col-sm-12 mb-3">
+                            <div class="form-group">
                                 <label for="route">BUS:</label>
                                 <select class="form-control" id="route" name="route">
                                     <option value="">Pilih Rute BUS</option>
@@ -81,8 +91,8 @@ $result = $conn->query($sql);
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            <div class="form-group mb-3">
+                        <div class="col-md-4 col-sm-12 mb-3">
+                            <div class="form-group">
                                 <label for="booking_code">Kode Booking:</label>
                                 <input type="text" class="form-control" id="booking_code" name="booking_code" placeholder="Masukkan kode booking">
                             </div>
@@ -91,52 +101,54 @@ $result = $conn->query($sql);
                     <button type="submit" name="search" class="btn btn-primary">Cari</button>
                 </form>
 
-                <table class="table table-striped mt-4">
-                    <thead>
-                        <tr>
-                            <th>ID log</th>
-                            <th>ID orders</th>
-                            <th>Kode booking</th>
-                            <th>Data yang diganti</th>
-                            <th>Data sebelum</th>
-                            <th>Status/data sesudah</th>
-                            <th>Diganti pada</th>
-                            <th>Nama pegawai</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        if ($result->num_rows > 0) {
-                            // Output data of each row
-                            while ($row = $result->fetch_assoc()) {
-                                // Create a DateTime object from the UTC timestamp
-                                $utcDateTime = new DateTime($row["changed_at"], new DateTimeZone('UTC'));
-                                
-                                // Convert to GMT+7 timezone
-                                $utcDateTime->setTimezone(new DateTimeZone('Asia/Jakarta')); // GMT+7 timezone
-                                
-                                // Format the datetime as DD/MM/YYYY HH:MM:SS
-                                $formattedDateTime = $utcDateTime->format('d/m/Y H:i:s');
+                <div class="table-responsive">
+                    <table class="table table-striped mt-4">
+                        <thead>
+                            <tr>
+                                <th>ID log</th>
+                                <th>ID orders</th>
+                                <th>Kode booking</th>
+                                <th>Data yang diganti</th>
+                                <th>Data sebelum</th>
+                                <th>Status/data sesudah</th>
+                                <th>Diganti pada</th>
+                                <th>Nama pegawai</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            if ($result->num_rows > 0) {
+                                // Output data of each row
+                                while ($row = $result->fetch_assoc()) {
+                                    // Create a DateTime object from the UTC timestamp
+                                    $utcDateTime = new DateTime($row["changed_at"], new DateTimeZone('UTC'));
+                                    
+                                    // Convert to GMT+7 timezone
+                                    $utcDateTime->setTimezone(new DateTimeZone('Asia/Jakarta')); // GMT+7 timezone
+                                    
+                                    // Format the datetime as DD/MM/YYYY HH:MM:SS
+                                    $formattedDateTime = $utcDateTime->format('d/m/Y H:i:s');
 
-                                echo "<tr>
-                                        <td>" . $row["log_id"] . "</td>
-                                        <td>" . $row["order_id"] . "</td>
-                                        <td>" . $row["booking_code"] . "</td>
-                                        <td>" . $row["column_changed"] . "</td>
-                                        <td>" . $row["old_value"] . "</td>
-                                        <td>" . $row["new_value"] . "</td>
-                                        <td>" . $formattedDateTime . "</td>
-                                        <td>" . htmlspecialchars($_SESSION['username']) . "</td>
-                                    </tr>";
+                                    echo "<tr>
+                                            <td>" . $row["log_id"] . "</td>
+                                            <td>" . $row["order_id"] . "</td>
+                                            <td>" . $row["booking_code"] . "</td>
+                                            <td>" . $row["column_changed"] . "</td>
+                                            <td>" . $row["old_value"] . "</td>
+                                            <td>" . $row["new_value"] . "</td>
+                                            <td>" . $formattedDateTime . "</td>
+                                            <td>" . htmlspecialchars($_SESSION['username']) . "</td>
+                                        </tr>";
+                                }
+                            } else {
+                                echo "<tr><td colspan='8'>No logs found</td></tr>";
                             }
-                        } else {
-                            echo "<tr><td colspan='7'>No logs found</td></tr>";
-                        }
 
-                        $conn->close();
-                        ?>
-                    </tbody>
-                </table>
+                            $conn->close();
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
 
                 <!-- Back Button -->
                 <a href="crud.php" class="btn btn-secondary">Kembali</a>
@@ -146,4 +158,3 @@ $result = $conn->query($sql);
     </div>
 </body>
 </html>
-
