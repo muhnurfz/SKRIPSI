@@ -1,3 +1,52 @@
+<?php
+include('conn.php');
+session_start();
+
+// Set session timeout period (in seconds)
+$timeout_duration = 1800; // 30 minutes
+
+// Check if the session is active and if the timeout has expired
+if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY']) > $timeout_duration) {
+    session_unset();     // Unset $_SESSION variables
+    session_destroy();   // Destroy session data in storage
+    header("Location: login.php"); // Redirect to login page
+    exit();
+}
+
+// Update the last activity time
+$_SESSION['LAST_ACTIVITY'] = time();
+
+// Check if the user is logged in
+if (!isset($_SESSION['username'])) {
+    header("Location: login.php");
+    exit();
+}
+
+// Get the username from the session
+$username = $_SESSION['username'];
+
+// Initialize search variables
+$booking_code = isset($_POST['booking_code']) ? $conn->real_escape_string($_POST['booking_code']) : '';
+$departure_date = isset($_POST['departure_date']) ? $conn->real_escape_string($_POST['departure_date']) : '';
+$route = isset($_POST['route']) ? $conn->real_escape_string($_POST['route']) : '';
+
+// Build query with optional filters
+$sql = "SELECT * FROM order_logs WHERE 1=1";
+if ($booking_code) {
+    $sql .= " AND booking_code LIKE '%$booking_code%'";
+}
+if ($departure_date) {
+    $sql .= " AND order_id IN (SELECT id FROM orders WHERE departure_date = '$departure_date')";
+}
+if ($route) {
+    $sql .= " AND order_id IN (SELECT id FROM orders WHERE route LIKE '%$route%')";
+}
+$sql .= " ORDER BY changed_at DESC";
+
+// Execute query
+$result = $conn->query($sql);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -55,35 +104,6 @@
             </thead>
             <tbody>
                 <?php
-                // Database connection
-                $conn = new mysqli("localhost", "root", "", "ticket_booking");
-
-                // Check connection
-                if ($conn->connect_error) {
-                    die("Connection failed: " . $conn->connect_error);
-                }
-
-                // Initialize search variables
-                $booking_code = isset($_POST['booking_code']) ? $conn->real_escape_string($_POST['booking_code']) : '';
-                $departure_date = isset($_POST['departure_date']) ? $conn->real_escape_string($_POST['departure_date']) : '';
-                $route = isset($_POST['route']) ? $conn->real_escape_string($_POST['route']) : '';
-
-                // Build query with optional filters
-                $sql = "SELECT * FROM order_logs WHERE 1=1";
-                if ($booking_code) {
-                    $sql .= " AND booking_code LIKE '%$booking_code%'";
-                }
-                if ($departure_date) {
-                    $sql .= " AND order_id IN (SELECT id FROM orders WHERE departure_date = '$departure_date')";
-                }
-                if ($route) {
-                    $sql .= " AND order_id IN (SELECT id FROM orders WHERE route LIKE '%$route%')";
-                }
-                $sql .= " ORDER BY changed_at DESC";
-
-                // Execute query
-                $result = $conn->query($sql);
-
                 if ($result->num_rows > 0) {
                     // Output data of each row
                     while ($row = $result->fetch_assoc()) {
