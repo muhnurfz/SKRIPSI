@@ -114,7 +114,6 @@ $result = $conn->query($sql);
                                 <th>Data sebelum</th>
                                 <th>Status/data sesudah</th>
                                 <th>Diganti pada</th>
-                                <th>Nama pegawai</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -139,8 +138,7 @@ $result = $conn->query($sql);
                                             <td>" . $row["old_value"] . "</td>
                                             <td>" . $row["new_value"] . "</td>
                                             <td>" . $formattedDateTime . "</td>
-                                            <td>" . htmlspecialchars($_SESSION['username']) . "</td>
-                                        </tr>";
+                                            </tr>";
                                 }
                             } else {
                                 echo "<tr><td colspan='8'>No logs found</td></tr>";
