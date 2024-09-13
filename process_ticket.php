@@ -138,10 +138,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $conn->begin_transaction();
 
     try {
-        // Check if seats are available
-        if (!areSeatsAvailable($conn, $selected_seats)) {
-            throw new Exception("Maaf ada yang lebih dahulu memesan kursi.");
-        }
+        // // Check if seats are available
+        // if (!areSeatsAvailable($conn, $selected_seats)) {
+        //     throw new Exception("Maaf ada yang lebih dahulu memesan kursi.");
+        // }
 
           // Proceed with the insertion
           $stmt = $conn->prepare("INSERT INTO orders (
